@@ -320,52 +320,52 @@
       <div class="poster"><span class="pill"></span></div>
       <div class="card-b">
         <div class="card-name">Зов глубин</div>
-        <div class="card-meta">МАЙ</div>
+        <div class="card-meta">12–26 мая</div>
         <div class="card-desc">Жемчужины, предметы ивента и репутация — сколько фармить и сколько донатить для апгрейдов.</div>
         <div class="card-foot"><span>Открыть</span><span class="arr">→</span></div>
       </div>
     </a>
-    <a class="card ready" data-ev="hop" href="leprecon/hmeli_calc.html">
+    <a class="card ready" data-ev="hop" data-start="2026-04-12" data-end="2026-04-26" href="leprecon/hmeli_calc.html">
       <div class="poster"></div>
       <div class="card-b">
         <div class="card-name">Месяц цветущего хмеля</div>
-        <div class="card-meta">АПРЕЛЬ · 4 предмета</div>
+        <div class="card-meta">12–26 апреля</div>
         <div class="card-desc">Лепрекон, Медовый хмель, Фляжка Патрика и Талисман клевера.</div>
         <div class="card-foot"><span>Открыть</span><span class="arr">→</span></div>
       </div>
     </a>
-    <div class="card soon" data-ev="flower">
+    <div class="card soon" data-ev="flower" data-start="2026-03-10" data-end="2026-03-24">
       <div class="poster"><span class="pill">Скоро</span></div>
       <div class="card-b">
         <div class="card-name">Месяц пробуждения цветов</div>
-        <div class="card-meta">МАРТ · весенний ивент</div>
+        <div class="card-meta">10–24 марта</div>
         <div class="card-desc">Калькулятор в разработке.</div>
         <div class="card-foot"><span>в разработке</span></div>
       </div>
     </div>
-    <div class="card soon" data-ev="exp1">
+    <div class="card soon" data-ev="exp1" data-start="2026-02-10" data-end="2026-02-24">
       <div class="poster"><span class="pill">Скоро</span></div>
       <div class="card-b">
         <div class="card-name">Экспедиция</div>
-        <div class="card-meta">ФЕВРАЛЬ · ИЮЛЬ</div>
+        <div class="card-meta">10–24 февраля</div>
         <div class="card-desc">Калькулятор для <em class="ev-name">Экспедиция: Сбор припасов</em> и <em class="ev-name">Экспедиция: Ледяные острова</em>.</div>
         <div class="card-foot"><span>в разработке</span></div>
       </div>
     </div>
-    <div class="card soon" data-ev="ny">
+    <div class="card soon" data-ev="ny" data-start="2026-12-14" data-end="2027-01-14">
       <div class="poster"><span class="pill">Скоро</span></div>
       <div class="card-b">
         <div class="card-name">Новый год. Колдер</div>
-        <div class="card-meta">ДЕК — ЯНВ</div>
+        <div class="card-meta">14 дек – 14 янв</div>
         <div class="card-desc">Зимний ивент.</div>
         <div class="card-foot"><span>в разработке</span></div>
       </div>
     </div>
-    <div class="card soon" data-ev="pumpkin">
+    <div class="card soon" data-ev="pumpkin" data-start="2026-10-14" data-end="2026-11-14">
       <div class="poster"><span class="pill">Скоро</span></div>
       <div class="card-b">
         <div class="card-name">Тыквенный фестиваль</div>
-        <div class="card-meta">ОКТЯБРЬ</div>
+        <div class="card-meta">14 окт – 14 ноя</div>
         <div class="card-desc">Осенний ивент.</div>
         <div class="card-foot"><span>в разработке</span></div>
       </div>
@@ -392,7 +392,7 @@
       <div class="poster"><span class="pill">Скоро</span></div>
       <div class="card-b">
         <div class="card-name">День Пирата</div>
-        <div class="card-meta">ИЮНЬ · 14–28 июня</div>
+        <div class="card-meta">14–28 июня</div>
         <div class="card-desc">Калькулятор в разработке.</div>
         <div class="card-foot"><span>в разработке</span></div>
       </div>
@@ -487,22 +487,17 @@
       const meta  = card.querySelector('.card-meta');
       const foot  = card.querySelector('.card-foot span:first-child');
 
-      const sm = MONTHS[start.getMonth()];
-      const em = MONTHS[end.getMonth()];
-      const monthLabel = sm === em ? sm : sm + '–' + em;
-
       if (now >= start && now <= end) {
         card.classList.remove('ready');
         card.classList.add('active');
         const daysLeft = Math.ceil((end - now) / 86400000);
         if (pill) { pill.textContent = 'Проходит сейчас'; pill.style.display = ''; }
-        if (meta) meta.textContent = monthLabel + ' · осталось ' + daysLeft + ' ' + pluralDays(daysLeft);
+        if (meta) meta.textContent = meta.textContent + ' · осталось ' + daysLeft + ' ' + pluralDays(daysLeft);
         if (foot) foot.textContent = 'Открыть калькулятор';
       } else {
         card.classList.remove('active');
         card.classList.add('ready');
         if (pill) pill.style.display = 'none';
-        if (meta) meta.textContent = monthLabel;
         if (foot) foot.textContent = 'Открыть';
       }
     });
