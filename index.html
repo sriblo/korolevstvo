@@ -322,7 +322,7 @@
         <div class="card-name">Зов глубин</div>
         <div class="card-meta">МАЙ</div>
         <div class="card-desc">Жемчужины, предметы ивента и репутация — сколько фармить и сколько донатить для апгрейдов.</div>
-        <div class="card-foot"><span>Открыть калькулятор</span><span class="arr">→</span></div>
+        <div class="card-foot"><span>Открыть</span><span class="arr">→</span></div>
       </div>
     </a>
     <a class="card ready" data-ev="hop" href="leprecon/hmeli_calc.html">
@@ -485,6 +485,7 @@
       const end   = new Date(card.dataset.end + 'T23:59:59');
       const pill  = card.querySelector('.pill');
       const meta  = card.querySelector('.card-meta');
+      const foot  = card.querySelector('.card-foot span:first-child');
 
       const sm = MONTHS[start.getMonth()];
       const em = MONTHS[end.getMonth()];
@@ -494,13 +495,15 @@
         card.classList.remove('ready');
         card.classList.add('active');
         const daysLeft = Math.ceil((end - now) / 86400000);
-        if (pill) pill.textContent = 'Проходит сейчас';
+        if (pill) { pill.textContent = 'Проходит сейчас'; pill.style.display = ''; }
         if (meta) meta.textContent = monthLabel + ' · осталось ' + daysLeft + ' ' + pluralDays(daysLeft);
+        if (foot) foot.textContent = 'Открыть калькулятор';
       } else {
         card.classList.remove('active');
         card.classList.add('ready');
         if (pill) pill.style.display = 'none';
         if (meta) meta.textContent = monthLabel;
+        if (foot) foot.textContent = 'Открыть';
       }
     });
   })();
