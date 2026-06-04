@@ -444,18 +444,12 @@ function calc(){
   mineEl.textContent  = fmt(myRace);   mineEl.className  = 'sval on';
   enEl.textContent    = fmt(enemies);
 
-  if (enemies === 0){
-    enEl.className  = 'rnum safe';
-    tagEl.textContent = 'Безопасно — можно фармить';
-    tagEl.className = 'rtag safe';
-  } else {
-    enEl.className  = 'rnum danger';
-    const word = (enemies % 10 === 1 && enemies % 100 !== 11) ? 'враг рядом'
-               : ([2,3,4].includes(enemies % 10) && ![12,13,14].includes(enemies % 100)) ? 'врага рядом'
-               : 'врагов рядом';
-    tagEl.textContent = enemies + ' ' + word + ' — будь осторожен';
-    tagEl.className = 'rtag danger';
-  }
+  enEl.className = 'rnum';
+  const word = (enemies % 10 === 1 && enemies % 100 !== 11) ? 'враг'
+             : ([2,3,4].includes(enemies % 10) && ![12,13,14].includes(enemies % 100)) ? 'врага'
+             : 'врагов';
+  tagEl.textContent = 'в локации ' + enemies + ' ' + word;
+  tagEl.className = 'rtag';
 }
 
 function switchTab(id, btn){
