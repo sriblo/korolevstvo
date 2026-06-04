@@ -388,11 +388,11 @@
         <div class="card-foot"><span>в разработке</span></div>
       </div>
     </div>
-    <div class="card soon" data-ev="pirate">
+    <div class="card soon" data-ev="pirate" data-start="2026-06-14" data-end="2026-06-28">
       <div class="poster"><span class="pill">Скоро</span></div>
       <div class="card-b">
         <div class="card-name">День Пирата</div>
-        <div class="card-meta">ИЮНЬ</div>
+        <div class="card-meta">ИЮНЬ · 14–28 июня</div>
         <div class="card-desc">Калькулятор в разработке.</div>
         <div class="card-foot"><span>в разработке</span></div>
       </div>
@@ -480,7 +480,7 @@
       return 'дней';
     }
 
-    document.querySelectorAll('.card[data-start][data-end]').forEach(function(card) {
+    document.querySelectorAll('.card[data-start][data-end]:not(.soon)').forEach(function(card) {
       const start = new Date(card.dataset.start);
       const end   = new Date(card.dataset.end + 'T23:59:59');
       const pill  = card.querySelector('.pill');
