@@ -112,8 +112,8 @@
         '<span class="dd-item soon">Новый год. Колдер</span>' +
         '<span class="dd-item soon">Экспедиция. Сбор припасов</span>' +
         '<span class="dd-item soon">Месяц пробуждения цветов</span>' +
-        '<a class="dd-item ready' + (isHmeli  ? ' on' : '') + '" href="' + _base + 'leprecon/index.html">Месяц цветущего хмеля</a>' +
-        '<a class="dd-item ready' + (isGlubin ? ' on' : '') + '" href="' + _base + 'zov_glubin/index.html">Зов Глубин</a>' +
+        '<a class="dd-item ready' + (isHmeli  ? ' on' : '') + '" href="' + _base + 'leprecon/hmeli_calc.html">Месяц цветущего хмеля</a>' +
+        '<a class="dd-item ready' + (isGlubin ? ' on' : '') + '" href="' + _base + 'zov_glubin/glubin_calc.html">Зов Глубин</a>' +
         '<span class="dd-item soon">День Пирата</span>' +
         '<span class="dd-item soon">Экспедиция. Ледяные Острова</span>' +
         '<span class="dd-item soon">Гоблинский Рай</span>' +
@@ -176,8 +176,8 @@
       '<a class="' + mbLinkClass(isHome, false) + '" href="' + _base + 'index.html">Главная</a>' +
       '<a class="' + mbLinkClass(isItems, false) + '" href="' + _base + 'items_base.html">База предметов</a>' +
       '<div class="nav-mb-sec">Калькуляторы</div>' +
-      '<a class="' + mbLinkClass(isHmeli, false) + '" href="' + _base + 'leprecon/index.html">Месяц цветущего хмеля</a>' +
-      '<a class="' + mbLinkClass(isGlubin, false) + '" href="' + _base + 'zov_glubin/index.html">Зов Глубин</a>' +
+      '<a class="' + mbLinkClass(isHmeli, false) + '" href="' + _base + 'leprecon/hmeli_calc.html">Месяц цветущего хмеля</a>' +
+      '<a class="' + mbLinkClass(isGlubin, false) + '" href="' + _base + 'zov_glubin/glubin_calc.html">Зов Глубин</a>' +
       '<a class="' + mbLinkClass(page === 'loc_calc.html', false) + '" href="' + _base + 'location_calc/loc_calc.html">Загруженность копий</a>' +
       '<a class="' + mbLinkClass(page === 'rep_calc.html', false) + '" href="' + _base + 'reputation_calc/rep_calc.html">Прокачка репутаций</a>' +
       '<a class="' + mbLinkClass(page === 'stats_calc.html', false) + '" href="' + _base + 'stats_calc.html">Характеристики</a>' +
@@ -195,8 +195,8 @@
   var INDEX = [
     { title: 'База предметов', desc: 'Оружие, броня, аксессуары, руны, ивентовые предметы', url: 'items_base.html', tags: 'предметы оружие броня экипировка руны аксессуары артефакты амулеты кольца' },
     { title: 'Калькулятор характеристик', desc: 'Расчёт характеристик, брони и урона персонажа', url: 'stats_calc.html', tags: 'статы характеристики броня урон атака защита резисты' },
-    { title: 'Зов Глубин', desc: 'Ивент май 2026 — жемчужины, репутация, апгрейды', url: 'zov_glubin/index.html', tags: 'зов глубин ивент жемчужины репутация апгрейд май' },
-    { title: 'Месяц цветущего хмеля', desc: 'Ивент — хмель, золотой клевер, монеты леприкона', url: 'leprecon/index.html', tags: 'хмель леприкон клевер ивент монеты' },
+    { title: 'Зов Глубин', desc: 'Ивент май 2026 — жемчужины, репутация, апгрейды', url: 'zov_glubin/glubin_calc.html', tags: 'зов глубин ивент жемчужины репутация апгрейд май' },
+    { title: 'Месяц цветущего хмеля', desc: 'Ивент — хмель, золотой клевер, монеты леприкона', url: 'leprecon/hmeli_calc.html', tags: 'хмель леприкон клевер ивент монеты' },
     { title: 'Загруженность копий', desc: 'Оптимальные копии локаций для фарма', url: 'location_calc/loc_calc.html', tags: 'локации копии загруженность фарм подземелья' },
     { title: 'Прокачка репутаций', desc: 'Калькулятор репутаций всех фракций Королевства', url: 'reputation_calc/rep_calc.html', tags: 'репутации фракции прокачка гвардия гладиатор орден завоеватель' },
   ];
