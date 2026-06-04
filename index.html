@@ -499,7 +499,7 @@
       } else {
         card.classList.remove('active');
         card.classList.add('ready');
-        if (pill) pill.textContent = '';
+        if (pill) pill.style.display = 'none';
         if (meta) meta.textContent = monthLabel;
       }
     });
