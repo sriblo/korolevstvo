@@ -316,11 +316,11 @@
   </div>
 
   <div class="grid">
-    <a class="card active" data-ev="glubin" href="zov_glubin/glubin_calc.html">
-      <div class="poster"><span class="pill">Проходит сейчас</span></div>
+    <a class="card ready" data-ev="glubin" data-start="2026-05-12" data-end="2026-05-26" href="zov_glubin/glubin_calc.html">
+      <div class="poster"><span class="pill"></span></div>
       <div class="card-b">
         <div class="card-name">Зов глубин</div>
-        <div class="card-meta">МАЙ · осталось <span id="days-left2">12</span> дней</div>
+        <div class="card-meta">МАЙ</div>
         <div class="card-desc">Жемчужины, предметы ивента и репутация — сколько фармить и сколько донатить для апгрейдов.</div>
         <div class="card-foot"><span>Открыть калькулятор</span><span class="arr">→</span></div>
       </div>
@@ -470,13 +470,39 @@
 </footer>
 
 <script>
-  // Days left until end of current event (May 26, 2026)
   (function() {
-    const end = new Date('2026-05-26T23:59:59');
     const now = new Date();
-    const diff = Math.ceil((end - now) / 86400000);
-    const d = Math.max(0, diff);
-    document.getElementById('days-left2').textContent = d;
+    const MONTHS = ['ЯНВ','ФЕВ','МАР','АПР','МАЙ','ИЮН','ИЮЛ','АВГ','СЕН','ОКТ','НОЯ','ДЕК'];
+
+    function pluralDays(n) {
+      if (n % 10 === 1 && n % 100 !== 11) return 'день';
+      if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return 'дня';
+      return 'дней';
+    }
+
+    document.querySelectorAll('.card[data-start][data-end]').forEach(function(card) {
+      const start = new Date(card.dataset.start);
+      const end   = new Date(card.dataset.end + 'T23:59:59');
+      const pill  = card.querySelector('.pill');
+      const meta  = card.querySelector('.card-meta');
+
+      const sm = MONTHS[start.getMonth()];
+      const em = MONTHS[end.getMonth()];
+      const monthLabel = sm === em ? sm : sm + '–' + em;
+
+      if (now >= start && now <= end) {
+        card.classList.remove('ready');
+        card.classList.add('active');
+        const daysLeft = Math.ceil((end - now) / 86400000);
+        if (pill) pill.textContent = 'Проходит сейчас';
+        if (meta) meta.textContent = monthLabel + ' · осталось ' + daysLeft + ' ' + pluralDays(daysLeft);
+      } else {
+        card.classList.remove('active');
+        card.classList.add('ready');
+        if (pill) pill.textContent = '';
+        if (meta) meta.textContent = monthLabel;
+      }
+    });
   })();
 </script>
 
