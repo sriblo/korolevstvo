@@ -1316,7 +1316,7 @@ const REQ_RANK = {
   parrot:   [0, 0, 2, 3, 4],
   duck:     [0, 4],
   broken:   [0, 4],
-  compass:  [0, 0],
+  compass:  [0, 4],
   stone:    [0, 4],
 };
 
@@ -1346,7 +1346,7 @@ const ITEMS = [
     frames: [null, 'border_high'],
     levels: ['Нет', 'Костюм резиновой утки'],
     gameIds: [null, 'pirate_day_beach_3'] },
-  { id: 'broken', name: 'Коллекция черных меток', note: 'вечная',
+  { id: 'broken', name: 'Коллекция черных меток', note: 'до 1 сентября',
     img:    '../icons/pirate_day_broken.png',
     frames: [null, 'border_exclusive'],
     levels: ['Нет', 'Коллекция черных меток'],
@@ -1695,13 +1695,13 @@ function renderItemsGuide() {
         { lv:3, label:'Синий',      cost:5032, costR:0, rAlt:12, rank:3, ingr:ingrIco('../icons/blood_bucket.jpg','border_medium',  'Краска эмалевая синяя',      'pirate_day_2013_reputation_boost_5_upgrade') },
         { lv:4, label:'Фиолетовый', cost:8384, costR:0, rAlt:20, rank:4, ingr:ingrIco('../icons/blood_bucket.jpg','border_high',    'Краска эмалевая фиолетовая', 'pirate_day_2013_reputation_boost_10_upgrade') },
       ]},
-    { name:'Коллекция черных меток', note:'вечная', cfg: ITEMS.find(c=>c.id==='broken'),
+    { name:'Коллекция черных меток', note:'до 1 сентября', cfg: ITEMS.find(c=>c.id==='broken'),
       steps:[
         { lv:1, label:'Коллекция черных меток', cost:6707, costR:0, rAlt:16, rank:4, ingr:null },
       ]},
     { name:'Проклятый компас', note:'', cfg: ITEMS.find(c=>c.id==='compass'),
       steps:[
-        { lv:1, label:'Проклятый компас', cost:4192, costR:0, rAlt:10, rank:null, ingr:null },
+        { lv:1, label:'Проклятый компас', cost:4192, costR:0, rAlt:10, rank:4, ingr:null },
       ]},
     { name:'Камень Путешествий', note:'вечный', cfg: ITEMS.find(c=>c.id==='stone'),
       steps:[
