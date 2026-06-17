@@ -569,21 +569,20 @@ select.on {
   font-family: var(--serif); font-style: normal;
   font-size: 11.5px; color: var(--txt3);
 }
-.iup-chain {
-  display: flex; align-items: flex-start; flex-wrap: nowrap; width: 100%;
-}
-.iup-step { display: flex; flex-direction: column; align-items: center; gap: 5px; flex: 2; min-width: 0; }
-.iup-step-ico { height: 32px; display: flex; align-items: center; justify-content: center; }
-.iup-step-name{font-family:var(--serif);font-size:12.5px;color:var(--txt2);text-align:center;line-height:1.3;}
-.iup-step-cost{font-family:var(--serif);font-size:12px;color:var(--green);font-weight:500;text-align:center;line-height:1.3;font-feature-settings:'tnum';font-variant-numeric:tabular-nums;}
-.iup-step-rank { margin-top: 2px; }
-.iup-ingr-step { display: flex; flex-direction: column; align-items: center; gap: 5px; flex: 1; min-width: 0; }
-.iup-ingr-step-ico { height: 32px; display: flex; align-items: center; justify-content: center; }
-.iup-ingr-name{font-family:var(--serif);font-size:11.5px;color:var(--txt3);font-style:normal;text-align:center;line-height:1.3;}
-.iup-arrow-sep {
-  flex-shrink: 0; height: 32px; display: flex; align-items: center;
-  padding: 0 6px; font-size: 16px; color: var(--txt3); font-family: var(--serif);
-}
+.iup-chain { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+.iup-chain-row { display: flex; align-items: center; flex-wrap: nowrap; width: 100%; }
+.iup-chain-cell { flex: 1; min-width: 60px; display: flex; justify-content: center; align-items: center; text-align: center; }
+.iup-chain-cell.ingr { flex: 0 0 65px; min-width: 0; }
+.iup-chain-sep { flex: 0 0 22px; display: flex; justify-content: center; align-items: center; }
+.iup-chain-row.ico .iup-chain-cell { height: 32px; }
+.iup-chain-row.ico .iup-chain-sep { height: 32px; font-size: 16px; color: var(--txt3); font-family: var(--serif); }
+.iup-chain-row.nam .iup-chain-cell { font-family: var(--serif); font-size: 12.5px; color: var(--txt2); line-height: 1.3; padding: 3px 4px 0; }
+.iup-chain-row.nam .iup-chain-cell.ingr { font-size: 11.5px; color: var(--txt3); }
+.iup-chain-row.cst .iup-chain-cell { font-family: var(--serif); font-size: 12px; color: var(--green); font-weight: 500; font-feature-settings: 'tnum'; font-variant-numeric: tabular-nums; padding: 0 4px 2px; }
+.iup-chain-row.rnk .iup-chain-cell { padding: 3px 4px 2px; }
+.iup-chain-row.nam .iup-chain-sep,
+.iup-chain-row.cst .iup-chain-sep,
+.iup-chain-row.rnk .iup-chain-sep { visibility: hidden; }
 
 /* ── CHECKER ────────────────────────────────────────────── */
 .chk-wrap { display: flex; align-items: center; gap: 6px; cursor: pointer; flex-shrink: 0; }
@@ -666,9 +665,9 @@ select.on {
   .guide-section { min-width: 0; }
   .guide-card { min-width: 0; }
   .iup-row { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .iup-chain { width: max-content; flex-wrap: nowrap; }
-  .iup-step  { flex: 0 0 auto; min-width: 70px; }
-  .iup-ingr-step { flex: 0 0 auto; min-width: 60px; }
+  .iup-chain { min-width: max-content; }
+  .iup-chain-cell { flex: 0 0 75px; min-width: 75px; }
+  .iup-chain-cell.ingr { flex: 0 0 58px; min-width: 0; width: 58px; }
 
   /* Tabs */
   .tab-btn { padding: 9px 10px; font-size: 11.5px; letter-spacing: .04em; }
@@ -1787,73 +1786,83 @@ function renderItemsGuide() {
       ]},
   ];
 
-  const html = GUIDE_ITEMS.map(({name, note, cfg, steps, result}) => {
-    if (!cfg) return '';
-    const parts = [];
+  function buildChain(steps, cfg, result) {
+    const ico = [], nam = [], cst = [], rnk = [];
+    let hasRank = false;
     steps.forEach((s, i) => {
-      if (i > 0) parts.push(`<div class="iup-arrow-sep">›</div>`);
-      if (s.ingr) {
-        parts.push(`<div class="iup-ingr-step">
-          <div class="iup-ingr-step-ico">${s.ingr.ico}</div>
-          <div class="iup-ingr-name">${s.ingr.name}</div>
-        </div>`);
-        parts.push(`<div class="iup-arrow-sep">›</div>`);
+      if (i > 0) {
+        ico.push(`<div class="iup-chain-sep">›</div>`);
+        nam.push(`<div class="iup-chain-sep"></div>`);
+        cst.push(`<div class="iup-chain-sep"></div>`);
+        rnk.push(`<div class="iup-chain-sep"></div>`);
       }
+      if (s.ingr) {
+        ico.push(`<div class="iup-chain-cell ingr">${s.ingr.ico}</div>`);
+        nam.push(`<div class="iup-chain-cell ingr">${s.ingr.name}</div>`);
+        cst.push(`<div class="iup-chain-cell ingr"></div>`);
+        rnk.push(`<div class="iup-chain-cell ingr"></div>`);
+        ico.push(`<div class="iup-chain-sep">›</div>`);
+        nam.push(`<div class="iup-chain-sep"></div>`);
+        cst.push(`<div class="iup-chain-sep"></div>`);
+        rnk.push(`<div class="iup-chain-sep"></div>`);
+      }
+      const stepCfg = s.overrideImg
+        ? { imgs:[null,s.overrideImg], frames:[null,s.overrideFrame], gameIds:[null,s.overrideGameId] }
+        : cfg;
+      const stepLv = s.overrideImg ? 1 : s.lv;
       const rankHtml = s.rank != null
         ? `<span class="iup-step-rank rank-badge ${RANK_BADGES[s.rank]}" style="font-size:9px">Ранг ${s.rank}</span>` : '';
-      const stepGicoCfg = s.overrideImg
-        ? { imgs:[null, s.overrideImg], frames:[null, s.overrideFrame], gameIds:[null, s.overrideGameId] }
-        : cfg;
-      const stepGicoLv = s.overrideImg ? 1 : s.lv;
-      parts.push(`<div class="iup-step">
-        <div class="iup-step-ico">${gico(stepGicoCfg, stepGicoLv)}</div>
-        <div class="iup-step-name">${s.label}</div>
-        <div class="iup-step-cost">${costLabel(s.cost, s.costR, s.rAlt)}</div>
-        ${rankHtml}
-      </div>`);
+      if (rankHtml) hasRank = true;
+      ico.push(`<div class="iup-chain-cell">${gico(stepCfg, stepLv)}</div>`);
+      nam.push(`<div class="iup-chain-cell">${s.label}</div>`);
+      cst.push(`<div class="iup-chain-cell">${costLabel(s.cost, s.costR, s.rAlt)}</div>`);
+      rnk.push(`<div class="iup-chain-cell">${rankHtml}</div>`);
     });
+    if (result) {
+      const ttR = result.gameId
+        ? ` onmouseenter="ttShowByGameId('${result.gameId}','${result.img}',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"` : '';
+      const frR = result.frame ? `<img class="fr" src="../frames/${result.frame}.png">` : '';
+      const icoR = `<div class="gico" data-q="2"${ttR}><img class="base" src="${result.img}">${frR}</div>`;
+      ico.push(`<div class="iup-chain-sep" style="color:var(--gold);font-weight:600">→</div>`);
+      nam.push(`<div class="iup-chain-sep"></div>`);
+      cst.push(`<div class="iup-chain-sep"></div>`);
+      rnk.push(`<div class="iup-chain-sep"></div>`);
+      ico.push(`<div class="iup-chain-cell">${icoR}</div>`);
+      nam.push(`<div class="iup-chain-cell" style="color:var(--gold-l)">${result.label}</div>`);
+      cst.push(`<div class="iup-chain-cell" style="color:var(--txt3)">${result.note||''}</div>`);
+      rnk.push(`<div class="iup-chain-cell"></div>`);
+    }
+    return `<div class="iup-chain">
+      <div class="iup-chain-row ico">${ico.join('')}</div>
+      <div class="iup-chain-row nam">${nam.join('')}</div>
+      <div class="iup-chain-row cst">${cst.join('')}</div>
+      ${hasRank ? `<div class="iup-chain-row rnk">${rnk.join('')}</div>` : ''}
+    </div>`;
+  }
 
-    const resultHtml = result
-      ? (() => {
-          const ttR = result.gameId
-            ? ` onmouseenter="ttShowByGameId('${result.gameId}','${result.img}',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"` : '';
-          const frR = result.frame ? `<img class="fr" src="../frames/${result.frame}.png">` : '';
-          const icoR = `<div class="gico" data-q="2"${ttR}><img class="base" src="${result.img}">${frR}</div>`;
-          return `<div class="iup-arrow-sep" style="color:var(--gold);font-weight:600">→</div>
-            <div class="iup-step">
-              <div class="iup-step-ico">${icoR}</div>
-              <div class="iup-step-name" style="color:var(--gold-l)">${result.label}</div>
-              <div class="iup-step-cost" style="color:var(--txt3)">${result.note || ''}</div>
-            </div>`;
-        })()
-      : '';
+  const html = GUIDE_ITEMS.map(({name, note, cfg, steps, result}) => {
+    if (!cfg) return '';
     return `<div class="iup-row">
       <div class="iup-row-header">
         <span class="iup-name">${name}</span>
         ${note ? `<span class="iup-note">${note}</span>` : ''}
       </div>
-      <div class="iup-chain">${parts.join('')}${resultHtml}</div>
+      ${buildChain(steps, cfg, result)}
     </div>`;
   }).join('');
 
   // Patents guide section
   const patCfg = PATENTS[0];
   const PAT_STEP_R = [1, 2, 2, 5, 10];
-  const patParts = [];
-  PAT_STEP_R.forEach((r, i) => {
-    if (i > 0) patParts.push(`<div class="iup-arrow-sep">›</div>`);
-    patParts.push(`<div class="iup-step">
-      <div class="iup-step-ico">${gico(patCfg, i+1)}</div>
-      <div class="iup-step-name">${patCfg.levels[i+1]}</div>
-      <div class="iup-step-cost">${fmtR(r)} руб.</div>
-    </div>`);
-  });
+  const patSteps = PAT_STEP_R.map((r, i) => ({
+    lv: i+1, label: patCfg.levels[i+1], cost: 0, costR: r, rAlt: null, rank: null, ingr: null
+  }));
   const patHtml = `<div class="iup-row">
     <div class="iup-row-header">
       <span class="iup-name">Пиратский патент</span>
       <span class="iup-note">только за рубины</span>
     </div>
-    <div class="iup-chain">${patParts.join('')}</div>
+    ${buildChain(patSteps, patCfg, null)}
   </div>`;
 
   el.innerHTML = html + patHtml;
