@@ -933,6 +933,16 @@ select.on {
       <div id="items-list"></div>
     </div>
 
+    <!-- Patents block -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-title-ornament"></div>
+        Патенты
+        <span class="tip" data-tip="Патенты доступны только за рубины.&#10;Уровень репутации не важен.">?</span>
+      </div>
+      <div id="patents-list"></div>
+    </div>
+
     <!-- Result card -->
     <div class="res-card">
       <div class="res-top">
@@ -1296,6 +1306,7 @@ const CUM = {
   broken:   [0, 6707],
   compass:  [0, 4192],
   stone:    [0, 1],
+  patent:   [0, 0, 0, 0, 0, 0],
 };
 // Накопительные цены в рубинах (от нуля)
 const CUM_R = {
@@ -1307,6 +1318,7 @@ const CUM_R = {
   broken:   [0, 16],
   compass:  [0, 10],
   stone:    [0,  0],
+  patent:   [0,  1,  3,  5, 10, 20],
 };
 // Минимальный ранг для каждого уровня
 const REQ_RANK = {
@@ -1318,6 +1330,7 @@ const REQ_RANK = {
   broken:   [0, 4],
   compass:  [0, 4],
   stone:    [0, 4],
+  patent:   [0, 0, 0, 0, 0, 0],
 };
 
 const ITEMS = [
@@ -1361,6 +1374,14 @@ const ITEMS = [
     frames: [null, 'border_exclusive'],
     levels: ['Нет', 'Камень Путешествий'],
     gameIds: [null, 'artefact_events_local_1'] },
+];
+
+const PATENTS = [
+  { id: 'patent', name: 'Пиратский патент', note: 'только за рубины',
+    img: '../icons/pirate_day_contract.png',
+    frames: [null, 'border_none', 'border_low', 'border_medium', 'border_high', 'border_exclusive'],
+    levels: ['Нет', 'Крошечная доля', 'Малая доля', 'Средняя доля', 'Значительная доля', 'Львиная доля'],
+    gameIds: [null, 'deposit_quest_contract_1', 'deposit_quest_contract_2', 'deposit_quest_contract_3', 'deposit_quest_contract_4', 'deposit_quest_contract_5'] },
 ];
 
 function gico(cfg, lv) {
@@ -1408,8 +1429,32 @@ function renderItems() {
     </div>`).join('');
 }
 
+function renderPatents() {
+  const el = document.getElementById('patents-list');
+  el.innerHTML = PATENTS.map(cfg => `
+    <div class="irow2">
+      <div class="iname-c">
+        <div id="gi-have-${cfg.id}">${gico(cfg, 0)}</div>
+        <div><div class="inn">${cfg.name}</div>${cfg.note?`<div class="inote">${cfg.note}</div>`:''}</div>
+      </div>
+      <div class="irow2-ctrl">
+        <select id="have-${cfg.id}" onchange="syncBoth('${cfg.id}');calc()">
+          ${cfg.levels.map((l,i)=>`<option value="${i}">${l}</option>`).join('')}
+        </select>
+        <div class="arr">›</div>
+        <div class="wcell">
+          <select id="want-${cfg.id}" onchange="syncBoth('${cfg.id}');calc()">
+            ${cfg.levels.map((l,i)=>`<option value="${i}">${l}</option>`).join('')}
+          </select>
+          <div class="chint" id="hint-${cfg.id}"></div>
+        </div>
+        <div class="wico" id="gi-want-${cfg.id}">${gico(cfg,0)}</div>
+      </div>
+    </div>`).join('');
+}
+
 function syncBoth(id) {
-  const cfg = ITEMS.find(c=>c.id===id);
+  const cfg = [...ITEMS, ...PATENTS].find(c=>c.id===id);
   const hv = parseInt(document.getElementById('have-'+id).value);
   const wv = parseInt(document.getElementById('want-'+id).value);
   document.getElementById('gi-have-'+id).innerHTML = gico(cfg, hv);
@@ -1474,6 +1519,24 @@ function calc() {
     }
   });
 
+  // Патенты — только рубины, без монет
+  let patRubDef = 0;
+  PATENTS.forEach(cfg => {
+    const h = parseInt(document.getElementById('have-'+cfg.id).value);
+    const w = parseInt(document.getElementById('want-'+cfg.id).value);
+    if (w > h) {
+      patRubDef += CUM_R[cfg.id][w] - CUM_R[cfg.id][h];
+      anyWant = true;
+    }
+    document.getElementById('want-'+cfg.id).classList.toggle('on', w > h);
+    const hintEl = document.getElementById('hint-'+cfg.id);
+    if (hintEl) {
+      if (w > h) {
+        hintEl.textContent = `${fmtR(CUM_R[cfg.id][w] - CUM_R[cfg.id][h])} руб.`;
+      } else { hintEl.textContent = ''; }
+    }
+  });
+
   // Жадный алгоритм: дешёвые шаги — монетами, дорогие — рубинами
   allSteps.sort((a, b) => a.t - b.t);
   let remT = total;
@@ -1494,7 +1557,7 @@ function calc() {
   const tUsedRep   = Math.ceil(freeRep / DUST_PTS) * DUST_T;
   const repGap     = repNeeded - freeRep;
   const rc         = optRubies(repGap);
-  const totalRub   = rubDef + rc.r;
+  const totalRub   = rubDef + rc.r + patRubDef;
 
   // Корректируем overshoot
   const repFromRub = rc.nPrem * ZAST_PTS + rc.nReg * DUST_PTS;
@@ -1582,6 +1645,14 @@ function calc() {
     </div>`);
   }
 
+  if (patRubDef > 0) {
+    rows.push('<div class="vsep"></div>');
+    rows.push(`<div class="vrow">
+      <span class="vkey">Патенты</span>
+      <span class="vval r">${fmtR(patRubDef)} рублей</span>
+    </div>`);
+  }
+
   vb.className = 'verdict-block';
   vb.innerHTML = rows.join('');
 
@@ -1590,6 +1661,7 @@ function calc() {
   const icoDust = `<div class="sline-ico"><div class="gico"><img class="base" src="../icons/pirate_day_repitem.jpg"><img class="fr" src="../frames/border_none.png"></div></div>`;
   const icoZast = `<div class="sline-ico"><div class="gico"><img class="base" src="../icons/pirate_day_repitem.jpg"><img class="fr" src="../frames/border_low.png"></div></div>`;
   const icoRuby = `<div class="sline-ico"><img src="../currency/ruby_dealer_trnsp.png" style="width:20px;height:20px;margin:auto"></div>`;
+  const icoPat  = `<div class="sline-ico"><div class="gico"><img class="base" src="../icons/pirate_day_contract.png"></div></div>`;
   const icoOk   = `<div class="sline-ico emoji">✅</div>`;
   const icoLeft = `<div class="sline-ico emoji">🪙</div>`;
 
@@ -1609,6 +1681,12 @@ function calc() {
       lines.push(`<div class="sline">
         ${icoRuby}
         <div class="sline-body">Докупи недостающие предметы напрямую за рубины: не хватает <span class="sr">${fmt(rubStepTCost)} монет</span> → <span class="sr">${fmtR(rubDef)} рубинов</span>.</div>
+      </div>`);
+    }
+    if (patRubDef > 0) {
+      lines.push(`<div class="sline">
+        ${icoPat}
+        <div class="sline-body">Купи патент(ы) напрямую за рубины: <span class="sr">${fmtR(patRubDef)} рублей</span>.</div>
       </div>`);
     }
     if (adjFreeRep > 0 && adjTUsed > 0) {
@@ -1758,7 +1836,27 @@ function renderItemsGuide() {
     </div>`;
   }).join('');
 
-  el.innerHTML = html;
+  // Patents guide section
+  const patCfg = PATENTS[0];
+  const PAT_STEP_R = [1, 2, 2, 5, 10];
+  const patParts = [];
+  PAT_STEP_R.forEach((r, i) => {
+    if (i > 0) patParts.push(`<div class="iup-arrow-sep">›</div>`);
+    patParts.push(`<div class="iup-step">
+      <div class="iup-step-ico">${gico(patCfg, i+1)}</div>
+      <div class="iup-step-name">${patCfg.levels[i+1]}</div>
+      <div class="iup-step-cost">${fmtR(r)} руб.</div>
+    </div>`);
+  });
+  const patHtml = `<div class="iup-row">
+    <div class="iup-row-header">
+      <span class="iup-name">Пиратский патент</span>
+      <span class="iup-note">только за рубины</span>
+    </div>
+    <div class="iup-chain">${patParts.join('')}</div>
+  </div>`;
+
+  el.innerHTML = html + patHtml;
 }
 
 function switchTab(id, btn) {
@@ -1769,6 +1867,7 @@ function switchTab(id, btn) {
 }
 
 renderItems();
+renderPatents();
 renderItemsGuide();
 calc();
 </script>
