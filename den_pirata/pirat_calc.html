@@ -583,6 +583,10 @@ select.on {
 .iup-chain-row.nam .iup-chain-sep,
 .iup-chain-row.cst .iup-chain-sep,
 .iup-chain-row.rnk .iup-chain-sep { visibility: hidden; }
+.pat-guide-list { display: flex; flex-direction: column; gap: 6px; }
+.pat-guide-item { display: flex; align-items: center; gap: 10px; }
+.pat-guide-name { flex: 1; font-family: var(--serif); font-size: 13px; color: var(--txt2); }
+.pat-guide-cost { font-family: var(--serif); font-size: 12px; color: var(--green); font-weight: 500; font-feature-settings: 'tnum'; }
 
 /* ── CHECKER ────────────────────────────────────────────── */
 .chk-wrap { display: flex; align-items: center; gap: 6px; cursor: pointer; flex-shrink: 0; }
@@ -1305,7 +1309,7 @@ const CUM = {
   broken:   [0, 6707],
   compass:  [0, 4192],
   stone:    [0, 1],
-  patent:   [0, 0, 0, 0, 0, 0],
+  patent1:  [0, 0], patent2: [0, 0], patent3: [0, 0], patent4: [0, 0], patent5: [0, 0],
 };
 // Накопительные цены в рубинах (от нуля)
 const CUM_R = {
@@ -1317,7 +1321,7 @@ const CUM_R = {
   broken:   [0, 16],
   compass:  [0, 10],
   stone:    [0,  0],
-  patent:   [0,  1,  3,  5, 10, 20],
+  patent1:  [0,  1], patent2: [0,  3], patent3: [0,  5], patent4: [0, 10], patent5: [0, 20],
 };
 // Минимальный ранг для каждого уровня
 const REQ_RANK = {
@@ -1329,7 +1333,7 @@ const REQ_RANK = {
   broken:   [0, 4],
   compass:  [0, 4],
   stone:    [0, 4],
-  patent:   [0, 0, 0, 0, 0, 0],
+  patent1:  [0, 0], patent2: [0, 0], patent3: [0, 0], patent4: [0, 0], patent5: [0, 0],
 };
 
 const ITEMS = [
@@ -1376,11 +1380,21 @@ const ITEMS = [
 ];
 
 const PATENTS = [
-  { id: 'patent', name: 'Пиратский патент', note: 'только за рубины',
-    img: '../icons/pirate_day_contract.png',
-    frames: [null, 'border_none', 'border_low', 'border_medium', 'border_high', 'border_exclusive'],
-    levels: ['Нет', 'Крошечная доля', 'Малая доля', 'Средняя доля', 'Значительная доля', 'Львиная доля'],
-    gameIds: [null, 'deposit_quest_contract_1', 'deposit_quest_contract_2', 'deposit_quest_contract_3', 'deposit_quest_contract_4', 'deposit_quest_contract_5'] },
+  { id:'patent1', name:'Патент «Крошечная доля»',   note:'',
+    img:'../icons/pirate_day_contract.png', frames:[null,'border_none'],
+    levels:['Нет','Есть'], gameIds:[null,'deposit_quest_contract_1'] },
+  { id:'patent2', name:'Патент «Малая доля»',        note:'',
+    img:'../icons/pirate_day_contract.png', frames:[null,'border_low'],
+    levels:['Нет','Есть'], gameIds:[null,'deposit_quest_contract_2'] },
+  { id:'patent3', name:'Патент «Средняя доля»',      note:'',
+    img:'../icons/pirate_day_contract.png', frames:[null,'border_medium'],
+    levels:['Нет','Есть'], gameIds:[null,'deposit_quest_contract_3'] },
+  { id:'patent4', name:'Патент «Значительная доля»', note:'',
+    img:'../icons/pirate_day_contract.png', frames:[null,'border_high'],
+    levels:['Нет','Есть'], gameIds:[null,'deposit_quest_contract_4'] },
+  { id:'patent5', name:'Патент «Львиная доля»',      note:'',
+    img:'../icons/pirate_day_contract.png', frames:[null,'border_exclusive'],
+    levels:['Нет','Есть'], gameIds:[null,'deposit_quest_contract_5'] },
 ];
 
 function gico(cfg, lv) {
@@ -1851,18 +1865,19 @@ function renderItemsGuide() {
     </div>`;
   }).join('');
 
-  // Patents guide section
-  const patCfg = PATENTS[0];
-  const PAT_STEP_R = [1, 2, 2, 5, 10];
-  const patSteps = PAT_STEP_R.map((r, i) => ({
-    lv: i+1, label: patCfg.levels[i+1], cost: 0, costR: r, rAlt: null, rank: null, ingr: null
-  }));
+  // Patents guide section — independent items, not upgrades
   const patHtml = `<div class="iup-row">
     <div class="iup-row-header">
-      <span class="iup-name">Пиратский патент</span>
-      <span class="iup-note">только за рубины</span>
+      <span class="iup-name">Пиратские патенты</span>
+      <span class="iup-note">только за рубины, можно покупать любые</span>
     </div>
-    ${buildChain(patSteps, patCfg, null)}
+    <div class="pat-guide-list">
+      ${PATENTS.map(cfg => `<div class="pat-guide-item">
+        <div>${gico(cfg, 1)}</div>
+        <div class="pat-guide-name">${cfg.name}</div>
+        <div class="pat-guide-cost">${fmtR(CUM_R[cfg.id][1])} руб.</div>
+      </div>`).join('')}
+    </div>
   </div>`;
 
   el.innerHTML = html + patHtml;
