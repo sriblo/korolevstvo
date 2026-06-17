@@ -147,7 +147,7 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--line);
   border-radius: 6px;
 }
-.ico-pill img { width: 18px; height: 18px; image-rendering: pixelated; }
+.ico-pill img { image-rendering: pixelated; }
 .ico-pill.em { font-size: 15px; filter: grayscale(.15); }
 
 .ilbl {
@@ -1310,8 +1310,8 @@ const REQ_RANK = {
   scrolls:  [0, 2, 3, 4],
   scrolls2: [0, 2, 3, 4],
   parrot:   [0, 0, 2, 3, 4],
-  duck:     [0, 0],
-  stone:    [0, 0],
+  duck:     [0, 4],
+  stone:    [0, 4],
 };
 
 const ITEMS = [
@@ -1655,7 +1655,7 @@ function renderItemsGuide() {
         { lv:1, label:'Книга пиратских пыток',  cost:2096, costR:0, rAlt:5,  rank:2, ingr:null },
         { lv:2, label:'Эссенция страданий',      cost:4192, costR:0, rAlt:10, rank:3, ingr:null },
         { lv:3, label:'Эссенция агонии',         cost:8384, costR:0, rAlt:20, rank:4, ingr:null },
-        { lv:4, label:'Костюм резиновой утки',   cost:1258, costR:0, rAlt:3,  rank:0, ingr:null,
+        { lv:4, label:'Костюм резиновой утки',   cost:1258, costR:0, rAlt:3,  rank:4, ingr:null,
           overrideImg:'../icons/rubber_duck_dress.jpg', overrideFrame:'border_high', overrideGameId:'pirate_day_beach_3' },
       ],
       result:{ label:'Пиратская книга истязаний', note:'(сдать по квесту)',
@@ -1666,7 +1666,7 @@ function renderItemsGuide() {
         { lv:1, label:'Книга корсарских пыток',    cost:2096, costR:0, rAlt:5,  rank:2, ingr:null },
         { lv:2, label:'Эссенция страданий',        cost:4192, costR:0, rAlt:10, rank:3, ingr:null },
         { lv:3, label:'Эссенция агонии',           cost:8384, costR:0, rAlt:20, rank:4, ingr:null },
-        { lv:4, label:'Костюм резиновой утки',     cost:1258, costR:0, rAlt:3,  rank:0, ingr:null,
+        { lv:4, label:'Костюм резиновой утки',     cost:1258, costR:0, rAlt:3,  rank:4, ingr:null,
           overrideImg:'../icons/rubber_duck_dress.jpg', overrideFrame:'border_high', overrideGameId:'pirate_day_beach_3' },
       ],
       result:{ label:'Книга истязаний', note:'(сдать по квесту)',
@@ -1681,7 +1681,7 @@ function renderItemsGuide() {
       ]},
     { name:'Камень Путешествий', note:'вечный', cfg: ITEMS.find(c=>c.id==='stone'),
       steps:[
-        { lv:1, label:'Камень Путешествий', cost:1, costR:0, rAlt:null, rank:null, ingr:null },
+        { lv:1, label:'Камень Путешествий', cost:1, costR:0, rAlt:null, rank:4, ingr:null },
       ]},
   ];
 
