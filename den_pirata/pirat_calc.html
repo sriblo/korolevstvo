@@ -1527,7 +1527,7 @@ function calc() {
         const rubCost = CUM_R[cfg.id][w] - CUM_R[cfg.id][h];
         hintEl.textContent = cost > 0
           ? `Итого: ${fmt(cost)} монет${bd}`
-          : `Только за рубины: ${fmtR(rubCost)} руб.`;
+          : `Только за рубины: ${fmtR(rubCost)} рубинов`;
       } else { hintEl.textContent = ''; }
     }
   });
@@ -1545,7 +1545,7 @@ function calc() {
     const hintEl = document.getElementById('hint-'+cfg.id);
     if (hintEl) {
       if (w > h) {
-        hintEl.textContent = `${fmtR(CUM_R[cfg.id][w] - CUM_R[cfg.id][h])} руб.`;
+        hintEl.textContent = `${fmtR(CUM_R[cfg.id][w] - CUM_R[cfg.id][h])} рубинов`;
       } else { hintEl.textContent = ''; }
     }
   });
@@ -1662,7 +1662,7 @@ function calc() {
     rows.push('<div class="vsep"></div>');
     rows.push(`<div class="vrow">
       <span class="vkey">Патенты</span>
-      <span class="vval r">${fmtR(patRubDef)} рублей</span>
+      <span class="vval r">${fmtR(patRubDef)} рубинов</span>
     </div>`);
   }
 
@@ -1699,7 +1699,7 @@ function calc() {
     if (patRubDef > 0) {
       lines.push(`<div class="sline">
         ${icoPat}
-        <div class="sline-body">Купи патент(ы) напрямую за рубины: <span class="sr">${fmtR(patRubDef)} рублей</span>.</div>
+        <div class="sline-body">Купи патент(ы) напрямую за рубины: <span class="sr">${fmtR(patRubDef)} рубинов</span>.</div>
       </div>`);
     }
     if (adjFreeRep > 0 && adjTUsed > 0) {
@@ -1743,7 +1743,7 @@ function renderItemsGuide() {
   }
 
   function costLabel(t, r, rAlt) {
-    if (rAlt != null && t > 0) return `${fmt(t)} монет / ${fmtR(rAlt)} руб.`;
+    if (rAlt != null && t > 0) return `${fmt(t)} монет / ${fmtR(rAlt)} рубинов`;
     if (t > 0) return `${fmt(t)} монет`;
     return `${fmtR(r)} рубинов`;
   }
@@ -1875,7 +1875,7 @@ function renderItemsGuide() {
       ${PATENTS.map(cfg => `<div class="pat-guide-item">
         <div>${gico(cfg, 1)}</div>
         <div class="pat-guide-name">${cfg.name}</div>
-        <div class="pat-guide-cost">${fmtR(CUM_R[cfg.id][1])} руб.</div>
+        <div class="pat-guide-cost">${fmtR(CUM_R[cfg.id][1])} рубинов</div>
       </div>`).join('')}
     </div>
   </div>`;
