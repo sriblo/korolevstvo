@@ -1288,18 +1288,21 @@ const ZAST_PTS = 5000;
 
 // Накопительные цены в монетах (от нуля)
 const CUM = {
-  flask:   [0, 5030, 11737, 20959],
-  scrolls: [0, 2096, 6288,  14672, 15930],
+  flask:    [0, 5030, 11737, 20959],
+  scrolls:  [0, 2096, 6288,  14672, 15930],
+  scrolls2: [0, 2096, 6288,  14672, 15930],
 };
 // Накопительные цены в рубинах (от нуля)
 const CUM_R = {
-  flask:   [0, 12, 28, 50],
-  scrolls: [0,  5, 15, 35, 38],
+  flask:    [0, 12, 28, 50],
+  scrolls:  [0,  5, 15, 35, 38],
+  scrolls2: [0,  5, 15, 35, 38],
 };
 // Минимальный ранг для каждого уровня
 const REQ_RANK = {
-  flask:   [0, 1, 2, 3],
-  scrolls: [0, 0, 0, 0, 0],
+  flask:    [0, 1, 2, 3],
+  scrolls:  [0, 0, 0, 0, 0],
+  scrolls2: [0, 0, 0, 0, 0],
 };
 
 const ITEMS = [
@@ -1308,8 +1311,13 @@ const ITEMS = [
     levels: ['Нет', 'Фиолетовая', 'Красная', 'Оранжевая'],
     frames: [null, 'border_high', 'border_exclusive', 'border_special'],
     gameIds: [null, 'pirate_day_2015_flask_9', 'pirate_day_2015_flask_10', 'pirate_day_2015_flask_11'] },
+  { id: 'scrolls2', name: 'Серия пиратских свитков', note: 'накопительно',
+    imgs:   ['../icons/grimoire_flame.jpg', '../icons/grimoire_flame.jpg', '../icons/bottle_of_pain.jpg', '../icons/bottle_of_pain.jpg', '../icons/grimoire_flame.jpg'],
+    frames: [null, 'border_low', 'border_low', 'border_high', 'border_high'],
+    levels: ['Нет', 'Книга пиратских пыток', '+ Эссенция страданий', '+ Эссенция агонии', 'Книга истязаний ✓'],
+    gameIds: [null, 'pirate_day_2014_scroll_damage_dot_5_5_upgrade', 'pirate_day_2015_scroll_damage_dot_5_5_upgrade', 'pirate_day_2017_scroll_damage_dot_5_5_upgrade', 'pirate_day_2017_scroll_damage_dot_5_5_upgrade_all'] },
   { id: 'scrolls', name: 'Серия корсарских свитков', note: 'накопительно',
-    imgs:   [null, '../icons/grimoire_flame.jpg', '../icons/bottle_of_pain.jpg', '../icons/bottle_of_pain.jpg', '../icons/grimoire_flame.jpg'],
+    imgs:   ['../icons/grimoire_flame.jpg', '../icons/grimoire_flame.jpg', '../icons/bottle_of_pain.jpg', '../icons/bottle_of_pain.jpg', '../icons/grimoire_flame.jpg'],
     frames: [null, 'border_none', 'border_none', 'border_medium', 'border_medium'],
     levels: ['Нет', 'Книга корсарских пыток', '+ Эссенция страданий', '+ Эссенция агонии', 'Книга истязаний ✓'],
     gameIds: [null, 'pirate_day_2014_scroll_damage_dot_2_1_upgrade', 'pirate_day_2015_scroll_damage_dot_2_1_upgrade', 'pirate_day_2017_scroll_damage_dot_2_1_upgrade', 'pirate_day_2017_scroll_damage_dot_2_1_upgrade_all'] },
@@ -1609,7 +1617,8 @@ function renderItemsGuide() {
     return `${fmtR(r)} рубинов`;
   }
 
-  const scrollCfg = ITEMS.find(c=>c.id==='scrolls');
+  const scrollCfg  = ITEMS.find(c=>c.id==='scrolls');
+  const scroll2Cfg = ITEMS.find(c=>c.id==='scrolls2');
   const GUIDE_ITEMS = [
     { name:'Пиратская фляжка', note:'вечная', cfg: ITEMS.find(c=>c.id==='flask'),
       steps:[
@@ -1617,6 +1626,17 @@ function renderItemsGuide() {
         { lv:2, label:'Красная',    cost:6707, costR:0,  rank:2, ingr:ingrIco('../icons/pirate_day_broken.png','border_exclusive','Легендарный обломок вражеских доспехов', 'pirate_day_2024_flask_box') },
         { lv:3, label:'Оранжевая',  cost:9222, costR:0,  rank:3, ingr:ingrIco('../icons/pirate_day_broken.png','border_special',  'Эпический обломок вражеских доспехов',   'pirate_day_2025_flask_box') },
       ]},
+    { name:'Серия пиратских свитков', note:'4 предмета → квест → Книга истязаний', cfg: scroll2Cfg,
+      steps:[
+        { lv:1, label:'Книга пиратских пыток',  cost:2096, costR:0, rAlt:5,  rank:0, ingr:null },
+        { lv:2, label:'Эссенция страданий',      cost:4192, costR:0, rAlt:10, rank:0, ingr:null },
+        { lv:3, label:'Эссенция агонии',         cost:8384, costR:0, rAlt:20, rank:0, ingr:null },
+        { lv:4, label:'Костюм резиновой утки',   cost:1258, costR:0, rAlt:3,  rank:0, ingr:null,
+          overrideImg:'../icons/rubber_duck_dress.jpg', overrideFrame:'border_high', overrideGameId:'pirate_day_beach_3' },
+      ],
+      result:{ label:'Пиратская книга истязаний', note:'(сдать по квесту)',
+               img:'../icons/grimoire_flame.jpg', frame:'border_high',
+               gameId:'pirate_day_2017_scroll_damage_dot_5_5_upgrade_all' } },
     { name:'Серия корсарских свитков', note:'4 предмета → квест → Книга истязаний', cfg: scrollCfg,
       steps:[
         { lv:1, label:'Книга корсарских пыток',    cost:2096, costR:0, rAlt:5,  rank:0, ingr:null },
