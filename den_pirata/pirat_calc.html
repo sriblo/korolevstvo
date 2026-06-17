@@ -1097,7 +1097,8 @@ const DB_STAT_LABELS = [
   { key:'hit_chance',                                  label:'Шанс попасть',           pct:true },
   { key:'attack_spell',                                label:'Маг. атака' },
   { key:'magic_resist',                                label:'Защита от магии',        pct:true },
-  { key:'damage',                                       label:'Периодический урон (DoT)' },
+  { key:'damage',                        label:'Периодический урон (DoT)' },
+  { key:'change_chance_critical_attack', label:'Шанс крит. удара',         pct:true },
   { key:'change_heal_sent_percent',                    label:'Эффективность лечения',  pct:true },
   { key:'change_health_regeneration_speed',            label:'Восстановление жизни вне боя' },
   { key:'mana_conservation',                           label:'Уменьш. расхода маны',   pct:true },
@@ -1288,17 +1289,17 @@ const ZAST_PTS = 5000;
 // Накопительные цены в монетах (от нуля)
 const CUM = {
   flask:   [0, 5030, 11737, 20959],
-  scrolls: [0, 2096, 6288,  14672],
+  scrolls: [0, 2096, 6288,  14672, 15930],
 };
 // Накопительные цены в рубинах (от нуля)
 const CUM_R = {
   flask:   [0, 12, 28, 50],
-  scrolls: [0,  5, 15, 35],
+  scrolls: [0,  5, 15, 35, 38],
 };
 // Минимальный ранг для каждого уровня
 const REQ_RANK = {
   flask:   [0, 1, 2, 3],
-  scrolls: [0, 0, 0, 0],
+  scrolls: [0, 0, 0, 0, 0],
 };
 
 const ITEMS = [
@@ -1308,10 +1309,10 @@ const ITEMS = [
     frames: [null, 'border_high', 'border_exclusive', 'border_special'],
     gameIds: [null, 'pirate_day_2015_flask_9', 'pirate_day_2015_flask_10', 'pirate_day_2015_flask_11'] },
   { id: 'scrolls', name: 'Серия корсарских свитков', note: 'накопительно',
-    imgs: [null, '../icons/pirate_day_2014_pain_scroll.jpg', '../icons/pirate_day_2015_pain_scroll.jpg', '../icons/pirate_day_2015_pain_scroll.jpg'],
-    frames: [null, 'border_none', 'border_none', 'border_medium'],
-    levels: ['Нет', 'Книга корсарских пыток', '+ Эссенция страданий', 'Книга истязаний ✓'],
-    gameIds: [null, 'pirate_day_2014_scroll_damage_dot_2_1_upgrade', 'pirate_day_2015_scroll_damage_dot_2_1_upgrade', 'pirate_day_2017_scroll_damage_dot_2_1_upgrade_all'] },
+    imgs:   [null, '../icons/pirate_day_2014_pain_scroll.jpg', '../icons/pirate_day_2015_pain_scroll.jpg', '../icons/pirate_day_2015_pain_scroll.jpg', '../icons/pirate_day_2015_pain_scroll.jpg'],
+    frames: [null, 'border_none', 'border_none', 'border_medium', 'border_medium'],
+    levels: ['Нет', 'Книга корсарских пыток', '+ Эссенция страданий', '+ Эссенция агонии', 'Книга истязаний ✓'],
+    gameIds: [null, 'pirate_day_2014_scroll_damage_dot_2_1_upgrade', 'pirate_day_2015_scroll_damage_dot_2_1_upgrade', 'pirate_day_2017_scroll_damage_dot_2_1_upgrade', 'pirate_day_2017_scroll_damage_dot_2_1_upgrade_all'] },
 ];
 
 function gico(cfg, lv) {
@@ -1616,15 +1617,20 @@ function renderItemsGuide() {
         { lv:2, label:'Красная',    cost:6707, costR:0,  rank:2, ingr:ingrIco('../icons/pirate_day_broken.png','border_exclusive','Легендарный обломок вражеских доспехов', 'pirate_day_2024_flask_box') },
         { lv:3, label:'Оранжевая',  cost:9222, costR:0,  rank:3, ingr:ingrIco('../icons/pirate_day_broken.png','border_special',  'Эпический обломок вражеских доспехов',   'pirate_day_2025_flask_box') },
       ]},
-    { name:'Серия корсарских свитков', note:'можно купить отдельно или собрать книгу', cfg: scrollCfg,
+    { name:'Серия корсарских свитков', note:'4 предмета → квест → Книга истязаний', cfg: scrollCfg,
       steps:[
-        { lv:1, label:'Книга корсарских пыток', cost:2096, costR:0, rAlt:5,  rank:0, ingr:null },
-        { lv:2, label:'Эссенция страданий',     cost:4192, costR:0, rAlt:10, rank:0, ingr:null },
-        { lv:3, label:'Книга истязаний',         cost:8384, costR:0, rAlt:20, rank:0, ingr:null },
-      ]},
+        { lv:1, label:'Книга корсарских пыток',    cost:2096, costR:0, rAlt:5,  rank:0, ingr:null },
+        { lv:2, label:'Эссенция страданий',        cost:4192, costR:0, rAlt:10, rank:0, ingr:null },
+        { lv:3, label:'Эссенция агонии',           cost:8384, costR:0, rAlt:20, rank:0, ingr:null },
+        { lv:4, label:'Костюм резиновой утки',     cost:1258, costR:0, rAlt:3,  rank:0, ingr:null,
+          overrideImg:'../icons/rubber_duck_dress.jpg', overrideFrame:'border_high', overrideGameId:'pirate_day_beach_3' },
+      ],
+      result:{ label:'Книга истязаний', note:'(сдать по квесту)',
+               img:'../icons/pirate_day_2015_pain_scroll.jpg', frame:'border_medium',
+               gameId:'pirate_day_2017_scroll_damage_dot_2_1_upgrade_all' } },
   ];
 
-  const html = GUIDE_ITEMS.map(({name, note, cfg, steps}) => {
+  const html = GUIDE_ITEMS.map(({name, note, cfg, steps, result}) => {
     if (!cfg) return '';
     const parts = [];
     steps.forEach((s, i) => {
@@ -1638,20 +1644,38 @@ function renderItemsGuide() {
       }
       const rankHtml = s.rank != null
         ? `<span class="iup-step-rank rank-badge ${RANK_BADGES[s.rank]}" style="font-size:9px">Ранг ${s.rank}</span>` : '';
+      const stepGicoCfg = s.overrideImg
+        ? { imgs:[null, s.overrideImg], frames:[null, s.overrideFrame], gameIds:[null, s.overrideGameId] }
+        : cfg;
+      const stepGicoLv = s.overrideImg ? 1 : s.lv;
       parts.push(`<div class="iup-step">
-        <div class="iup-step-ico">${gico(cfg, s.lv)}</div>
+        <div class="iup-step-ico">${gico(stepGicoCfg, stepGicoLv)}</div>
         <div class="iup-step-name">${s.label}</div>
         <div class="iup-step-cost">${costLabel(s.cost, s.costR, s.rAlt)}</div>
         ${rankHtml}
       </div>`);
     });
 
+    const resultHtml = result
+      ? (() => {
+          const ttR = result.gameId
+            ? ` onmouseenter="ttShowByGameId('${result.gameId}','${result.img}',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"` : '';
+          const frR = result.frame ? `<img class="fr" src="../frames/${result.frame}.png">` : '';
+          const icoR = `<div class="gico" data-q="2"${ttR}><img class="base" src="${result.img}">${frR}</div>`;
+          return `<div class="iup-arrow-sep" style="color:var(--gold);font-weight:600">→</div>
+            <div class="iup-step">
+              <div class="iup-step-ico">${icoR}</div>
+              <div class="iup-step-name" style="color:var(--gold-l)">${result.label}</div>
+              <div class="iup-step-cost" style="color:var(--txt3)">${result.note || ''}</div>
+            </div>`;
+        })()
+      : '';
     return `<div class="iup-row">
       <div class="iup-row-header">
         <span class="iup-name">${name}</span>
         ${note ? `<span class="iup-note">${note}</span>` : ''}
       </div>
-      <div class="iup-chain">${parts.join('')}</div>
+      <div class="iup-chain">${parts.join('')}${resultHtml}</div>
     </div>`;
   }).join('');
 
