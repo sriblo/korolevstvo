@@ -1372,7 +1372,7 @@ const ITEMS = [
     frames: [null, 'border_exclusive'],
     levels: ['Нет', 'Проклятый компас'],
     gameIds: [null, 'pirate_day_2013_map_recipe'] },
-  { id: 'stone', name: 'Камень Путешествий', note: 'вечный',
+  { id: 'stone', name: 'Камень Путешествий', note: '90 дней',
     img:    '../icons/traveler_stone.jpg',
     frames: [null, 'border_exclusive'],
     levels: ['Нет', 'Камень Путешествий'],
@@ -1794,7 +1794,7 @@ function renderItemsGuide() {
       steps:[
         { lv:1, label:'Проклятый компас', cost:4192, costR:0, rAlt:10, rank:4, ingr:null },
       ]},
-    { name:'Камень Путешествий', note:'вечный', cfg: ITEMS.find(c=>c.id==='stone'),
+    { name:'Камень Путешествий', note:'90 дней', cfg: ITEMS.find(c=>c.id==='stone'),
       steps:[
         { lv:1, label:'Камень Путешествий', cost:1, costR:0, rAlt:null, rank:4, ingr:null },
       ]},
@@ -1812,7 +1812,7 @@ function renderItemsGuide() {
       }
       if (s.ingr) {
         ico.push(`<div class="iup-chain-cell ingr">${s.ingr.ico}</div>`);
-        nam.push(`<div class="iup-chain-cell ingr"></div>`);
+        nam.push(`<div class="iup-chain-cell ingr">${s.ingr.name}</div>`);
         cst.push(`<div class="iup-chain-cell ingr"></div>`);
         rnk.push(`<div class="iup-chain-cell ingr"></div>`);
         ico.push(`<div class="iup-chain-sep">›</div>`);
