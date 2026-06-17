@@ -837,7 +837,7 @@ select.on {
       </div>
 
       <div class="irow">
-        <div class="ico-pill"><img src="../icons/pirate_coin_small.png" style="width:18px;height:18px;image-rendering:pixelated"></div>
+        <div class="ico-pill"><img src="../icons/pirate_coin_small.png"></div>
         <div class="ilbl">Монет сейчас</div>
         <span class="tip" data-tip="Сколько монет островного племени сейчас&#10;в твоём кошельке в игре.&#10;&#10;Именно столько — не считая то что&#10;ещё заработаешь за оставшиеся дни.&#10;&#10;Если ещё не забрал разовый квест&#10;«Скромный подарок» (+1001 монета)&#10;— не включай их сюда.">?</span>
         <div class="nf">
@@ -866,7 +866,7 @@ select.on {
       </div>
 
       <div class="irow irow-rep">
-        <div class="ico-pill em">🏴‍☠️</div>
+        <div class="ico-pill em">🏆</div>
         <div class="ilbl">Текущий ранг</div>
         <select class="rank-sel" id="have-rank" onchange="calc()">
           <option value="0">Сухопутная крыса</option>
@@ -1097,6 +1097,7 @@ const DB_STAT_LABELS = [
   { key:'hit_chance',                                  label:'Шанс попасть',           pct:true },
   { key:'attack_spell',                                label:'Маг. атака' },
   { key:'magic_resist',                                label:'Защита от магии',        pct:true },
+  { key:'damage',                                       label:'Периодический урон (DoT)' },
   { key:'change_heal_sent_percent',                    label:'Эффективность лечения',  pct:true },
   { key:'change_health_regeneration_speed',            label:'Восстановление жизни вне боя' },
   { key:'mana_conservation',                           label:'Уменьш. расхода маны',   pct:true },
@@ -1138,6 +1139,10 @@ const DB_STAT_SKIP = new Set([
   'teleport_realm','teleport_raelm_rus','target_class',
   'use_in_location','move_speed','type','permanent','reusable',
   'owner_alive','not_to_openworld','repeat','quest','text',
+  'item_1','item_2','item_3','duration',
+  'pirate_day_2014_scroll_damage_dot_2_1',
+  'pirate_day_2015_scroll_damage_dot_2_1',
+  'pirate_day_2017_scroll_damage_dot_2_1',
 ]);
 function dbStatRows(stats) {
   if (!stats) return '';
@@ -1161,16 +1166,18 @@ function dbStatRows(stats) {
   return rows.join('');
 }
 const TOKEN_ICO = {
-  dniwe_token:     '../icons/pearl_small.png',
-  pirate_token:    '../icons/pirate_coin_small.png',
-  event_token:     '../icons/currency_tailen_event_small.png',
-  st_patric_token: '../icons/lucky_coin.jpg',
+  dniwe_token:          '../icons/pearl_small.png',
+  pirate_token:         '../icons/pirate_coin_small.png',
+  pirate_day_2013_token:'../icons/pirate_coin_small.png',
+  event_token:          '../icons/currency_tailen_event_small.png',
+  st_patric_token:      '../icons/lucky_coin.jpg',
 };
 const TOKEN_LABEL = {
-  dniwe_token:     'Жемчужина',
-  pirate_token:    'Монета островного племени',
-  event_token:     'Праздничный тайлен',
-  st_patric_token: 'Монета Лепреконов',
+  dniwe_token:          'Жемчужина',
+  pirate_token:         'Монета островного племени',
+  pirate_day_2013_token:'Монета островного племени',
+  event_token:          'Праздничный тайлен',
+  st_patric_token:      'Монета Лепреконов',
 };
 
 const Q_COLOR = { white:'#bbb', green:'#8acc60', blue:'#78aae0', purple:'#b888ee', red:'#ee5050', orange:'#f0a040' };
@@ -1280,15 +1287,18 @@ const ZAST_PTS = 5000;
 
 // Накопительные цены в монетах (от нуля)
 const CUM = {
-  flask: [0, 5030, 11737, 20959],
+  flask:   [0, 5030, 11737, 20959],
+  scrolls: [0, 2096, 6288,  14672],
 };
 // Накопительные цены в рубинах (от нуля)
 const CUM_R = {
-  flask: [0, 12, 28, 50],
+  flask:   [0, 12, 28, 50],
+  scrolls: [0,  5, 15, 35],
 };
 // Минимальный ранг для каждого уровня
 const REQ_RANK = {
-  flask: [0, 1, 2, 3],
+  flask:   [0, 1, 2, 3],
+  scrolls: [0, 0, 0, 0],
 };
 
 const ITEMS = [
@@ -1296,7 +1306,12 @@ const ITEMS = [
     img: '../icons/pirate_flask.jpg',
     levels: ['Нет', 'Фиолетовая', 'Красная', 'Оранжевая'],
     frames: [null, 'border_high', 'border_exclusive', 'border_special'],
-    gameIds: [null, null, null, null] },
+    gameIds: [null, 'pirate_day_2015_flask_9', 'pirate_day_2015_flask_10', 'pirate_day_2015_flask_11'] },
+  { id: 'scrolls', name: 'Серия корсарских свитков', note: 'накопительно',
+    imgs: [null, '../icons/pirate_day_2014_pain_scroll.jpg', '../icons/pirate_day_2015_pain_scroll.jpg', '../icons/pirate_day_2015_pain_scroll.jpg'],
+    frames: [null, 'border_none', 'border_none', 'border_medium'],
+    levels: ['Нет', 'Книга корсарских пыток', '+ Эссенция страданий', 'Книга истязаний ✓'],
+    gameIds: [null, 'pirate_day_2014_scroll_damage_dot_2_1_upgrade', 'pirate_day_2015_scroll_damage_dot_2_1_upgrade', 'pirate_day_2017_scroll_damage_dot_2_1_upgrade_all'] },
 ];
 
 function gico(cfg, lv) {
@@ -1587,17 +1602,25 @@ function renderItemsGuide() {
     return { ico: gico({ img, frames:[null, frame], gameId }, 1), name };
   }
 
-  function costLabel(t, r) {
+  function costLabel(t, r, rAlt) {
+    if (rAlt != null && t > 0) return `${fmt(t)} монет / ${fmtR(rAlt)} руб.`;
     if (t > 0) return `${fmt(t)} монет`;
     return `${fmtR(r)} рубинов`;
   }
 
+  const scrollCfg = ITEMS.find(c=>c.id==='scrolls');
   const GUIDE_ITEMS = [
     { name:'Пиратская фляжка', note:'вечная', cfg: ITEMS.find(c=>c.id==='flask'),
       steps:[
         { lv:1, label:'Фиолетовая', cost:5030, costR:0,  rank:1, ingr:null },
-        { lv:2, label:'Красная',    cost:6707, costR:0,  rank:2, ingr:ingrIco('../icons/pirate_day_broken.png','border_exclusive','Легендарный обломок вражеских доспехов', null) },
-        { lv:3, label:'Оранжевая',  cost:9222, costR:0,  rank:3, ingr:ingrIco('../icons/pirate_day_broken.png','border_special',  'Эпический обломок вражеских доспехов',   null) },
+        { lv:2, label:'Красная',    cost:6707, costR:0,  rank:2, ingr:ingrIco('../icons/pirate_day_broken.png','border_exclusive','Легендарный обломок вражеских доспехов', 'pirate_day_2024_flask_box') },
+        { lv:3, label:'Оранжевая',  cost:9222, costR:0,  rank:3, ingr:ingrIco('../icons/pirate_day_broken.png','border_special',  'Эпический обломок вражеских доспехов',   'pirate_day_2025_flask_box') },
+      ]},
+    { name:'Серия корсарских свитков', note:'можно купить отдельно или собрать книгу', cfg: scrollCfg,
+      steps:[
+        { lv:1, label:'Книга корсарских пыток', cost:2096, costR:0, rAlt:5,  rank:0, ingr:null },
+        { lv:2, label:'Эссенция страданий',     cost:4192, costR:0, rAlt:10, rank:0, ingr:null },
+        { lv:3, label:'Книга истязаний',         cost:8384, costR:0, rAlt:20, rank:0, ingr:null },
       ]},
   ];
 
@@ -1618,7 +1641,7 @@ function renderItemsGuide() {
       parts.push(`<div class="iup-step">
         <div class="iup-step-ico">${gico(cfg, s.lv)}</div>
         <div class="iup-step-name">${s.label}</div>
-        <div class="iup-step-cost">${costLabel(s.cost, s.costR)}</div>
+        <div class="iup-step-cost">${costLabel(s.cost, s.costR, s.rAlt)}</div>
         ${rankHtml}
       </div>`);
     });
