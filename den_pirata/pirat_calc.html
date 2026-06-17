@@ -1293,6 +1293,8 @@ const CUM = {
   scrolls2: [0, 2096, 6288,  14672],
   parrot:   [0, 1258, 4613,   9645, 18029],
   duck:     [0, 1258],
+  broken:   [0, 6707],
+  compass:  [0, 4192],
   stone:    [0, 1],
 };
 // Накопительные цены в рубинах (от нуля)
@@ -1624,7 +1626,7 @@ function calc() {
     if (rc.nReg > 0) {
       lines.push(`<div class="sline">
         ${icoDust}
-        <div class="sline-body">Купи <span class="sn">${rc.nReg} × Бочонок рома</span> — по <span class="sn">0,23 рубина/шт.</span> = <span class="sr">${fmtR(rc.nReg*DUST_R)} рубинов</span> → <span class="sg">+${fmt(rc.nReg*DUST_PTS)} очков</span> репутации.</div>
+        <div class="sline-body">Купи <span class="sn">${rc.nReg} × Бочонок рома</span> — по <span class="sn">${fmtR(DUST_R)} рубина/шт.</span> = <span class="sr">${fmtR(rc.nReg*DUST_R)} рубинов</span> → <span class="sg">+${fmt(rc.nReg*DUST_PTS)} очков</span> репутации.</div>
       </div>`);
     }
     if (leftover > 0) {
