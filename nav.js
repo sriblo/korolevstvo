@@ -8,10 +8,11 @@
   var pathname = window.location.pathname;
   var page = pathname.split('/').pop() || 'index.html';
 
-  var isHome   = (page === 'index.html' || page === '') && pathname.indexOf('/zov_glubin/') === -1 && pathname.indexOf('/leprecon/') === -1;
+  var isHome   = (page === 'index.html' || page === '') && pathname.indexOf('/zov_glubin/') === -1 && pathname.indexOf('/leprecon/') === -1 && pathname.indexOf('/den_pirata/') === -1;
   var isHmeli  = pathname.indexOf('/leprecon/') !== -1;
   var isGlubin = pathname.indexOf('/zov_glubin/') !== -1;
-  var isCalc   = isHmeli || isGlubin;
+  var isPirate = pathname.indexOf('/den_pirata/') !== -1;
+  var isCalc   = isHmeli || isGlubin || isPirate;
   var isItems  = page === 'items_base.html';
 
   // ── CSS ────────────────────────────────────────────────────────────────────
@@ -114,7 +115,7 @@
         '<span class="dd-item soon">Месяц пробуждения цветов</span>' +
         '<a class="dd-item ready' + (isHmeli  ? ' on' : '') + '" href="' + _base + 'leprecon/hmeli_calc.html">Месяц цветущего хмеля</a>' +
         '<a class="dd-item ready' + (isGlubin ? ' on' : '') + '" href="' + _base + 'zov_glubin/glubin_calc.html">Зов Глубин</a>' +
-        '<span class="dd-item soon">День Пирата</span>' +
+        '<a class="dd-item ready' + (isPirate ? ' on' : '') + '" href="' + _base + 'den_pirata/pirat_calc.html">День Пирата</a>' +
         '<span class="dd-item soon">Экспедиция. Ледяные Острова</span>' +
         '<span class="dd-item soon">Гоблинский Рай</span>' +
         '<span class="dd-item soon">Небесные Драконы</span>' +
@@ -178,6 +179,7 @@
       '<div class="nav-mb-sec">Калькуляторы</div>' +
       '<a class="' + mbLinkClass(isHmeli, false) + '" href="' + _base + 'leprecon/hmeli_calc.html">Месяц цветущего хмеля</a>' +
       '<a class="' + mbLinkClass(isGlubin, false) + '" href="' + _base + 'zov_glubin/glubin_calc.html">Зов Глубин</a>' +
+      '<a class="' + mbLinkClass(isPirate, false) + '" href="' + _base + 'den_pirata/pirat_calc.html">День Пирата</a>' +
       '<a class="' + mbLinkClass(page === 'loc_calc.html', false) + '" href="' + _base + 'location_calc/loc_calc.html">Загруженность копий</a>' +
       '<a class="' + mbLinkClass(page === 'rep_calc.html', false) + '" href="' + _base + 'reputation_calc/rep_calc.html">Прокачка репутаций</a>' +
       '<a class="' + mbLinkClass(page === 'stats_calc.html', false) + '" href="' + _base + 'stats_calc.html">Характеристики</a>' +
@@ -197,6 +199,7 @@
     { title: 'Калькулятор характеристик', desc: 'Расчёт характеристик, брони и урона персонажа', url: 'stats_calc.html', tags: 'статы характеристики броня урон атака защита резисты' },
     { title: 'Зов Глубин', desc: 'Ивент май 2026 — жемчужины, репутация, апгрейды', url: 'zov_glubin/glubin_calc.html', tags: 'зов глубин ивент жемчужины репутация апгрейд май' },
     { title: 'Месяц цветущего хмеля', desc: 'Ивент — хмель, золотой клевер, монеты леприкона', url: 'leprecon/hmeli_calc.html', tags: 'хмель леприкон клевер ивент монеты' },
+    { title: 'День Пирата', desc: 'Ивент июнь 2026 — монеты, репутация Корсар, апгрейды фляжки', url: 'den_pirata/pirat_calc.html', tags: 'пират корсар монеты ивент июнь фляжка репутация' },
     { title: 'Загруженность копий', desc: 'Оптимальные копии локаций для фарма', url: 'location_calc/loc_calc.html', tags: 'локации копии загруженность фарм подземелья' },
     { title: 'Прокачка репутаций', desc: 'Калькулятор репутаций всех фракций Королевства', url: 'reputation_calc/rep_calc.html', tags: 'репутации фракции прокачка гвардия гладиатор орден завоеватель' },
   ];
