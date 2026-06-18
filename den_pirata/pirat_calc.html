@@ -1894,6 +1894,28 @@ renderItems();
 renderPatents();
 renderItemsGuide();
 calc();
+
+// Sync horizontal scroll across all iup-rows so columns stay aligned on mobile
+(function() {
+  function syncScroll(rows, source) {
+    rows.forEach(r => { if (r !== source) r.scrollLeft = source.scrollLeft; });
+  }
+  function attachSync() {
+    const guideCards = document.querySelectorAll('.guide-card');
+    guideCards.forEach(card => {
+      const rows = card.querySelectorAll('.iup-row');
+      if (rows.length < 2) return;
+      rows.forEach(row => {
+        row.addEventListener('scroll', () => syncScroll(rows, row), {passive: true});
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attachSync);
+  } else {
+    attachSync();
+  }
+})();
 </script>
 </body>
 </html>
