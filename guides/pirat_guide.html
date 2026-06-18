@@ -91,6 +91,20 @@ a{color:inherit;text-decoration:none}
 .chain-arrow span{flex-shrink:0}
 
 .todo{color:var(--gold);background:rgba(var(--gold-tint),.1);border:1px dashed rgba(var(--gold-tint),.35);border-radius:4px;padding:1px 8px;font-size:13px;font-family:var(--sans);letter-spacing:.04em;white-space:nowrap}
+.cico{height:13px;vertical-align:middle;display:inline;image-rendering:pixelated}
+
+/* Location maps */
+.loc-maps{display:flex;gap:14px;margin:0 0 28px;flex-wrap:wrap}
+.loc-map-item{flex:1;min-width:240px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.loc-map-item img{display:block;width:100%;height:auto}
+.loc-map-label{padding:7px 14px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);background:var(--bg2)}
+
+/* Rank badges */
+.rbadge{display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;font-family:var(--sans);letter-spacing:.06em;padding:3px 9px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:var(--txt2)}
+.rb1{background:rgba(138,184,96,.12);color:var(--green);border-color:rgba(138,184,96,.25)}
+.rb2{background:rgba(90,155,212,.12);color:var(--r-medium);border-color:rgba(90,155,212,.25)}
+.rb3{background:rgba(var(--gold-tint),.14);color:var(--gold-l);border-color:var(--line2)}
+.rb4{background:rgba(212,106,106,.14);color:var(--r-exclusive);border-color:rgba(212,106,106,.3)}
 
 .qtable{width:100%;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg2);margin:0 0 24px;border-collapse:separate;border-spacing:0}
 .qtable th{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3);font-weight:700;text-align:left;padding:13px 18px;background:var(--bg3);border-bottom:1px solid var(--line)}
@@ -132,11 +146,11 @@ a{color:inherit;text-decoration:none}
 .tip-sep{border:none;border-top:1px solid var(--line);margin:8px 0}
 .tip-action{font-size:12px;line-height:1.55;color:var(--txt2);margin-top:8px}
 
-/* Numbered list */
-.num-list{list-style:none;padding:0;counter-reset:nl;margin:0 0 24px}
-.num-list li{counter-increment:nl;display:flex;align-items:flex-start;gap:14px;font-family:var(--serif);font-size:17px;line-height:1.65;color:var(--txt2);margin-bottom:12px}
-.num-list li::before{content:counter(nl);flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--line2);color:var(--txt);font-family:var(--sans);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:3px}
-.num-list li b{color:var(--txt)}
+/* Plain list */
+.plain-list{list-style:none;padding:0;margin:0 0 24px}
+.plain-list li{position:relative;padding-left:16px;font-family:var(--serif);font-size:17px;line-height:1.65;color:var(--txt2);margin-bottom:10px}
+.plain-list li::before{content:'—';position:absolute;left:0;color:var(--txt3)}
+.plain-list li b{color:var(--txt)}
 
 /* Calc card */
 .calc-card{display:flex;align-items:center;justify-content:space-between;gap:20px;background:var(--bg2);border:1px solid var(--line2);border-left:3px solid var(--gold-d);border-radius:10px;padding:18px 22px;margin:0 0 20px;text-decoration:none;transition:border-color .12s,background .12s}
@@ -192,11 +206,12 @@ a{color:inherit;text-decoration:none}
   <div class="aside-k">Содержание</div>
   <nav class="toc" id="toc">
     <a href="#overview"><span class="ti">01</span>Обзор</a>
-    <a href="#quests"><span class="ti">02</span>Квесты</a>
-    <a href="#flask"><span class="ti">03</span>Фляжка</a>
-    <a href="#parrots"><span class="ti">04</span>Попугаи</a>
-    <a href="#pain34"><span class="ti">05</span>Боль 3–4</a>
-    <a href="#pain5"><span class="ti">06</span>Боль 5+</a>
+    <a href="#rep"><span class="ti">02</span>Репутация</a>
+    <a href="#quests"><span class="ti">03</span>Квесты</a>
+    <a href="#flask"><span class="ti">04</span>Фляжка</a>
+    <a href="#parrots"><span class="ti">05</span>Попугаи</a>
+    <a href="#pain34"><span class="ti">06</span>Боль 3–4</a>
+    <a href="#pain5"><span class="ti">07</span>Боль 5+</a>
   </nav>
   <div class="aside-foot">
     <div class="progress"><span id="progbar"></span></div>
@@ -207,15 +222,15 @@ a{color:inherit;text-decoration:none}
 <article class="article">
 
 <!-- §01 ОБЗОР -->
-<h2 class="h2" id="overview"><span class="s">§ 01</span> Обзор ивента</h2>
+<h2 class="h2" id="overview">Обзор ивента</h2>
 <hr class="h2-rule">
-<ol class="num-list">
+<ul class="plain-list">
   <li><b>Пиратская фляжка</b> — постоянный предмет экипировки.</li>
   <li><b>Попугай</b> — питомец, дающий «Советы» (баффы на прирост репутации).</li>
   <li><b>Усиления для Свитков боли</b> — Книги пыток, Эссенции страданий и агонии, которые навсегда апнут ваши свитки до Корсарских или Пиратских.</li>
   <li><b>Легендарное второе оружие</b> — временный предмет экипировки (не уступающий оружию Аррана), который добывается с помощью карт сокровищ и Проклятого компаса (актуально до 31 июля).</li>
   <li><b>Коллекция черных меток</b> — временный предмет (до 31 августа), меняющий облик персонажа на легендарного пирата и дающий баффы в PvP в обычных локациях и на Аренах.</li>
-</ol>
+</ul>
 <a class="calc-card" href="../den_pirata/pirat_calc.html">
   <div class="calc-card-l">
     <div class="calc-card-tag">Калькулятор</div>
@@ -225,8 +240,128 @@ a{color:inherit;text-decoration:none}
   <div class="calc-card-go">Открыть →</div>
 </a>
 
+<h3 class="h3">Порт-Флинн</h3>
+<p>Чтобы попасть в Порт-Флинн, поговорите с Пиратом-проводником в городе своей расы.</p>
+<div class="loc-maps">
+  <div class="loc-map-item">
+    <img src="../all_images/Port_flynn.png" alt="Карта Порт-Флинна">
+    <div class="loc-map-label">Порт-Флинн</div>
+  </div>
+  <div class="loc-map-item">
+    <img src="../all_images/Port_flynn2.png" alt="Карта Открытого моря">
+    <div class="loc-map-label">Открытое море</div>
+  </div>
+</div>
+
+<h3 class="h3">Как выйти в Открытое море</h3>
+<p>Чтобы пуститься в плавание, нужно приобрести корабль у Боцмана Рейнольдса, в Легендарной лавке или в Королевской лавке. Существует несколько видов кораблей, которые становятся доступны по мере того, как вы зарабатываете репутацию корсара.</p>
+
+<h3 class="h3">Корабли</h3>
+<p>Корабли можно купить у Боцмана Рейнольдса или в королевской и легендарной лавках.</p>
+
+<p style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);margin:20px 0 8px">Для людей</p>
+<div class="item-row" data-id="pirate_day_2013_drake_human">
+  <div class="gico sz-lg"><img class="base" src="../icons/drake_white_throne.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Дрэйк Белого Престола</span><span class="item-rar rar-none">Простое</span><span class="item-id">pirate_day_2013_drake_human</span></div>
+    <p class="item-desc">Покупается у Боцмана Рейнольдса за 1 медь.</p>
+  </div>
+</div>
+<div class="item-row" data-id="pirate_day_2013_battle_drake_human">
+  <div class="gico sz-lg"><img class="base" src="../icons/drake_white_throne.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Боевой Дрэйк Белого Престола</span><span class="item-rar rar-low">Обычное</span><span class="item-id">pirate_day_2013_battle_drake_human</span></div>
+    <p class="item-desc">1 258 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 3 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: <span class="todo">___</span>.</p>
+  </div>
+</div>
+<div class="item-row" data-id="pirate_day_2013_fregat_human">
+  <div class="gico sz-lg"><img class="base" src="../icons/frigate_white_throne.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Фрегат Белого Престола</span><span class="item-rar rar-medium">Редкое</span><span class="item-id">pirate_day_2013_fregat_human</span></div>
+    <p class="item-desc">2 097 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 5 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: <span class="todo">___</span>.</p>
+  </div>
+</div>
+<div class="item-row" data-id="pirate_day_2013_battle_fregat_human">
+  <div class="gico sz-lg"><img class="base" src="../icons/frigate_white_throne.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Боевой Фрегат Белого Престола</span><span class="item-rar rar-high">Героическое</span><span class="item-id">pirate_day_2013_battle_fregat_human</span></div>
+    <p class="item-desc">3 355 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 8 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: <span class="todo">___</span>.</p>
+  </div>
+</div>
+
+<p style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);margin:20px 0 8px">Для эльфов</p>
+<div class="item-row" data-id="pirate_day_2013_drake_elf">
+  <div class="gico sz-lg"><img class="base" src="../icons/drake_league_of_blood.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Дрэйк Лиги Крови</span><span class="item-rar rar-none">Простое</span><span class="item-id">pirate_day_2013_drake_elf</span></div>
+    <p class="item-desc">Покупается у Боцмана Рейнольдса за 1 медь.</p>
+  </div>
+</div>
+<div class="item-row" data-id="pirate_day_2013_battle_drake_elf">
+  <div class="gico sz-lg"><img class="base" src="../icons/drake_league_of_blood.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Боевой Дрэйк Лиги Крови</span><span class="item-rar rar-low">Обычное</span><span class="item-id">pirate_day_2013_battle_drake_elf</span></div>
+    <p class="item-desc">1 258 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 3 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: <span class="todo">___</span>.</p>
+  </div>
+</div>
+<div class="item-row" data-id="pirate_day_2013_fregat_elf">
+  <div class="gico sz-lg"><img class="base" src="../icons/frigate_league_of_blood.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Фрегат Лиги Крови</span><span class="item-rar rar-medium">Редкое</span><span class="item-id">pirate_day_2013_fregat_elf</span></div>
+    <p class="item-desc">2 097 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 5 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: <span class="todo">___</span>.</p>
+  </div>
+</div>
+<div class="item-row" data-id="pirate_day_2013_battle_fregat_elf">
+  <div class="gico sz-lg"><img class="base" src="../icons/frigate_league_of_blood.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Боевой Фрегат Лиги Крови</span><span class="item-rar rar-high">Героическое</span><span class="item-id">pirate_day_2013_battle_fregat_elf</span></div>
+    <p class="item-desc">3 355 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 8 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: <span class="todo">___</span>.</p>
+  </div>
+</div>
+
+<!-- РЕПУТАЦИЯ -->
+<h2 class="h2" id="rep">Репутация Корсара</h2>
+<hr class="h2-rule">
+<p>Игроки зарабатывают репутацию Корсара, покупая бочонки за рубины или за монеты, полученные в Порту-Флинн за выполнение заданий. За прокачанную репутацию они получают подарок на личную страницу.</p>
+<p>Репутация Корсара открывает доступ к покупке лучших кораблей, расходки и предметов.</p>
+
+<h3 class="h3">Ранги</h3>
+<table class="qtable">
+  <thead><tr><th>Ранг</th><th>Звание</th><th style="text-align:right">Требуемые очки</th></tr></thead>
+  <tbody>
+    <tr><td><span class="rbadge">0</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_pvp3_0.png" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Сухопутная крыса</span></div></td><td class="rew-r">0</td></tr>
+    <tr><td><span class="rbadge rb1">1</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_pvp3_1.png" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Речная крыса</span></div></td><td class="rew-r">8 000</td></tr>
+    <tr><td><span class="rbadge rb2">2</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_pvp3_2.png" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Абордажный пёс</span></div></td><td class="rew-r">19 000</td></tr>
+    <tr><td><span class="rbadge rb3">3</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_pvp3_3.jpg" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Морской волк</span></div></td><td class="rew-r">27 000</td></tr>
+    <tr><td><span class="rbadge rb4">4</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_pvp3_4.jpg" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Гроза кораблей</span></div></td><td class="rew-r">46 000</td></tr>
+  </tbody>
+</table>
+
+<h3 class="h3">Как прокачивать</h3>
+<div class="item-row" data-id="pirate_day_2013_repitem">
+  <div class="gico sz-lg"><img class="base" src="../icons/barrel_quest.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Бочонок рома</span><span class="item-rar rar-none">Простое</span><span class="item-id">pirate_day_2013_repitem</span></div>
+    <p class="item-desc">113 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> · +300 очков репутации Корсара</p>
+  </div>
+</div>
+<div class="item-row" data-id="pirate_day_2013_repitem_day">
+  <div class="gico sz-lg"><img class="base" src="../icons/barrel_quest.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Бочонок рома (×13)</span><span class="item-rar rar-none">Простое</span><span class="item-id">pirate_day_2013_repitem_day</span></div>
+    <p class="item-desc">1 469 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> · +3 900 очков репутации Корсара</p>
+  </div>
+</div>
+<div class="item-row" data-id="pirate_day_2013_repitem_pack">
+  <div class="gico sz-lg"><img class="base" src="../icons/barrel_quest.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Бочонок рома (скидка 40%)</span><span class="item-rar rar-low">Обычное</span><span class="item-id">pirate_day_2013_repitem_pack</span></div>
+    <p class="item-desc"><span class="todo">___</span> <img class="cico" src="../icons/currency_ruby_small.png" alt=""> · +5 000 очков репутации Корсара</p>
+  </div>
+</div>
+
 <!-- §02 КВЕСТЫ -->
-<h2 class="h2" id="quests"><span class="s">§ 02</span> <em>Квесты</em> и монеты</h2>
+<h2 class="h2" id="quests"><em>Квесты</em> и монеты</h2>
 <hr class="h2-rule">
 <table class="qtable">
   <thead><tr><th>Квест</th><th>Задание</th><th>Монеты</th></tr></thead>
@@ -243,7 +378,7 @@ a{color:inherit;text-decoration:none}
 </table>
 
 <!-- §03 ФЛЯЖКА -->
-<h2 class="h2" id="flask"><span class="s">§ 03</span> Пиратская <em>фляжка</em></h2>
+<h2 class="h2" id="flask">Пиратская <em>фляжка</em></h2>
 <hr class="h2-rule">
 <p>Мощный аксессуар с тремя уровнями качества. Каждый год ивента фляжка деградирует на один уровень. Элитную фляжку в текущем ивенте улучшить нельзя.</p>
 
@@ -251,7 +386,7 @@ a{color:inherit;text-decoration:none}
   <div class="gico sz-lg"><img class="base" src="../icons/pirate_flask.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Пиратская Фляжка</span><span class="item-rar rar-high">Героическое</span><span class="item-id">pirate_day_2015_flask_9</span></div>
-    <p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>.</p>
+    <p class="item-desc">Покупается за 5&nbsp;030 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 12 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Корсар.</p>
   </div>
 </div>
 <div class="chain-arrow"><span>улучшается через</span></div>
@@ -259,7 +394,7 @@ a{color:inherit;text-decoration:none}
   <div class="gico sz-lg"><img class="base" src="../icons/scrap_metal_quest.jpg" alt=""><img class="fr" src="../frames/border_exclusive.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Легендарный обломок вражеских доспехов</span><span class="item-rar rar-exclusive">Легендарное</span><span class="item-id">pirate_day_2024_flask_box</span></div>
-    <p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>.</p>
+    <p class="item-desc">Покупается за 6&nbsp;707 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 16 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: <span class="todo">___</span>.</p>
   </div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
@@ -274,7 +409,7 @@ a{color:inherit;text-decoration:none}
   <div class="gico sz-lg"><img class="base" src="../icons/scrap_metal_quest.jpg" alt=""><img class="fr" src="../frames/border_special.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Эпический обломок вражеских доспехов</span><span class="item-rar rar-special">Эпическое</span><span class="item-id">pirate_day_2025_flask_box</span></div>
-    <p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>.</p>
+    <p class="item-desc">Покупается за 9&nbsp;222 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 22 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: <span class="todo">___</span>.</p>
   </div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
@@ -286,7 +421,7 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <!-- §04 ПОПУГАИ -->
-<h2 class="h2" id="parrots"><span class="s">§ 04</span> <em>Попугаи</em></h2>
+<h2 class="h2" id="parrots"><em>Попугаи</em></h2>
 <hr class="h2-rule">
 <p>Попугаи дают советы — временные бафы на прокачку репутаций или боевые характеристики. Советы активируются орехами у торговца припасами в городе своей расы. Тип ореха определяет силу совета.</p>
 
@@ -386,7 +521,7 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <!-- §05 БОЛЬ 3-4 -->
-<h2 class="h2" id="pain34"><span class="s">§ 05</span> Боль для <em>3–4 уровня</em></h2>
+<h2 class="h2" id="pain34">Боль для <em>3–4 уровня</em></h2>
 <hr class="h2-rule">
 <p>Цепочка апгрейдов для персонажей 3 и 4 уровня.</p>
 
@@ -440,7 +575,7 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <!-- §06 БОЛЬ 5+ -->
-<h2 class="h2" id="pain5"><span class="s">§ 06</span> Боль для <em>5+ уровня</em></h2>
+<h2 class="h2" id="pain5">Боль для <em>5+ уровня</em></h2>
 <hr class="h2-rule">
 <p>Аналогичная цепочка для персонажей 5 уровня и выше.</p>
 
@@ -508,7 +643,15 @@ a{color:inherit;text-decoration:none}
   var IDX={}, LOCALE={}, dbReady=false;
   var QUAL_LABEL={white:'Обычное',green:'Необычное',blue:'Редкое',purple:'Героическое',orange:'Эпическое',red:'Легендарное'};
   var QUAL_COLOR={white:'var(--r-none)',green:'var(--r-low)',blue:'var(--r-medium)',purple:'var(--r-high)',orange:'var(--r-special)',red:'var(--r-exclusive)'};
-  var STAT_LABEL={max_health:'Здоровье',mana:'Мана',change_health_regeneration_speed:'Регенерация здоровья',change_absorb_critical:'Поглощение крита',change_damage_sent_percent:'Исходящий урон',change_damage_received_percent:'Входящий урон',attack:'Атака',defense:'Защита',health:'Здоровье',rep_received_percent:'Репутация',duration:'Длительность',damage_sent:'Исходящий урон',damage_received:'Входящий урон'};
+  var STAT_LABEL={
+    max_health:'Здоровье',max_mana:'Мана',mana:'Мана',attack:'Атака',defense:'Защита',health:'Здоровье',damage:'Урон',damage_dot:'Урон (DoT)',heal:'Лечение',heal_sent:'Исходящее лечение',reputation:'Очки репутации',
+    change_health_regeneration_speed:'Регенерация здоровья',change_absorb_critical:'Поглощение крита',change_damage_sent_percent:'Исходящий урон',change_damage_received_percent:'Входящий урон',change_damage_sent:'Исходящий урон',damage_sent:'Исходящий урон',damage_received:'Входящий урон',change_attack:'Атака',change_max_health:'Здоровье',change_chance_critical_attack:'Шанс крита',change_critical_attack_multiplier:'Урон крита',change_heal_sent_percent:'Исходящее лечение',heal_percent:'Лечение',move_speed:'Скорость',rep_received_percent:'Репутация',
+    pvp1:'Завоеватель',pvp1_percent:'Завоеватель',pvp1_received_percent:'Завоеватель (получ.)',pvp2:'Гладиатор',pvp2_percent:'Гладиатор',pvp2_received_percent:'Гладиатор (получ.)',pvp6:'Властитель земель',pvp6_percent:'Властитель земель',pvp6_received_percent:'Властитель земель (получ.)',
+    pve1:'Археолог',pve1_percent:'Археолог',pve1_received_percent:'Археолог (получ.)',pve2:'Ведьмак',pve2_percent:'Ведьмак',pve2_received_percent:'Ведьмак (получ.)',pve4:'Охотник на демонов',pve4_percent:'Охотник на демонов',pve4_received_percent:'Охотник на демонов (получ.)',pve5:'Дрессировщик',pve5_percent:'Дрессировщик',pve5_received_percent:'Дрессировщик (получ.)',
+    rep17:'Экзорцист',rep17_percent:'Экзорцист',rep17_received_percent:'Экзорцист (получ.)',rep19:'Чародей',rep19_percent:'Чародей',rep19_received_percent:'Чародей (получ.)',rep21:'Королевская Гвардия',rep21_percent:'Королевская Гвардия',rep21_received_percent:'Королевская Гвардия (получ.)'
+  };
+  var STAT_PCT={change_health_regeneration_speed:1,change_absorb_critical:1,change_damage_sent_percent:1,change_damage_received_percent:1,change_damage_sent:1,damage_sent:1,damage_received:1,change_attack:1,change_max_health:1,change_chance_critical_attack:1,change_critical_attack_multiplier:1,change_heal_sent_percent:1,heal_percent:1,move_speed:1,rep_received_percent:1,pvp1_percent:1,pvp1_received_percent:1,pvp2_percent:1,pvp2_received_percent:1,pvp6_percent:1,pvp6_received_percent:1,pve1_percent:1,pve1_received_percent:1,pve2_percent:1,pve2_received_percent:1,pve4_percent:1,pve4_received_percent:1,pve5_percent:1,pve5_received_percent:1,rep17_percent:1,rep17_received_percent:1,rep19_percent:1,rep19_received_percent:1,rep21_percent:1,rep21_received_percent:1};
+  var STAT_SKIP={skin:1,speech:1,target:1,ticket:1,owner_alive:1,speed:1,walk_speed:1,min_distance_to_target:1,max_distance_to_target:1,weapon2:1,item_1:1,item_2:1,item_3:1,item_4:1,item_5:1,item_6:1,item_7:1,item_8:1,item_useable:1,param_1:1,param_2:1,param_3:1,param_4:1,param_5:1,param_1_change:1,param_2_change:1,param_3_change:1,param_4_change:1,param_5_change:1};
 
   Promise.all([
     fetch('../db/buffs.json').then(function(r){return r.json()}),
@@ -527,8 +670,8 @@ a{color:inherit;text-decoration:none}
     var name=loc.name||id, qual=item.quality||'', stats=item.stats||{}, action=loc.action||'';
     var h='<div class="tip-name">'+name+'</div>';
     if(qual) h+='<span class="tip-rar" style="color:'+(QUAL_COLOR[qual]||'var(--txt3)')+'">'+( QUAL_LABEL[qual]||qual)+'</span>';
-    var skeys=Object.keys(stats).filter(function(k){return k!=='duration'});
-    skeys.forEach(function(k){var v=stats[k],lbl=STAT_LABEL[k]||k,val=v%1===0?v:Math.round(v*10)/10;h+='<div class="tip-stat"><span>'+lbl+'</span><b>'+val+'</b></div>'});
+    var skeys=Object.keys(stats).filter(function(k){return k!=='duration'&&!STAT_SKIP[k]});
+    skeys.forEach(function(k){var v=stats[k],lbl=STAT_LABEL[k]||k,val=v%1===0?v:Math.round(v*10)/10,sfx=STAT_PCT[k]?'%':'';h+='<div class="tip-stat"><span>'+lbl+'</span><b>'+val+sfx+'</b></div>';});
     if(stats.duration) h+='<div class="tip-stat"><span>Длительность</span><b>'+stats.duration+' дн.</b></div>';
     if(action){
       h+='<hr class="tip-sep">';
