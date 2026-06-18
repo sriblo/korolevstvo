@@ -8,171 +8,150 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --gold:#d4a843; --gold-l:#f5d878; --gold-d:#a07d2b; --gold-tint:212,168,67;
-    --bg:#0b0907; --bg2:#120e09; --bg3:#1a160f;
-    --line:rgba(var(--gold-tint),.09); --line2:rgba(var(--gold-tint),.18);
-    --txt:#ece4cf; --txt2:#a99775; --txt3:#6c5d44;
-    --green:#8ab860;
-    --r-none:#7d6f52; --r-low:#8ab860; --r-medium:#5a9bd4; --r-high:#a878d4; --r-special:#d4a843; --r-exclusive:#d46a6a;
-    --serif:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  html,body{background:var(--bg);color:var(--txt);font-family:var(--sans);font-size:14px;-webkit-font-smoothing:antialiased}
-  body{min-height:100vh;background:
-    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(var(--gold-tint),.14), transparent 60%),
-    radial-gradient(ellipse 50% 40% at 100% 5%, rgba(80,30,15,.18), transparent 60%),var(--bg)}
-  a{color:inherit;text-decoration:none}
+:root{
+  --gold:#d4a843;--gold-l:#f5d878;--gold-d:#a07d2b;--gold-tint:212,168,67;
+  --bg:#0b0907;--bg2:#120e09;--bg3:#1a160f;
+  --line:rgba(var(--gold-tint),.09);--line2:rgba(var(--gold-tint),.18);
+  --txt:#ece4cf;--txt2:#a99775;--txt3:#6c5d44;
+  --green:#8ab860;
+  --r-none:#7d6f52;--r-low:#8ab860;--r-medium:#5a9bd4;--r-high:#a878d4;--r-special:#d4a843;--r-exclusive:#d46a6a;
+  --serif:'Fraunces',Georgia,serif;--sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{background:var(--bg);color:var(--txt);font-family:var(--sans);font-size:14px;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;background:radial-gradient(ellipse 80% 50% at 20% -10%,rgba(var(--gold-tint),.14),transparent 60%),radial-gradient(ellipse 50% 40% at 100% 5%,rgba(80,30,15,.18),transparent 60%),var(--bg)}
+a{color:inherit;text-decoration:none}
 
-  /* ── Hero ── */
-  .hero{
-    position:relative;overflow:hidden;border-bottom:1px solid var(--line);
-    background:
-      linear-gradient(180deg,rgba(11,9,7,0) 0%,rgba(11,9,7,.5) 72%,var(--bg) 100%),
-      linear-gradient(90deg,rgba(11,9,7,.88) 0%,rgba(11,9,7,.55) 45%,rgba(11,9,7,.12) 100%),
-      url('../all_images/event_titles/pirate_day.jpg') center 30%/cover no-repeat,
-      var(--bg);
-  }
-  .hero::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.45;
-    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")}
-  .hero-in{max-width:1180px;margin:0 auto;padding:34px 40px 52px;position:relative;z-index:1}
-  .crumb{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--txt3);margin-bottom:32px;letter-spacing:.02em}
-  .crumb a{color:var(--txt2);transition:color .12s}.crumb a:hover{color:var(--gold-l)}.crumb .dot{opacity:.6}
-  .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;display:inline-flex;align-items:center;gap:10px;margin-bottom:20px}
-  .eyebrow::before{content:'';width:24px;height:1px;background:var(--gold)}
-  .h1{font-family:var(--serif);font-size:58px;line-height:1.03;font-weight:400;letter-spacing:-.025em;margin-bottom:20px;max-width:820px}
-  .h1 em{font-style:italic;color:var(--gold-l);font-weight:300}
-  .lede{font-family:var(--serif);font-size:19px;line-height:1.55;color:var(--txt2);max-width:660px}
-  .lede b{color:var(--txt)}
-  .hero-meta{margin-top:32px;display:flex;gap:30px;flex-wrap:wrap}
-  .hm{display:flex;flex-direction:column;gap:4px}
-  .hm-k{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt3);font-weight:600}
-  .hm-v{font-family:var(--serif);font-size:16px;color:var(--txt);font-weight:500;letter-spacing:-.01em}
-  .hm-v.live{color:var(--green);display:inline-flex;align-items:center;gap:7px}
-  .hm-v.live::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:p 2s ease-in-out infinite}
-  @keyframes p{50%{opacity:.4}}
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(11,9,7,0) 0%,rgba(11,9,7,.5) 72%,var(--bg) 100%),linear-gradient(90deg,rgba(11,9,7,.88) 0%,rgba(11,9,7,.55) 45%,rgba(11,9,7,.12) 100%),url('../all_images/event_titles/pirate_day.jpg') center 30%/cover no-repeat,var(--bg)}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.45;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")}
+.hero-in{max-width:1180px;margin:0 auto;padding:34px 40px 52px;position:relative;z-index:1}
+.crumb{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--txt3);margin-bottom:32px;letter-spacing:.02em}
+.crumb a{color:var(--txt2);transition:color .12s}.crumb a:hover{color:var(--gold-l)}.crumb .dot{opacity:.6}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;display:inline-flex;align-items:center;gap:10px;margin-bottom:20px}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--gold)}
+.h1{font-family:var(--serif);font-size:58px;line-height:1.03;font-weight:400;letter-spacing:-.025em;margin-bottom:20px;max-width:820px}
+.h1 em{font-style:italic;color:var(--gold-l);font-weight:300}
+.lede{font-family:var(--serif);font-size:19px;line-height:1.55;color:var(--txt2);max-width:660px}
+.lede b{color:var(--txt)}
+.hero-meta{margin-top:32px;display:flex;gap:30px;flex-wrap:wrap}
+.hm{display:flex;flex-direction:column;gap:4px}
+.hm-k{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt3);font-weight:600}
+.hm-v{font-family:var(--serif);font-size:16px;color:var(--txt);font-weight:500;letter-spacing:-.01em}
+.hm-v.live{color:var(--green);display:inline-flex;align-items:center;gap:7px}
+.hm-v.live::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:p 2s ease-in-out infinite}
+@keyframes p{50%{opacity:.4}}
 
-  /* ── Layout ── */
-  .layout{max-width:1180px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:228px 1fr;gap:56px;align-items:start}
+.layout{max-width:1180px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:228px 1fr;gap:56px;align-items:start}
 
-  /* ── TOC sidebar ── */
-  .aside{position:sticky;top:90px;padding:48px 0;align-self:start}
-  .aside-k{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--txt3);font-weight:700;margin-bottom:16px;padding-left:15px}
-  .toc{display:flex;flex-direction:column;border-left:1px solid var(--line)}
-  .toc a{position:relative;padding:8px 0 8px 15px;font-size:13px;color:var(--txt2);font-weight:500;line-height:1.4;transition:color .12s;margin-left:-1px;border-left:1px solid transparent}
-  .toc a:hover{color:var(--txt)}
-  .toc a.on{color:var(--gold-l);border-left-color:var(--gold)}
-  .toc a .ti{color:var(--txt3);font-feature-settings:'tnum';margin-right:8px;font-size:11px}
-  .toc a.on .ti{color:var(--gold-d)}
-  .aside-foot{margin-top:26px;padding:16px 16px 16px 15px}
-  .progress{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-bottom:10px}
-  .progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));transition:width .12s}
-  .aside-foot small{font-size:11px;color:var(--txt3);letter-spacing:.04em}
+.aside{position:sticky;top:90px;padding:48px 0;align-self:start}
+.aside-k{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--txt3);font-weight:700;margin-bottom:16px;padding-left:15px}
+.toc{display:flex;flex-direction:column;border-left:1px solid var(--line)}
+.toc a{position:relative;padding:8px 0 8px 15px;font-size:13px;color:var(--txt2);font-weight:500;line-height:1.4;transition:color .12s;margin-left:-1px;border-left:1px solid transparent}
+.toc a:hover{color:var(--txt)}.toc a.on{color:var(--gold-l);border-left-color:var(--gold)}
+.toc a .ti{color:var(--txt3);font-feature-settings:'tnum';margin-right:8px;font-size:11px}
+.toc a.on .ti{color:var(--gold-d)}
+.aside-foot{margin-top:26px;padding:16px 16px 16px 15px}
+.progress{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-bottom:10px}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));transition:width .12s}
+.aside-foot small{font-size:11px;color:var(--txt3);letter-spacing:.04em}
 
-  /* ── Reading column ── */
-  .article{padding:48px 0 80px;max-width:760px;min-width:0}
-  .h2{font-family:var(--serif);font-size:32px;font-weight:500;letter-spacing:-.02em;color:var(--txt);
-    padding-top:52px;margin-bottom:8px;scroll-margin-top:90px;line-height:1.12;display:flex;align-items:baseline;gap:14px}
-  .article > .h2:first-child{padding-top:0}
-  .h2 .s{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--gold-d);font-weight:400;flex-shrink:0}
-  .h2 em{font-style:italic;color:var(--gold-l);font-weight:400}
-  .h2-rule{border:none;border-top:1px solid var(--line);margin:0 0 28px}
-  .h3{font-family:var(--serif);font-size:21px;font-weight:500;color:var(--txt);margin:38px 0 14px;letter-spacing:-.01em}
-  .article p{font-family:var(--serif);font-size:17px;line-height:1.75;color:var(--txt2);margin-bottom:20px}
-  .article p b{color:var(--txt);font-weight:600}
-  .article p .hl{color:var(--gold-l);font-weight:500}
-  .lead{font-size:19px !important;line-height:1.7 !important;color:var(--txt) !important}
+.article{padding:48px 0 80px;max-width:760px;min-width:0}
+.h2{font-family:var(--serif);font-size:32px;font-weight:500;letter-spacing:-.02em;color:var(--txt);padding-top:52px;margin-bottom:8px;scroll-margin-top:90px;line-height:1.12;display:flex;align-items:baseline;gap:14px}
+.article>.h2:first-child{padding-top:0}
+.h2 .s{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--gold-d);font-weight:400;flex-shrink:0}
+.h2 em{font-style:italic;color:var(--gold-l);font-weight:400}
+.h2-rule{border:none;border-top:1px solid var(--line);margin:0 0 28px}
+.h3{font-family:var(--serif);font-size:21px;font-weight:500;color:var(--txt);margin:38px 0 14px;letter-spacing:-.01em}
+.article p{font-family:var(--serif);font-size:17px;line-height:1.75;color:var(--txt2);margin-bottom:20px}
+.article p b{color:var(--txt);font-weight:600}
 
-  /* ── Item row ── */
-  .item-row{display:flex;gap:18px;align-items:flex-start;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:0 0 10px}
-  .item-row:hover{border-color:var(--line2)}
-  .item-ico{flex-shrink:0;width:58px;height:58px;border-radius:9px;background:#0e0b07 center/62% no-repeat;border:2px solid var(--r-none);box-shadow:inset 0 0 16px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.4);image-rendering:pixelated}
-  .r-low  .item-ico{border-color:var(--r-low);  box-shadow:inset 0 0 14px rgba(0,0,0,.6),0 0 12px rgba(138,184,96,.18)}
-  .r-medium .item-ico{border-color:var(--r-medium);box-shadow:inset 0 0 14px rgba(0,0,0,.6),0 0 12px rgba(90,155,212,.2)}
-  .r-high .item-ico{border-color:var(--r-high);  box-shadow:inset 0 0 14px rgba(0,0,0,.6),0 0 12px rgba(168,120,212,.22)}
-  .r-special .item-ico{border-color:var(--r-special);box-shadow:inset 0 0 14px rgba(0,0,0,.6),0 0 14px rgba(212,168,67,.28)}
-  .r-exclusive .item-ico{border-color:var(--r-exclusive);box-shadow:inset 0 0 14px rgba(0,0,0,.6),0 0 14px rgba(212,106,106,.26)}
-  .item-b{flex:1;min-width:0}
-  .item-top{display:flex;align-items:baseline;gap:10px;margin-bottom:5px;flex-wrap:wrap}
-  .item-name{font-family:var(--serif);font-size:17px;font-weight:500;letter-spacing:-.01em}
-  .item-id{font-size:10px;color:var(--txt3);letter-spacing:.04em;font-family:monospace;opacity:.7}
-  .item-rar{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
-  .r-none .item-rar{color:var(--r-none)} .r-low .item-rar{color:var(--r-low)} .r-medium .item-rar{color:var(--r-medium)}
-  .r-high .item-rar{color:var(--r-high)} .r-special .item-rar{color:var(--r-special)} .r-exclusive .item-rar{color:var(--r-exclusive)}
-  .item-desc{font-family:var(--serif);font-size:14.5px;line-height:1.55;color:var(--txt2);margin:0}
+/* Frame icon */
+.gico{position:relative;flex-shrink:0;border-radius:9px;overflow:hidden;background:#080604;display:inline-flex}
+.gico img.base{display:block;object-fit:cover;image-rendering:pixelated}
+.gico img.fr{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.gico.sz-lg{width:58px;height:58px}.gico.sz-lg img.base{width:58px;height:58px}
+.gico.sz-sm{width:44px;height:44px}.gico.sz-sm img.base{width:44px;height:44px}
 
-  /* ── Chain arrow ── */
-  .chain-arrow{display:flex;align-items:center;gap:10px;padding:4px 20px;color:var(--txt3);font-size:13px;margin-bottom:4px}
-  .chain-arrow::before,.chain-arrow::after{content:'';flex:1;height:1px;background:var(--line)}
-  .chain-arrow span{flex-shrink:0}
+/* Item row - no quality class on outer box */
+.item-row{display:flex;gap:18px;align-items:flex-start;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:0 0 10px}
+.item-row:hover{border-color:var(--line2)}
+.item-b{flex:1;min-width:0}
+.item-top{display:flex;align-items:baseline;gap:10px;margin-bottom:5px;flex-wrap:wrap}
+.item-name{font-family:var(--serif);font-size:17px;font-weight:500;letter-spacing:-.01em}
+.item-id{font-size:10px;color:var(--txt3);letter-spacing:.04em;font-family:monospace;opacity:.7}
+.item-rar{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.rar-none{color:var(--r-none)}.rar-low{color:var(--r-low)}.rar-medium{color:var(--r-medium)}
+.rar-high{color:var(--r-high)}.rar-special{color:var(--r-special)}.rar-exclusive{color:var(--r-exclusive)}
+.item-desc{font-family:var(--serif);font-size:14.5px;line-height:1.55;color:var(--txt2);margin:0}
 
-  /* ── TODO placeholder ── */
-  .todo{color:var(--gold);background:rgba(var(--gold-tint),.1);border:1px dashed rgba(var(--gold-tint),.35);
-    border-radius:4px;padding:1px 8px;font-size:13px;font-family:var(--sans);letter-spacing:.04em;white-space:nowrap}
+.chain-arrow{display:flex;align-items:center;gap:10px;padding:4px 20px;color:var(--txt3);font-size:13px;margin-bottom:4px}
+.chain-arrow::before,.chain-arrow::after{content:'';flex:1;height:1px;background:var(--line)}
+.chain-arrow span{flex-shrink:0}
 
-  /* ── Buy block ── */
-  .buy{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-  .buy-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--txt2);background:var(--bg3);
-    border:1px solid var(--line);border-radius:6px;padding:5px 10px}
-  .buy-item b{color:var(--txt);font-weight:600}
+.todo{color:var(--gold);background:rgba(var(--gold-tint),.1);border:1px dashed rgba(var(--gold-tint),.35);border-radius:4px;padding:1px 8px;font-size:13px;font-family:var(--sans);letter-spacing:.04em;white-space:nowrap}
 
-  /* ── Tags (совет list) ── */
-  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 20px}
-  .tag{font-size:11px;padding:4px 10px;border-radius:8px;background:var(--bg2);border:1px solid var(--line);color:var(--txt2);font-family:var(--sans)}
-  .tag.pvp{border-color:rgba(212,106,106,.3);color:#d46a6a}
-  .tag.pve{border-color:rgba(90,155,212,.3);color:var(--r-medium)}
-  .tag.rep{border-color:rgba(var(--gold-tint),.3);color:var(--gold-l)}
-  .tag.stat{border-color:rgba(168,120,212,.3);color:var(--r-high)}
-  .tag.special{border-color:rgba(138,184,96,.3);color:var(--green)}
+.qtable{width:100%;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg2);margin:0 0 24px;border-collapse:separate;border-spacing:0}
+.qtable th{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3);font-weight:700;text-align:left;padding:13px 18px;background:var(--bg3);border-bottom:1px solid var(--line)}
+.qtable th:last-child{text-align:right}
+.qtable td{padding:14px 18px;border-top:1px solid var(--line);vertical-align:middle;font-family:var(--serif);font-size:15px;color:var(--txt2)}
+.qtable tr:first-child td{border-top:none}
+.qtable tbody tr:hover{background:var(--bg3)}
+.qn{font-size:15px;font-weight:500;color:var(--txt)}
+.q-tag{font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:3px 7px;border-radius:9px;background:var(--bg);color:var(--txt3);border:1px solid var(--line);white-space:nowrap;margin-top:4px;display:inline-block}
+.q-tag.daily{color:var(--green);border-color:rgba(138,184,96,.3);background:rgba(138,184,96,.08)}
+.q-tag.once{color:var(--gold-l);border-color:rgba(var(--gold-tint),.3);background:rgba(var(--gold-tint),.08)}
+.rew-r{text-align:right;white-space:nowrap;color:var(--gold-l);font-weight:600}
+.qtotal-row td{background:var(--bg3);font-size:12px;color:var(--txt3);padding:9px 18px}
+.qtotal{text-align:right;color:var(--gold-l)!important;font-weight:600;font-size:13px!important}
 
-  /* ── Quest table ── */
-  .qtable{width:100%;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg2);margin:0 0 24px;border-collapse:separate;border-spacing:0}
-  .qtable th{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3);font-weight:700;text-align:left;padding:13px 18px;background:var(--bg3);border-bottom:1px solid var(--line)}
-  .qtable th:last-child{text-align:right}
-  .qtable td{padding:15px 18px;border-top:1px solid var(--line);vertical-align:top;font-family:var(--serif);font-size:15px;color:var(--txt2)}
-  .qtable tr:first-child td{border-top:none}
-  .qtable tbody tr:hover{background:var(--bg3)}
-  .qn{font-size:15px;font-weight:500;color:var(--txt)}
-  .q-tag{font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:3px 7px;border-radius:9px;background:var(--bg);color:var(--txt3);border:1px solid var(--line);white-space:nowrap}
-  .q-tag.daily{color:var(--green);border-color:rgba(138,184,96,.3);background:rgba(138,184,96,.08)}
-  .q-tag.once{color:var(--gold-l);border-color:rgba(var(--gold-tint),.3);background:rgba(var(--gold-tint),.08)}
-  .rew-r{text-align:right;white-space:nowrap;color:var(--gold-l);font-weight:600}
-  .qtotal-row td{background:var(--bg3);font-size:12px;color:var(--txt3);padding:9px 18px}
-  .qtotal{text-align:right;color:var(--gold-l) !important;font-weight:600;font-size:13px !important}
+.note{border:1px solid var(--line);border-left:2px solid var(--gold-d);border-radius:8px;background:linear-gradient(100deg,rgba(var(--gold-tint),.05),transparent 60%),var(--bg2);padding:18px 22px;margin:0 0 24px}
+.note-k{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.note-k::before{content:'';width:5px;height:5px;background:var(--gold);transform:rotate(45deg)}
+.note p{font-size:15.5px!important;line-height:1.65!important;margin:0!important;color:var(--txt2)}
 
-  /* ── Callout ── */
-  .note{border:1px solid var(--line);border-left:2px solid var(--gold-d);border-radius:8px;
-    background:linear-gradient(100deg,rgba(var(--gold-tint),.05),transparent 60%),var(--bg2);padding:18px 22px;margin:0 0 24px}
-  .note.warn{border-left-color:var(--r-exclusive);background:linear-gradient(100deg,rgba(212,106,106,.06),transparent 60%),var(--bg2)}
-  .note-k{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:8px}
-  .note-k::before{content:'';width:5px;height:5px;background:var(--gold);transform:rotate(45deg)}
-  .note.warn .note-k{color:var(--r-exclusive)} .note.warn .note-k::before{background:var(--r-exclusive)}
-  .note p{font-size:15.5px !important;line-height:1.65 !important;margin:0 !important;color:var(--txt2)}
+/* Advice grid */
+.adv-wrap{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:0 0 20px}
+.adv-head{display:grid;grid-template-columns:1fr 48px 48px 48px;gap:4px 8px;padding:10px 14px;background:var(--bg3);border-bottom:1px solid var(--line);align-items:center}
+.adv-head span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3);font-weight:700;text-align:center}
+.adv-head span:first-child{text-align:left}
+.adv-row{display:grid;grid-template-columns:1fr 48px 48px 48px;gap:4px 8px;padding:8px 14px;align-items:center;border-top:1px solid var(--line)}
+.adv-row:hover{background:var(--bg3)}
+.adv-cat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--txt2)}
+.adv-cat img{width:24px;height:24px;object-fit:contain;image-rendering:pixelated}
+.adv-cell{display:flex;justify-content:center}
 
-  /* ── Footer ── */
-  .ftr{max-width:1180px;margin:0 auto;padding:32px 40px 60px;border-top:1px solid var(--line);
-    display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;font-size:12px;color:var(--txt3)}
-  .ftr-l{font-family:var(--serif);font-style:italic}
-  .ftr-r{display:flex;gap:18px} .ftr-r a:hover{color:var(--gold-l)}
+/* Tooltip */
+.tip{position:fixed;z-index:999;pointer-events:none;opacity:0;transition:opacity .12s;background:var(--bg2);border:1px solid var(--line2);border-radius:10px;padding:14px 16px;max-width:260px;min-width:160px;box-shadow:0 8px 28px rgba(0,0,0,.6)}
+.tip.on{opacity:1}
+.tip-name{font-family:var(--serif);font-size:15px;font-weight:500;line-height:1.25;margin-bottom:6px}
+.tip-rar{font-size:9px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-bottom:10px;display:block}
+.tip-stat{display:flex;justify-content:space-between;gap:12px;font-size:12px;line-height:1.6;color:var(--txt2)}
+.tip-stat b{color:var(--txt);text-align:right}
+.tip-sep{border:none;border-top:1px solid var(--line);margin:8px 0}
+.tip-action{font-size:12px;line-height:1.55;color:var(--txt2);margin-top:8px}
 
-  @media(max-width:980px){
-    .layout{grid-template-columns:1fr;gap:0}
-    .aside{position:static;padding:28px 0 0}
-    .toc{flex-direction:row;flex-wrap:wrap;border-left:none;gap:6px}
-    .toc a{border:1px solid var(--line);border-radius:7px;padding:7px 12px;margin-left:0}
-    .toc a.on{border-color:var(--gold);border-left-color:var(--gold)}
-    .aside-k{padding-left:0}
-    .aside-foot{display:none}
-    .article{padding-top:24px;max-width:none}
-  }
-  @media(max-width:600px){
-    .hero-in,.layout,.ftr{padding-left:16px;padding-right:16px}
-    .h1{font-size:36px}.lede{font-size:16px}
-    .h2{font-size:26px}
-    .item-row{flex-wrap:wrap}
-    .ftr{padding:24px 16px 40px;flex-direction:column;align-items:flex-start;gap:12px}
-  }
+.ftr{max-width:1180px;margin:0 auto;padding:32px 40px 60px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;font-size:12px;color:var(--txt3)}
+.ftr-l{font-family:var(--serif);font-style:italic}
+.ftr-r{display:flex;gap:18px}.ftr-r a:hover{color:var(--gold-l)}
+
+@media(max-width:980px){
+  .layout{grid-template-columns:1fr;gap:0}
+  .aside{position:static;padding:28px 0 0}
+  .toc{flex-direction:row;flex-wrap:wrap;border-left:none;gap:6px}
+  .toc a{border:1px solid var(--line);border-radius:7px;padding:7px 12px;margin-left:0}
+  .toc a.on{border-color:var(--gold);border-left-color:var(--gold)}
+  .aside-k{padding-left:0}.aside-foot{display:none}
+  .article{padding-top:24px;max-width:none}
+}
+@media(max-width:600px){
+  .hero-in,.layout,.ftr{padding-left:16px;padding-right:16px}
+  .h1{font-size:36px}.lede{font-size:16px}.h2{font-size:26px}
+  .item-row{flex-wrap:wrap}
+  .adv-head,.adv-row{grid-template-columns:1fr 40px 40px 40px}
+  .ftr{padding:24px 16px 40px;flex-direction:column;align-items:flex-start;gap:12px}
+}
 </style>
 </head>
 <body>
@@ -201,639 +180,379 @@
 </section>
 
 <div class="layout">
-
-  <aside class="aside">
-    <div class="aside-k">Содержание</div>
-    <nav class="toc" id="toc">
-      <a href="#quests"><span class="ti">01</span>Квесты</a>
-      <a href="#flask"><span class="ti">02</span>Пиратская фляжка</a>
-      <a href="#parrots"><span class="ti">03</span>Попугаи</a>
-      <a href="#pain34"><span class="ti">04</span>Боль для 3–4 уровня</a>
-      <a href="#pain5"><span class="ti">05</span>Боль для 5+ уровня</a>
-    </nav>
-    <div class="aside-foot">
-      <div class="progress"><span id="progbar"></span></div>
-      <small id="progtxt">Прочитано 0%</small>
-    </div>
-  </aside>
-
-  <article class="article">
-
-    <!-- ───────── 01 · КВЕСТЫ ───────── -->
-    <h2 class="h2" id="quests"><span class="s">§ 01</span> <em>Квесты</em></h2>
-    <hr class="h2-rule">
-    <table class="qtable">
-      <thead><tr><th>Квест</th><th>Задание</th><th>Награда</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><div class="qn">Скромный подарок</div><span class="q-tag once">Разовый</span></td>
-          <td>—</td>
-          <td class="rew-r">1 001 монета</td>
-        </tr>
-        <tr>
-          <td><div class="qn">Обломки</div><span class="q-tag daily">Ежедневный</span></td>
-          <td>Собрать 10 прочных обломков</td>
-          <td class="rew-r">420 монет</td>
-        </tr>
-        <tr>
-          <td><div class="qn">Ремни с черепами</div><span class="q-tag daily">Ежедневный</span></td>
-          <td>Собрать 3 ремня</td>
-          <td class="rew-r">720 монет</td>
-        </tr>
-        <tr>
-          <td><div class="qn">Вечеринка</div><span class="q-tag daily">Ежедневный</span></td>
-          <td>Добыть 3 певицы (сирены)</td>
-          <td class="rew-r">420 монет</td>
-        </tr>
-        <tr>
-          <td><div class="qn">Морское колдовство</div><span class="q-tag daily">Ежедневный</span></td>
-          <td>Убить 5 спрутов</td>
-          <td class="rew-r">420 монет</td>
-        </tr>
-        <tr>
-          <td><div class="qn">Угроза блокады</div><span class="q-tag daily">Ежедневный</span></td>
-          <td>Уничтожить 10 кораблей</td>
-          <td class="rew-r">420 монет</td>
-        </tr>
-        <tr>
-          <td><div class="qn">Морской дьявол</div><span class="q-tag daily">Ежедневный</span></td>
-          <td>Убить 1 Морского Дьявола</td>
-          <td class="rew-r">692 монеты</td>
-        </tr>
-        <tr class="qtotal-row">
-          <td colspan="2">Итого ежедневно (6 квестов)</td>
-          <td class="qtotal">3 092 монеты / день</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- ───────── 02 · ФЛЯЖКА ───────── -->
-    <h2 class="h2" id="flask"><span class="s">§ 02</span> Пиратская <em>фляжка</em></h2>
-    <hr class="h2-rule">
-
-    <p>Пиратская фляжка — мощный предмет экипировки, без которого вам не обойтись, если вы хотите комфортно играть. Фляжки деградируют своим качеством с каждым годом: если у вас была <b>Пиратская фляжка (героического качества)</b>, то с наступлением ивента она станет <b>Пиратской Фляжкой (элитного качества)</b>, то есть потеряет один уровень апгрейда. Улучшить элитную фляжку во время ивента нельзя.</p>
-
-    <p>Чтобы получить легендарную или эпическую фляжку, нужно сначала купить героическую, прокачав репутацию до соответствующего уровня.</p>
-
-    <!-- Фляжка героическая -->
-    <div class="item-row r-high">
-      <div class="item-ico" style="background-image:url('../icons/pirate_flask.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Пиратская Фляжка</span>
-          <span class="item-rar">Героическое</span>
-          <span class="item-id">pirate_day_2015_flask_9</span>
-        </div>
-        <p class="item-desc">
-          Можно купить за <span class="todo">———</span> монет или за <span class="todo">———</span> рубинов в королевской лавке после достижения ранга репутации Корсар <span class="todo">———</span>.
-        </p>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>улучшается через</span></div>
-
-    <!-- Обломок легендарный -->
-    <div class="item-row r-exclusive">
-      <div class="item-ico" style="background-image:url('../icons/scrap_metal_quest.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Легендарный обломок вражеских доспехов</span>
-          <span class="item-rar">Легендарное</span>
-          <span class="item-id">pirate_day_2024_flask_box</span>
-        </div>
-        <p class="item-desc">
-          Можно купить за <span class="todo">———</span> монет или за <span class="todo">———</span> рубинов в королевской лавке после достижения ранга репутации Корсар <span class="todo">———</span>.
-        </p>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>даёт</span></div>
-
-    <!-- Фляжка легендарная -->
-    <div class="item-row r-exclusive">
-      <div class="item-ico" style="background-image:url('../icons/pirate_flask.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Пиратская Фляжка</span>
-          <span class="item-rar">Легендарное</span>
-          <span class="item-id">pirate_day_2015_flask_10</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>улучшается через</span></div>
-
-    <!-- Обломок эпический -->
-    <div class="item-row r-special">
-      <div class="item-ico" style="background-image:url('../icons/scrap_metal_quest.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Эпический обломок вражеских доспехов</span>
-          <span class="item-rar">Эпическое</span>
-          <span class="item-id">pirate_day_2025_flask_box</span>
-        </div>
-        <p class="item-desc">
-          Можно купить за <span class="todo">———</span> монет или за <span class="todo">———</span> рубинов в королевской лавке после достижения ранга репутации Корсар <span class="todo">———</span>.
-        </p>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>даёт</span></div>
-
-    <!-- Фляжка эпическая -->
-    <div class="item-row r-special">
-      <div class="item-ico" style="background-image:url('../icons/pirate_flask.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Пиратская Фляжка</span>
-          <span class="item-rar">Эпическое</span>
-          <span class="item-id">pirate_day_2015_flask_11</span>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- ───────── 03 · ПОПУГАИ ───────── -->
-    <h2 class="h2" id="parrots"><span class="s">§ 03</span> <em>Попугаи</em></h2>
-    <hr class="h2-rule">
-    <p>Попугаи позволяют получать бафы на усиление характеристик, а также на прокачку репутаций. Каждый попугай даёт советы через <b>орехи</b>, которые можно купить у торговца припасами в городе своей расы.</p>
-
-    <!-- Белый попугай -->
-    <h3 class="h3">Белый попугай</h3>
-
-    <div class="item-row r-none">
-      <div class="item-ico" style="background-image:url('../icons/parrot_weapon.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Белый попугай</span>
-          <span class="item-id">pirate_day_2013_reputation_boost_1_box</span>
-        </div>
-        <p class="item-desc">
-          Можно купить за <span class="todo">———</span> монет или за <span class="todo">———</span> рубинов в королевской лавке после достижения ранга репутации Корсар <span class="todo">———</span>.
-          Для советов нужны <b>Белые орехи</b> <span class="item-id">pirate_day_2013_reputation_boost_1_key</span> у торговца припасами.
-        </p>
-      </div>
-    </div>
-
-    <p style="font-size:13px;color:var(--txt3);margin-bottom:8px">Советы на 1 / 5 / 10 дней:</p>
-    <div class="tags">
-      <span class="tag pvp">Гладиатор</span>
-      <span class="tag pvp">Завоеватель</span>
-      <span class="tag pvp">Властитель земель</span>
-      <span class="tag pve">Археолог</span>
-      <span class="tag pve">Ведьмак</span>
-      <span class="tag pve">Охотник на демонов</span>
-      <span class="tag pve">Дрессировщик</span>
-      <span class="tag rep">Королевская Гвардия</span>
-      <span class="tag rep">Экзорцист</span>
-    </div>
-
-    <!-- Зеленый попугай -->
-    <h3 class="h3">Зеленый попугай</h3>
-
-    <div class="item-row r-low">
-      <div class="item-ico" style="background-image:url('../icons/parrot_weapon.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Зеленый попугай</span>
-          <span class="item-rar">Обычное</span>
-          <span class="item-id">pirate_day_2013_reputation_boost_5_box</span>
-        </div>
-        <p class="item-desc">
-          Можно купить за <span class="todo">———</span> монет или за <span class="todo">———</span> рубинов в королевской лавке после достижения ранга репутации Корсар <span class="todo">———</span>.
-          Для советов нужны <b>Зеленые орехи</b> <span class="item-id">pirate_day_2013_reputation_boost_5_key</span> у торговца припасами.
-        </p>
-      </div>
-    </div>
-
-    <p style="font-size:13px;color:var(--txt3);margin-bottom:8px">Советы на 1 / 5 / 10 дней:</p>
-    <div class="tags">
-      <span class="tag pvp">Гладиатор</span>
-      <span class="tag pvp">Завоеватель</span>
-      <span class="tag pvp">Властитель земель</span>
-      <span class="tag pve">Археолог</span>
-      <span class="tag pve">Ведьмак</span>
-      <span class="tag pve">Охотник на демонов</span>
-      <span class="tag pve">Дрессировщик</span>
-      <span class="tag rep">Королевская Гвардия</span>
-      <span class="tag rep">Экзорцист</span>
-    </div>
-
-    <!-- Синий попугай -->
-    <h3 class="h3">Синий попугай</h3>
-
-    <div class="item-row r-medium">
-      <div class="item-ico" style="background-image:url('../icons/parrot_weapon.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Синий попугай</span>
-          <span class="item-rar">Редкое</span>
-          <span class="item-id">pirate_day_2013_reputation_boost_10_box</span>
-        </div>
-        <p class="item-desc">
-          Можно купить за <span class="todo">———</span> монет или за <span class="todo">———</span> рубинов в королевской лавке после достижения ранга репутации Корсар <span class="todo">———</span>.
-          Для советов нужны <b>Мелкие синие орехи</b> <span class="item-id">pirate_day_2013_reputation_boost_10_1_key</span>, <b>Средние синие орехи</b> <span class="item-id">pirate_day_2013_reputation_boost_10_5_key</span> или <b>Крупные синие орехи</b> <span class="item-id">pirate_day_2013_reputation_boost_10_key</span> у торговца припасами. Мелкие дают совет белого, средние — зеленого, крупные — синего попугая.
-        </p>
-      </div>
-    </div>
-
-    <p style="font-size:13px;color:var(--txt3);margin-bottom:8px">Советы на 1 / 5 / 10 дней:</p>
-    <div class="tags">
-      <span class="tag pvp">Гладиатор</span>
-      <span class="tag pvp">Завоеватель</span>
-      <span class="tag pvp">Властитель земель</span>
-      <span class="tag pve">Археолог</span>
-      <span class="tag pve">Ведьмак</span>
-      <span class="tag pve">Охотник на демонов</span>
-      <span class="tag pve">Дрессировщик</span>
-      <span class="tag rep">Королевская Гвардия</span>
-      <span class="tag rep">Экзорцист</span>
-    </div>
-
-    <!-- Фиолетовый попугай -->
-    <h3 class="h3">Фиолетовый попугай</h3>
-
-    <div class="item-row r-high">
-      <div class="item-ico" style="background-image:url('../icons/parrot_weapon.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Фиолетовый попугай</span>
-          <span class="item-rar">Героическое</span>
-          <span class="item-id">pirate_day_2013_reputation_boost_15_box</span>
-        </div>
-        <p class="item-desc">
-          Можно купить за <span class="todo">———</span> монет или за <span class="todo">———</span> рубинов в королевской лавке после достижения ранга репутации Корсар <span class="todo">———</span>.
-          Для советов нужны <b>Мелкие</b> <span class="item-id">pirate_day_2013_reputation_boost_15_1_key</span>, <b>Средние</b> <span class="item-id">pirate_day_2013_reputation_boost_15_5_key</span>, <b>Крупные</b> <span class="item-id">pirate_day_2013_reputation_boost_15_10_key</span> или <b>Огромные фиолетовые орехи</b> <span class="item-id">pirate_day_2013_reputation_boost_15_15_key</span>. Мелкие дают совет белого, средние — зеленого, крупные — синего попугая. Огромные нужны для боевых советов.
-        </p>
-      </div>
-    </div>
-
-    <p style="font-size:13px;color:var(--txt3);margin-bottom:8px">Репутационные советы на 1 / 5 / 10 дней:</p>
-    <div class="tags">
-      <span class="tag pvp">Гладиатор</span>
-      <span class="tag pvp">Завоеватель</span>
-      <span class="tag pvp">Властитель земель</span>
-      <span class="tag pve">Археолог</span>
-      <span class="tag pve">Ведьмак</span>
-      <span class="tag pve">Охотник на демонов</span>
-      <span class="tag pve">Дрессировщик</span>
-      <span class="tag rep">Королевская Гвардия</span>
-      <span class="tag rep">Экзорцист</span>
-    </div>
-
-    <p style="font-size:13px;color:var(--txt3);margin-bottom:8px">Боевые советы на 1 / 5 / 10 дней:</p>
-    <div class="tags">
-      <span class="tag stat">Атака</span>
-      <span class="tag stat">Защита</span>
-      <span class="tag stat">Здоровье</span>
-      <span class="tag stat">Исходящий урон</span>
-      <span class="tag stat">Входящий урон</span>
-    </div>
-
-    <p style="font-size:13px;color:var(--txt3);margin-bottom:8px">Редкие советы (небольшой шанс):</p>
-    <div class="tags">
-      <span class="tag special">Совет фиолетового попугая — все характеристики · 14 дней <span class="item-id" style="margin-left:4px">pirate_day_2013_reputation_boost_15_all</span></span>
-      <span class="tag special">Тайна попугая — все репутации · 14 дней <span class="item-id" style="margin-left:4px">pirate_day_2013_reputation_boost_10_allrep_3</span></span>
-    </div>
-
-
-    <!-- ───────── 04 · БОЛЬ 3-4 ───────── -->
-    <h2 class="h2" id="pain34"><span class="s">§ 04</span> Усиление боли для <em>3–4 уровня</em></h2>
-    <hr class="h2-rule">
-    <p>Цепочка апгрейдов для игроков 3 и 4 уровней. Каждый предмет-усилитель превращает свиток боли в более мощную версию.</p>
-
-    <!-- Свиток боли базовый -->
-    <div class="item-row r-none">
-      <div class="item-ico" style="background-image:url('../icons/pain_scroll.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Свиток боли</span>
-          <span class="item-id">mob_scroll_damage_dot_2_1</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>+ Книга корсарских пыток =</span></div>
-
-    <div class="item-row r-none">
-      <div class="item-ico" style="background-image:url('../icons/grimoire_flame.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Книга корсарских пыток</span>
-          <span class="item-id">pirate_day_2014_scroll_damage_dot_2_1_upgrade</span>
-        </div>
-        <p class="item-desc">Превращает Свиток боли в Корсарский свиток боли.</p>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>даёт</span></div>
-
-    <div class="item-row r-none">
-      <div class="item-ico" style="background-image:url('../icons/pirate_day_2014_pain_scroll.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Корсарский свиток боли</span>
-          <span class="item-id">pirate_day_2014_scroll_damage_dot_2_1</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>+ Корсарская эссенция страданий =</span></div>
-
-    <div class="item-row r-none">
-      <div class="item-ico" style="background-image:url('../icons/bottle_of_pain.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Корсарская эссенция страданий</span>
-          <span class="item-id">pirate_day_2015_scroll_damage_dot_2_1_upgrade</span>
-        </div>
-        <p class="item-desc">Превращает Корсарский свиток боли в Тёмный корсарский свиток боли.</p>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>даёт</span></div>
-
-    <div class="item-row r-none">
-      <div class="item-ico" style="background-image:url('../icons/pirate_day_2015_pain_scroll.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Тёмный корсарский свиток боли</span>
-          <span class="item-id">pirate_day_2015_scroll_damage_dot_2_1</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>+ Корсарская эссенция агонии =</span></div>
-
-    <div class="item-row r-medium">
-      <div class="item-ico" style="background-image:url('../icons/bottle_of_pain.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Корсарская эссенция агонии</span>
-          <span class="item-rar">Редкое</span>
-          <span class="item-id">pirate_day_2017_scroll_damage_dot_2_1_upgrade</span>
-        </div>
-        <p class="item-desc">Превращает Тёмный корсарский свиток боли в Корсарский свиток жгучей боли.</p>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>даёт</span></div>
-
-    <div class="item-row r-medium">
-      <div class="item-ico" style="background-image:url('../icons/pirate_day_2015_pain_scroll.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Корсарский свиток жгучей боли</span>
-          <span class="item-rar">Редкое</span>
-          <span class="item-id">pirate_day_2017_scroll_damage_dot_2_1</span>
-        </div>
-      </div>
-    </div>
-
-    <h3 class="h3">Квест «Опасная наука» — Корсарская книга истязаний</h3>
-
-    <p>Собрав все три усилителя и <b>Костюм Резиновой Утки (героический)</b>, вы сможете выполнить квест «Опасная наука» у <b>Энжела Ноббса</b>. Принести нужно:</p>
-
-    <div class="item-row r-none" style="margin-bottom:6px">
-      <div class="item-ico" style="background-image:url('../icons/grimoire_flame.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top"><span class="item-name">Книга корсарских пыток</span><span class="item-id">pirate_day_2014_scroll_damage_dot_2_1_upgrade</span></div>
-        <p class="item-desc">1 шт.</p>
-      </div>
-    </div>
-    <div class="item-row r-none" style="margin-bottom:6px">
-      <div class="item-ico" style="background-image:url('../icons/bottle_of_pain.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top"><span class="item-name">Корсарская эссенция страданий</span><span class="item-id">pirate_day_2015_scroll_damage_dot_2_1_upgrade</span></div>
-        <p class="item-desc">1 шт.</p>
-      </div>
-    </div>
-    <div class="item-row r-medium" style="margin-bottom:6px">
-      <div class="item-ico" style="background-image:url('../icons/bottle_of_pain.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top"><span class="item-name">Корсарская эссенция агонии</span><span class="item-rar">Редкое</span><span class="item-id">pirate_day_2017_scroll_damage_dot_2_1_upgrade</span></div>
-        <p class="item-desc">1 шт.</p>
-      </div>
-    </div>
-    <div class="item-row r-high" style="margin-bottom:20px">
-      <div class="item-ico" style="background-image:url('../icons/rubber_duck_dress.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top"><span class="item-name">Костюм Резиновой Утки (героический)</span><span class="item-rar">Героическое</span><span class="item-id">pirate_day_beach_3</span></div>
-        <p class="item-desc">1 шт.</p>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>награда квеста</span></div>
-
-    <div class="item-row r-medium">
-      <div class="item-ico" style="background-image:url('../icons/grimoire_flame.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Корсарская книга истязаний</span>
-          <span class="item-rar">Редкое</span>
-          <span class="item-id">pirate_day_2017_scroll_damage_dot_2_1_upgrade_all</span>
-        </div>
-        <p class="item-desc">Позволяет сразу превращать <b>Свиток боли</b> в <b>Корсарский свиток жгучей боли</b>, минуя всю цепочку улучшений. Нужна игрокам 3 и 4 уровня.</p>
-      </div>
-    </div>
-
-
-    <!-- ───────── 05 · БОЛЬ 5+ ───────── -->
-    <h2 class="h2" id="pain5"><span class="s">§ 05</span> Усиление боли для <em>5+ уровня</em></h2>
-    <hr class="h2-rule">
-    <p>Аналогичная цепочка для игроков 5 уровня и выше. Предметы покупаются в легендарной или королевской лавке.</p>
-
-    <div class="item-row r-low">
-      <div class="item-ico" style="background-image:url('../icons/pain_scroll.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Свиток боли</span>
-          <span class="item-rar">Обычное</span>
-          <span class="item-id">mob_scroll_damage_dot_5_5</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>+ Книга пиратских пыток =</span></div>
-
-    <div class="item-row r-low">
-      <div class="item-ico" style="background-image:url('../icons/grimoire_flame.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Книга пиратских пыток</span>
-          <span class="item-rar">Обычное</span>
-          <span class="item-id">pirate_day_2014_scroll_damage_dot_5_5_upgrade</span>
-        </div>
-        <p class="item-desc">
-          Можно купить за <span class="todo">———</span> монет или за <span class="todo">———</span> рубинов в королевской лавке после достижения ранга репутации Корсар <span class="todo">———</span>.
-          Превращает Свиток боли в Пиратский свиток боли.
-        </p>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>даёт</span></div>
-
-    <div class="item-row r-low">
-      <div class="item-ico" style="background-image:url('../icons/pirate_day_2014_pain_scroll.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Пиратский свиток боли</span>
-          <span class="item-rar">Обычное</span>
-          <span class="item-id">pirate_day_2014_scroll_damage_dot_5_5</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>+ Пиратская эссенция страданий =</span></div>
-
-    <div class="item-row r-low">
-      <div class="item-ico" style="background-image:url('../icons/bottle_of_pain.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Пиратская эссенция страданий</span>
-          <span class="item-rar">Обычное</span>
-          <span class="item-id">pirate_day_2015_scroll_damage_dot_5_5_upgrade</span>
-        </div>
-        <p class="item-desc">
-          Можно купить за <span class="todo">———</span> монет или за <span class="todo">———</span> рубинов в королевской лавке после достижения ранга репутации Корсар <span class="todo">———</span>.
-          Превращает Пиратский свиток боли в Тёмный пиратский свиток боли.
-        </p>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>даёт</span></div>
-
-    <div class="item-row r-low">
-      <div class="item-ico" style="background-image:url('../icons/pirate_day_2015_pain_scroll.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Тёмный пиратский свиток боли</span>
-          <span class="item-rar">Обычное</span>
-          <span class="item-id">pirate_day_2015_scroll_damage_dot_5_5</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>+ Пиратская эссенция агонии =</span></div>
-
-    <div class="item-row r-high">
-      <div class="item-ico" style="background-image:url('../icons/bottle_of_pain.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Пиратская эссенция агонии</span>
-          <span class="item-rar">Героическое</span>
-          <span class="item-id">pirate_day_2017_scroll_damage_dot_5_5_upgrade</span>
-        </div>
-        <p class="item-desc">
-          Можно купить за <span class="todo">———</span> монет или за <span class="todo">———</span> рубинов в королевской лавке после достижения ранга репутации Корсар <span class="todo">———</span>.
-          Превращает Тёмный пиратский свиток боли в Пиратский свиток жгучей боли.
-        </p>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>даёт</span></div>
-
-    <div class="item-row r-high">
-      <div class="item-ico" style="background-image:url('../icons/pirate_day_2015_pain_scroll.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Пиратский свиток жгучей боли</span>
-          <span class="item-rar">Героическое</span>
-          <span class="item-id">pirate_day_2017_scroll_damage_dot_5_5</span>
-        </div>
-      </div>
-    </div>
-
-    <h3 class="h3">Квест «Опасная наука» — Пиратская книга истязаний</h3>
-
-    <p>Собрав все три усилителя и <b>Костюм Резиновой Утки (героический)</b>, выполните квест «Опасная наука» у <b>Энжела Ноббса</b>. Принести нужно:</p>
-
-    <div class="item-row r-low" style="margin-bottom:6px">
-      <div class="item-ico" style="background-image:url('../icons/grimoire_flame.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top"><span class="item-name">Книга пиратских пыток</span><span class="item-rar">Обычное</span><span class="item-id">pirate_day_2014_scroll_damage_dot_5_5_upgrade</span></div>
-        <p class="item-desc">1 шт.</p>
-      </div>
-    </div>
-    <div class="item-row r-low" style="margin-bottom:6px">
-      <div class="item-ico" style="background-image:url('../icons/bottle_of_pain.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top"><span class="item-name">Пиратская эссенция страданий</span><span class="item-rar">Обычное</span><span class="item-id">pirate_day_2015_scroll_damage_dot_5_5_upgrade</span></div>
-        <p class="item-desc">1 шт.</p>
-      </div>
-    </div>
-    <div class="item-row r-high" style="margin-bottom:6px">
-      <div class="item-ico" style="background-image:url('../icons/bottle_of_pain.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top"><span class="item-name">Пиратская эссенция агонии</span><span class="item-rar">Героическое</span><span class="item-id">pirate_day_2017_scroll_damage_dot_5_5_upgrade</span></div>
-        <p class="item-desc">1 шт.</p>
-      </div>
-    </div>
-    <div class="item-row r-high" style="margin-bottom:20px">
-      <div class="item-ico" style="background-image:url('../icons/rubber_duck_dress.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top"><span class="item-name">Костюм Резиновой Утки (героический)</span><span class="item-rar">Героическое</span><span class="item-id">pirate_day_beach_3</span></div>
-        <p class="item-desc">
-          Можно купить за <span class="todo">———</span> монет или за <span class="todo">———</span> рубинов в королевской лавке после достижения ранга репутации Корсар <span class="todo">———</span>. 1 шт.
-        </p>
-      </div>
-    </div>
-
-    <div class="chain-arrow"><span>награда квеста</span></div>
-
-    <div class="item-row r-high">
-      <div class="item-ico" style="background-image:url('../icons/grimoire_flame.jpg')"></div>
-      <div class="item-b">
-        <div class="item-top">
-          <span class="item-name">Пиратская книга истязаний</span>
-          <span class="item-rar">Героическое</span>
-          <span class="item-id">pirate_day_2017_scroll_damage_dot_5_5_upgrade_all</span>
-        </div>
-        <p class="item-desc">Позволяет сразу превращать <b>Свиток боли</b> в <b>Пиратский свиток жгучей боли</b>, минуя всю цепочку. Нужна игрокам 5 уровня и выше.</p>
-      </div>
-    </div>
-
-  </article>
+<aside class="aside">
+  <div class="aside-k">Содержание</div>
+  <nav class="toc" id="toc">
+    <a href="#overview"><span class="ti">01</span>Обзор</a>
+    <a href="#quests"><span class="ti">02</span>Квесты</a>
+    <a href="#flask"><span class="ti">03</span>Фляжка</a>
+    <a href="#parrots"><span class="ti">04</span>Попугаи</a>
+    <a href="#pain34"><span class="ti">05</span>Боль 3–4</a>
+    <a href="#pain5"><span class="ti">06</span>Боль 5+</a>
+  </nav>
+  <div class="aside-foot">
+    <div class="progress"><span id="progbar"></span></div>
+    <small id="progtxt">Прочитано 0%</small>
+  </div>
+</aside>
+
+<article class="article">
+
+<!-- §01 ОБЗОР -->
+<h2 class="h2" id="overview"><span class="s">§ 01</span> <em>Обзор</em> ивента</h2>
+<hr class="h2-rule">
+<p>День Пирата проходит ежегодно в июне. На картах появляются пираты, корабли, сирены и Морской Дьявол. Жители Рябинового острова выдают квесты за <b>монеты островного племени</b> — основную валюту ивента.</p>
+<p>На монеты в королевской лавке покупаются <b>Пиратская фляжка</b>, <b>попугаи</b>, апгрейды <b>свитков боли</b>, а также Сломанный компас, Камень путника и Патент корсара. Доступность предметов зависит от ранга репутации Корсара.</p>
+<div class="note">
+  <div class="note-k">Репутация Корсара</div>
+  <p>Прокачивается за квесты, убийство мобов и боссов. Чем выше ранг — тем больше предметов открыто в лавке. Самые дорогие и мощные вещи требуют высокого ранга.</p>
+</div>
+
+<!-- §02 КВЕСТЫ -->
+<h2 class="h2" id="quests"><span class="s">§ 02</span> <em>Квесты</em> и монеты</h2>
+<hr class="h2-rule">
+<table class="qtable">
+  <thead><tr><th>Квест</th><th>Задание</th><th>Монеты</th></tr></thead>
+  <tbody>
+    <tr><td><div class="qn">Скромный подарок</div><span class="q-tag once">Разовый</span></td><td>—</td><td class="rew-r">1 001</td></tr>
+    <tr><td><div class="qn">Обломки</div><span class="q-tag daily">Ежедневный</span></td><td>Собрать 10 прочных обломков</td><td class="rew-r">420</td></tr>
+    <tr><td><div class="qn">Ремни с черепами</div><span class="q-tag daily">Ежедневный</span></td><td>Собрать 3 ремня</td><td class="rew-r">720</td></tr>
+    <tr><td><div class="qn">Вечеринка</div><span class="q-tag daily">Ежедневный</span></td><td>Добыть 3 сирены</td><td class="rew-r">420</td></tr>
+    <tr><td><div class="qn">Морское колдовство</div><span class="q-tag daily">Ежедневный</span></td><td>Убить 5 спрутов</td><td class="rew-r">420</td></tr>
+    <tr><td><div class="qn">Угроза блокады</div><span class="q-tag daily">Ежедневный</span></td><td>Уничтожить 10 кораблей</td><td class="rew-r">420</td></tr>
+    <tr><td><div class="qn">Морской дьявол</div><span class="q-tag daily">Ежедневный</span></td><td>Убить 1 Морского Дьявола</td><td class="rew-r">692</td></tr>
+    <tr class="qtotal-row"><td colspan="2">Итого ежедневно (6 квестов)</td><td class="qtotal">3 092</td></tr>
+  </tbody>
+</table>
+
+<!-- §03 ФЛЯЖКА -->
+<h2 class="h2" id="flask"><span class="s">§ 03</span> Пиратская <em>фляжка</em></h2>
+<hr class="h2-rule">
+<p>Мощный аксессуар с тремя уровнями качества. Каждый год ивента фляжка деградирует на один уровень. Элитную фляжку в текущем ивенте улучшить нельзя.</p>
+
+<div class="item-row" data-id="pirate_day_2015_flask_9">
+  <div class="gico sz-lg"><img class="base" src="../icons/pirate_flask.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Пиратская Фляжка</span><span class="item-rar rar-high">Героическое</span><span class="item-id">pirate_day_2015_flask_9</span></div>
+    <p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>.</p>
+  </div>
+</div>
+<div class="chain-arrow"><span>улучшается через</span></div>
+<div class="item-row" data-id="pirate_day_2024_flask_box">
+  <div class="gico sz-lg"><img class="base" src="../icons/scrap_metal_quest.jpg" alt=""><img class="fr" src="../frames/border_exclusive.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Легендарный обломок вражеских доспехов</span><span class="item-rar rar-exclusive">Легендарное</span><span class="item-id">pirate_day_2024_flask_box</span></div>
+    <p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>.</p>
+  </div>
+</div>
+<div class="chain-arrow"><span>даёт</span></div>
+<div class="item-row" data-id="pirate_day_2015_flask_10">
+  <div class="gico sz-lg"><img class="base" src="../icons/pirate_flask.jpg" alt=""><img class="fr" src="../frames/border_exclusive.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Пиратская Фляжка</span><span class="item-rar rar-exclusive">Легендарное</span><span class="item-id">pirate_day_2015_flask_10</span></div>
+  </div>
+</div>
+<div class="chain-arrow"><span>улучшается через</span></div>
+<div class="item-row" data-id="pirate_day_2025_flask_box">
+  <div class="gico sz-lg"><img class="base" src="../icons/scrap_metal_quest.jpg" alt=""><img class="fr" src="../frames/border_special.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Эпический обломок вражеских доспехов</span><span class="item-rar rar-special">Эпическое</span><span class="item-id">pirate_day_2025_flask_box</span></div>
+    <p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>.</p>
+  </div>
+</div>
+<div class="chain-arrow"><span>даёт</span></div>
+<div class="item-row" data-id="pirate_day_2015_flask_11">
+  <div class="gico sz-lg"><img class="base" src="../icons/pirate_flask.jpg" alt=""><img class="fr" src="../frames/border_special.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Пиратская Фляжка</span><span class="item-rar rar-special">Эпическое</span><span class="item-id">pirate_day_2015_flask_11</span></div>
+  </div>
+</div>
+
+<!-- §04 ПОПУГАИ -->
+<h2 class="h2" id="parrots"><span class="s">§ 04</span> <em>Попугаи</em></h2>
+<hr class="h2-rule">
+<p>Попугаи дают советы — временные бафы на прокачку репутаций или боевые характеристики. Советы активируются орехами у торговца припасами в городе своей расы. Тип ореха определяет силу совета.</p>
+
+<h3 class="h3">Белый попугай</h3>
+<div class="item-row" data-id="pirate_day_2013_reputation_boost_1_box">
+  <div class="gico sz-lg"><img class="base" src="../icons/parrot_weapon.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Белый попугай</span><span class="item-id">pirate_day_2013_reputation_boost_1_box</span></div>
+    <p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>. Орехи: <b>Белые орехи</b> <span class="item-id">pirate_day_2013_reputation_boost_1_key</span></p>
+  </div>
+</div>
+<div class="adv-wrap">
+  <div class="adv-head"><span>Совет</span><span>1 д.</span><span>5 д.</span><span>10 д.</span></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pvp2_0.png" alt="">Гладиатор</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pvp2_1"><img class="base" src="../icons/reputation_pvp2_1.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pvp2_2"><img class="base" src="../icons/reputation_pvp2_5.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pvp2_3"><img class="base" src="../icons/reputation_pvp2_6.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pvp1_0.png" alt="">Завоеватель</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pvp1_1"><img class="base" src="../icons/reputation_pvp1_1.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pvp1_2"><img class="base" src="../icons/reputation_pvp1_6.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pvp1_3"><img class="base" src="../icons/reputation_pvp1_7.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pvp6_0.png" alt="">Властитель земель</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pvp6_1"><img class="base" src="../icons/reputation_pvp6_1.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pvp6_2"><img class="base" src="../icons/reputation_pvp6_7.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pvp6_3"><img class="base" src="../icons/reputation_pvp6_9.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pve1_0.png" alt="">Археолог</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pve1_1"><img class="base" src="../icons/reputation_pve1_1.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pve1_2"><img class="base" src="../icons/reputation_pve1_7.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pve1_3"><img class="base" src="../icons/reputation_pve1_8.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pve2_0.png" alt="">Ведьмак</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pve2_1"><img class="base" src="../icons/reputation_pve2_1.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pve2_2"><img class="base" src="../icons/reputation_pve2_8.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pve2_3"><img class="base" src="../icons/reputation_pve2_10.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pve4_0.png" alt="">Охотник на демонов</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pve4_1"><img class="base" src="../icons/reputation_pve4_1.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pve4_2"><img class="base" src="../icons/reputation_pve4_7.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pve4_3"><img class="base" src="../icons/reputation_pve4_9.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Дрессировщик</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pve5_1"><img class="base" src="../icons/reputation_pve5_1.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pve5_2"><img class="base" src="../icons/reputation_pve5_6.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_pve5_3"><img class="base" src="../icons/reputation_pve5_7.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_rep21_0.png" alt="">Королевская Гвардия</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_rep21_1"><img class="base" src="../icons/reputation_rep21_1.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_rep21_2"><img class="base" src="../icons/reputation_rep21_7.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_rep21_3"><img class="base" src="../icons/reputation_rep21_10.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Экзорцист</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_rep17_1"><img class="base" src="../icons/reputation_rep17_1.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_rep17_2"><img class="base" src="../icons/reputation_rep17_7.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_rep17_3"><img class="base" src="../icons/reputation_rep17_9.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Чародей</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_rep19_1"><img class="base" src="../icons/reputation_rep19_0.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_rep19_2"><img class="base" src="../icons/reputation_rep19_3.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_1_rep19_3"><img class="base" src="../icons/reputation_rep19_4.png" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div></div></div>
+</div>
+
+<h3 class="h3">Зеленый попугай</h3>
+<div class="item-row" data-id="pirate_day_2013_reputation_boost_5_box">
+  <div class="gico sz-lg"><img class="base" src="../icons/parrot_weapon.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Зеленый попугай</span><span class="item-rar rar-low">Обычное</span><span class="item-id">pirate_day_2013_reputation_boost_5_box</span></div>
+    <p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>. Орехи: <b>Зеленые орехи</b> <span class="item-id">pirate_day_2013_reputation_boost_5_key</span></p>
+  </div>
+</div>
+<div class="adv-wrap">
+  <div class="adv-head"><span>Совет</span><span>1 д.</span><span>5 д.</span><span>10 д.</span></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pvp2_0.png" alt="">Гладиатор</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pvp2_1"><img class="base" src="../icons/reputation_pvp2_1.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pvp2_2"><img class="base" src="../icons/reputation_pvp2_5.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pvp2_3"><img class="base" src="../icons/reputation_pvp2_6.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pvp1_0.png" alt="">Завоеватель</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pvp1_1"><img class="base" src="../icons/reputation_pvp1_1.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pvp1_2"><img class="base" src="../icons/reputation_pvp1_6.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pvp1_3"><img class="base" src="../icons/reputation_pvp1_7.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pvp6_0.png" alt="">Властитель земель</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pvp6_1"><img class="base" src="../icons/reputation_pvp6_1.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pvp6_2"><img class="base" src="../icons/reputation_pvp6_7.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pvp6_3"><img class="base" src="../icons/reputation_pvp6_9.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pve1_0.png" alt="">Археолог</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pve1_1"><img class="base" src="../icons/reputation_pve1_1.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pve1_2"><img class="base" src="../icons/reputation_pve1_7.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pve1_3"><img class="base" src="../icons/reputation_pve1_8.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pve2_0.png" alt="">Ведьмак</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pve2_1"><img class="base" src="../icons/reputation_pve2_1.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pve2_2"><img class="base" src="../icons/reputation_pve2_8.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pve2_3"><img class="base" src="../icons/reputation_pve2_10.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pve4_0.png" alt="">Охотник на демонов</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pve4_1"><img class="base" src="../icons/reputation_pve4_1.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pve4_2"><img class="base" src="../icons/reputation_pve4_7.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pve4_3"><img class="base" src="../icons/reputation_pve4_9.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Дрессировщик</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pve5_1"><img class="base" src="../icons/reputation_pve5_1.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pve5_2"><img class="base" src="../icons/reputation_pve5_6.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_pve5_3"><img class="base" src="../icons/reputation_pve5_7.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_rep21_0.png" alt="">Королевская Гвардия</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_rep21_1"><img class="base" src="../icons/reputation_rep21_1.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_rep21_2"><img class="base" src="../icons/reputation_rep21_7.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_rep21_3"><img class="base" src="../icons/reputation_rep21_10.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Экзорцист</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_rep17_1"><img class="base" src="../icons/reputation_rep17_1.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_rep17_2"><img class="base" src="../icons/reputation_rep17_7.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_rep17_3"><img class="base" src="../icons/reputation_rep17_9.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Чародей</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_rep19_1"><img class="base" src="../icons/reputation_rep19_0.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_rep19_2"><img class="base" src="../icons/reputation_rep19_3.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_5_rep19_3"><img class="base" src="../icons/reputation_rep19_4.png" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div></div></div>
+</div>
+
+<h3 class="h3">Синий попугай</h3>
+<div class="item-row" data-id="pirate_day_2013_reputation_boost_10_box">
+  <div class="gico sz-lg"><img class="base" src="../icons/parrot_weapon.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Синий попугай</span><span class="item-rar rar-medium">Редкое</span><span class="item-id">pirate_day_2013_reputation_boost_10_box</span></div>
+    <p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>. Орехи: <b>Мелкие</b> <span class="item-id">…10_1_key</span> / <b>Средние</b> <span class="item-id">…10_5_key</span> / <b>Крупные</b> <span class="item-id">…10_key</span> — дают советы белого / зелёного / синего попугая.</p>
+  </div>
+</div>
+<div class="adv-wrap">
+  <div class="adv-head"><span>Совет</span><span>1 д.</span><span>5 д.</span><span>10 д.</span></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pvp2_0.png" alt="">Гладиатор</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pvp2_1"><img class="base" src="../icons/reputation_pvp2_1.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pvp2_2"><img class="base" src="../icons/reputation_pvp2_5.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pvp2_3"><img class="base" src="../icons/reputation_pvp2_6.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pvp1_0.png" alt="">Завоеватель</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pvp1_1"><img class="base" src="../icons/reputation_pvp1_1.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pvp1_2"><img class="base" src="../icons/reputation_pvp1_6.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pvp1_3"><img class="base" src="../icons/reputation_pvp1_7.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pvp6_0.png" alt="">Властитель земель</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pvp6_1"><img class="base" src="../icons/reputation_pvp6_1.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pvp6_2"><img class="base" src="../icons/reputation_pvp6_7.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pvp6_3"><img class="base" src="../icons/reputation_pvp6_9.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pve1_0.png" alt="">Археолог</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pve1_1"><img class="base" src="../icons/reputation_pve1_1.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pve1_2"><img class="base" src="../icons/reputation_pve1_7.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pve1_3"><img class="base" src="../icons/reputation_pve1_8.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pve2_0.png" alt="">Ведьмак</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pve2_1"><img class="base" src="../icons/reputation_pve2_1.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pve2_2"><img class="base" src="../icons/reputation_pve2_8.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pve2_3"><img class="base" src="../icons/reputation_pve2_10.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_pve4_0.png" alt="">Охотник на демонов</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pve4_1"><img class="base" src="../icons/reputation_pve4_1.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pve4_2"><img class="base" src="../icons/reputation_pve4_7.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pve4_3"><img class="base" src="../icons/reputation_pve4_9.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Дрессировщик</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pve5_1"><img class="base" src="../icons/reputation_pve5_1.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pve5_2"><img class="base" src="../icons/reputation_pve5_6.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_pve5_3"><img class="base" src="../icons/reputation_pve5_7.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat"><img src="../icons/cards_reputation_rep21_0.png" alt="">Королевская Гвардия</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_rep21_1"><img class="base" src="../icons/reputation_rep21_1.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_rep21_2"><img class="base" src="../icons/reputation_rep21_7.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_rep21_3"><img class="base" src="../icons/reputation_rep21_10.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Экзорцист</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_rep17_1"><img class="base" src="../icons/reputation_rep17_1.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_rep17_2"><img class="base" src="../icons/reputation_rep17_7.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_rep17_3"><img class="base" src="../icons/reputation_rep17_9.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Чародей</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_rep19_1"><img class="base" src="../icons/reputation_rep19_0.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_rep19_2"><img class="base" src="../icons/reputation_rep19_3.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_10_rep19_3"><img class="base" src="../icons/reputation_rep19_4.png" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div></div></div>
+</div>
+
+<h3 class="h3">Фиолетовый попугай</h3>
+<div class="item-row" data-id="pirate_day_2013_reputation_boost_15_box">
+  <div class="gico sz-lg"><img class="base" src="../icons/parrot_weapon.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Фиолетовый попугай</span><span class="item-rar rar-high">Героическое</span><span class="item-id">pirate_day_2013_reputation_boost_15_box</span></div>
+    <p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>. Орехи: <b>Мелкие/Средние/Крупные</b> — советы белого/зелёного/синего. <b>Огромные</b> <span class="item-id">…15_15_key</span> — боевые советы ниже.</p>
+  </div>
+</div>
+<p style="font-size:13px;color:var(--txt3);margin-bottom:8px">Боевые советы (из огромных орехов):</p>
+<div class="adv-wrap">
+  <div class="adv-head"><span>Характеристика</span><span>1 д.</span><span>5 д.</span><span>10 д.</span></div>
+  <div class="adv-row"><div class="adv-cat">Атака</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_attack_1"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_attack_2"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_attack_3"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Защита</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_defense_1"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_defense_2"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_defense_3"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Здоровье</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_health_1"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_health_2"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_health_3"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Исходящий урон</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_damage_sent_1"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_damage_sent_2"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_damage_sent_3"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div></div>
+  <div class="adv-row"><div class="adv-cat">Входящий урон</div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_damage_received_1"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_damage_received_2"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div><div class="adv-cell"><div class="gico sz-sm" data-id="pirate_day_2013_reputation_boost_15_damage_received_3"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div></div></div>
+</div>
+<p style="font-size:13px;color:var(--txt3);margin-bottom:8px">Редкие советы:</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
+  <div class="item-row" style="margin:0;flex:1;min-width:200px" data-id="pirate_day_2013_reputation_boost_15_all">
+    <div class="gico sz-sm"><img class="base" src="../icons/pirate_day_offhand_feather.jpg" alt=""><img class="fr" src="../frames/border_exclusive.png" alt=""></div>
+    <div class="item-b"><div class="item-top"><span class="item-name" style="font-size:14px">Совет фиолетового попугая</span><span class="item-rar rar-exclusive">Легендарное</span></div><p class="item-desc" style="font-size:13px">Все характеристики · 14 дней<br><span class="item-id">pirate_day_2013_reputation_boost_15_all</span></p></div>
+  </div>
+  <div class="item-row" style="margin:0;flex:1;min-width:200px" data-id="pirate_day_2013_reputation_boost_10_allrep_3">
+    <div class="gico sz-sm"><img class="base" src="../icons/parrot_zombie_weapon.jpg" alt=""><img class="fr" src="../frames/border_exclusive.png" alt=""></div>
+    <div class="item-b"><div class="item-top"><span class="item-name" style="font-size:14px">Тайна попугая</span><span class="item-rar rar-exclusive">Легендарное</span></div><p class="item-desc" style="font-size:13px">Все репутации · 14 дней<br><span class="item-id">pirate_day_2013_reputation_boost_10_allrep_3</span></p></div>
+  </div>
+</div>
+
+<!-- §05 БОЛЬ 3-4 -->
+<h2 class="h2" id="pain34"><span class="s">§ 05</span> Боль для <em>3–4 уровня</em></h2>
+<hr class="h2-rule">
+<p>Цепочка апгрейдов для персонажей 3 и 4 уровня.</p>
+
+<div class="item-row" data-id="mob_scroll_damage_dot_2_1">
+  <div class="gico sz-lg"><img class="base" src="../icons/pain_scroll.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Свиток боли</span><span class="item-id">mob_scroll_damage_dot_2_1</span></div></div>
+</div>
+<div class="chain-arrow"><span>+ Книга корсарских пыток</span></div>
+<div class="item-row" data-id="pirate_day_2014_scroll_damage_dot_2_1_upgrade">
+  <div class="gico sz-lg"><img class="base" src="../icons/grimoire_flame.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Книга корсарских пыток</span><span class="item-id">pirate_day_2014_scroll_damage_dot_2_1_upgrade</span></div><p class="item-desc">Покупается за <span class="todo">___</span> монет.</p></div>
+</div>
+<div class="chain-arrow"><span>даёт</span></div>
+<div class="item-row" data-id="pirate_day_2014_scroll_damage_dot_2_1">
+  <div class="gico sz-lg"><img class="base" src="../icons/pirate_day_2014_pain_scroll.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Корсарский свиток боли</span><span class="item-id">pirate_day_2014_scroll_damage_dot_2_1</span></div></div>
+</div>
+<div class="chain-arrow"><span>+ Корсарская эссенция страданий</span></div>
+<div class="item-row" data-id="pirate_day_2015_scroll_damage_dot_2_1_upgrade">
+  <div class="gico sz-lg"><img class="base" src="../icons/bottle_of_pain.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Корсарская эссенция страданий</span><span class="item-id">pirate_day_2015_scroll_damage_dot_2_1_upgrade</span></div><p class="item-desc">Покупается за <span class="todo">___</span> монет.</p></div>
+</div>
+<div class="chain-arrow"><span>даёт</span></div>
+<div class="item-row" data-id="pirate_day_2015_scroll_damage_dot_2_1">
+  <div class="gico sz-lg"><img class="base" src="../icons/pirate_day_2015_pain_scroll.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Тёмный корсарский свиток боли</span><span class="item-id">pirate_day_2015_scroll_damage_dot_2_1</span></div></div>
+</div>
+<div class="chain-arrow"><span>+ Корсарская эссенция агонии</span></div>
+<div class="item-row" data-id="pirate_day_2017_scroll_damage_dot_2_1_upgrade">
+  <div class="gico sz-lg"><img class="base" src="../icons/bottle_of_pain.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Корсарская эссенция агонии</span><span class="item-rar rar-medium">Редкое</span><span class="item-id">pirate_day_2017_scroll_damage_dot_2_1_upgrade</span></div><p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>.</p></div>
+</div>
+<div class="chain-arrow"><span>даёт</span></div>
+<div class="item-row" data-id="pirate_day_2017_scroll_damage_dot_2_1">
+  <div class="gico sz-lg"><img class="base" src="../icons/pirate_day_2015_pain_scroll.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Корсарский свиток жгучей боли</span><span class="item-rar rar-medium">Редкое</span><span class="item-id">pirate_day_2017_scroll_damage_dot_2_1</span></div></div>
+</div>
+
+<h3 class="h3">Квест «Опасная наука» — Корсарская книга истязаний</h3>
+<p>Принесите все три апгрейда и <b>Костюм Резиновой Утки (героический)</b> Энжелу Ноббсу:</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px">
+  <div class="gico sz-sm" data-id="pirate_day_2014_scroll_damage_dot_2_1_upgrade"><img class="base" src="../icons/grimoire_flame.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="gico sz-sm" data-id="pirate_day_2015_scroll_damage_dot_2_1_upgrade"><img class="base" src="../icons/bottle_of_pain.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="gico sz-sm" data-id="pirate_day_2017_scroll_damage_dot_2_1_upgrade"><img class="base" src="../icons/bottle_of_pain.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div>
+  <div class="gico sz-sm" data-id="pirate_day_beach_3"><img class="base" src="../icons/rubber_duck_dress.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
+</div>
+<div class="chain-arrow"><span>награда квеста</span></div>
+<div class="item-row" data-id="pirate_day_2017_scroll_damage_dot_2_1_upgrade_all">
+  <div class="gico sz-lg"><img class="base" src="../icons/grimoire_flame.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Корсарская книга истязаний</span><span class="item-rar rar-medium">Редкое</span><span class="item-id">pirate_day_2017_scroll_damage_dot_2_1_upgrade_all</span></div><p class="item-desc">Прокачивает Свиток боли сразу в Корсарский свиток жгучей боли, минуя цепочку.</p></div>
+</div>
+
+<!-- §06 БОЛЬ 5+ -->
+<h2 class="h2" id="pain5"><span class="s">§ 06</span> Боль для <em>5+ уровня</em></h2>
+<hr class="h2-rule">
+<p>Аналогичная цепочка для персонажей 5 уровня и выше.</p>
+
+<div class="item-row" data-id="mob_scroll_damage_dot_5_5">
+  <div class="gico sz-lg"><img class="base" src="../icons/pain_scroll.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Свиток боли</span><span class="item-rar rar-low">Обычное</span><span class="item-id">mob_scroll_damage_dot_5_5</span></div></div>
+</div>
+<div class="chain-arrow"><span>+ Книга пиратских пыток</span></div>
+<div class="item-row" data-id="pirate_day_2014_scroll_damage_dot_5_5_upgrade">
+  <div class="gico sz-lg"><img class="base" src="../icons/grimoire_flame.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Книга пиратских пыток</span><span class="item-rar rar-low">Обычное</span><span class="item-id">pirate_day_2014_scroll_damage_dot_5_5_upgrade</span></div><p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>.</p></div>
+</div>
+<div class="chain-arrow"><span>даёт</span></div>
+<div class="item-row" data-id="pirate_day_2014_scroll_damage_dot_5_5">
+  <div class="gico sz-lg"><img class="base" src="../icons/pirate_day_2014_pain_scroll.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Пиратский свиток боли</span><span class="item-rar rar-low">Обычное</span><span class="item-id">pirate_day_2014_scroll_damage_dot_5_5</span></div></div>
+</div>
+<div class="chain-arrow"><span>+ Пиратская эссенция страданий</span></div>
+<div class="item-row" data-id="pirate_day_2015_scroll_damage_dot_5_5_upgrade">
+  <div class="gico sz-lg"><img class="base" src="../icons/bottle_of_pain.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Пиратская эссенция страданий</span><span class="item-rar rar-low">Обычное</span><span class="item-id">pirate_day_2015_scroll_damage_dot_5_5_upgrade</span></div><p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>.</p></div>
+</div>
+<div class="chain-arrow"><span>даёт</span></div>
+<div class="item-row" data-id="pirate_day_2015_scroll_damage_dot_5_5">
+  <div class="gico sz-lg"><img class="base" src="../icons/pirate_day_2015_pain_scroll.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Тёмный пиратский свиток боли</span><span class="item-rar rar-low">Обычное</span><span class="item-id">pirate_day_2015_scroll_damage_dot_5_5</span></div></div>
+</div>
+<div class="chain-arrow"><span>+ Пиратская эссенция агонии</span></div>
+<div class="item-row" data-id="pirate_day_2017_scroll_damage_dot_5_5_upgrade">
+  <div class="gico sz-lg"><img class="base" src="../icons/bottle_of_pain.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Пиратская эссенция агонии</span><span class="item-rar rar-high">Героическое</span><span class="item-id">pirate_day_2017_scroll_damage_dot_5_5_upgrade</span></div><p class="item-desc">Покупается за <span class="todo">___</span> монет или <span class="todo">___</span> руб. Ранг: <span class="todo">___</span>.</p></div>
+</div>
+<div class="chain-arrow"><span>даёт</span></div>
+<div class="item-row" data-id="pirate_day_2017_scroll_damage_dot_5_5">
+  <div class="gico sz-lg"><img class="base" src="../icons/pirate_day_2015_pain_scroll.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Пиратский свиток жгучей боли</span><span class="item-rar rar-high">Героическое</span><span class="item-id">pirate_day_2017_scroll_damage_dot_5_5</span></div></div>
+</div>
+
+<h3 class="h3">Квест «Опасная наука» — Пиратская книга истязаний</h3>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px">
+  <div class="gico sz-sm" data-id="pirate_day_2014_scroll_damage_dot_5_5_upgrade"><img class="base" src="../icons/grimoire_flame.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
+  <div class="gico sz-sm" data-id="pirate_day_2015_scroll_damage_dot_5_5_upgrade"><img class="base" src="../icons/bottle_of_pain.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
+  <div class="gico sz-sm" data-id="pirate_day_2017_scroll_damage_dot_5_5_upgrade"><img class="base" src="../icons/bottle_of_pain.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
+  <div class="gico sz-sm" data-id="pirate_day_beach_3"><img class="base" src="../icons/rubber_duck_dress.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
+</div>
+<div class="chain-arrow"><span>награда квеста</span></div>
+<div class="item-row" data-id="pirate_day_2017_scroll_damage_dot_5_5_upgrade_all">
+  <div class="gico sz-lg"><img class="base" src="../icons/grimoire_flame.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Пиратская книга истязаний</span><span class="item-rar rar-high">Героическое</span><span class="item-id">pirate_day_2017_scroll_damage_dot_5_5_upgrade_all</span></div><p class="item-desc">Прокачивает Свиток боли сразу в Пиратский свиток жгучей боли, минуя цепочку.</p></div>
+</div>
+
+</article>
 </div>
 
 <footer class="ftr">
   <div class="ftr-l">Сделано с любовью к Королевству · не является официальным ресурсом</div>
-  <div class="ftr-r"><a href="#">GitHub</a><a href="#">Telegram</a><a href="#">Дискорд</a></div>
+  <div class="ftr-r"><a href="https://github.com/sriblo/korolevstvo">GitHub</a></div>
 </footer>
+
+<div class="tip" id="tip"></div>
 
 <script src="../nav.js"></script>
 <script>
 (function(){
-  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
-  var map = {};
-  links.forEach(function(a){ var id=a.getAttribute('href').slice(1); var el=document.getElementById(id); if(el) map[id]=a; });
-  var sections = Object.keys(map).map(function(id){ return document.getElementById(id); });
+  var IDX={}, LOCALE={}, dbReady=false;
+  var QUAL_LABEL={white:'Обычное',green:'Необычное',blue:'Редкое',purple:'Героическое',orange:'Эпическое',red:'Легендарное'};
+  var QUAL_COLOR={white:'var(--r-none)',green:'var(--r-low)',blue:'var(--r-medium)',purple:'var(--r-high)',orange:'var(--r-special)',red:'var(--r-exclusive)'};
+  var STAT_LABEL={max_health:'Здоровье',mana:'Мана',change_health_regeneration_speed:'Регенерация здоровья',change_absorb_critical:'Поглощение крита',change_damage_sent_percent:'Исходящий урон',change_damage_received_percent:'Входящий урон',attack:'Атака',defense:'Защита',health:'Здоровье',rep_received_percent:'Репутация',duration:'Длительность',damage_sent:'Исходящий урон',damage_received:'Входящий урон'};
 
-  var obs = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        links.forEach(function(l){ l.classList.remove('on'); });
-        var a = map[e.target.id]; if(a) a.classList.add('on');
-      }
-    });
-  }, { rootMargin:'-90px 0px -72% 0px', threshold:0 });
-  sections.forEach(function(s){ obs.observe(s); });
+  Promise.all([
+    fetch('../db/buffs.json').then(function(r){return r.json()}),
+    fetch('../db/equipment_none.json').then(function(r){return r.json()}),
+    fetch('../db/item_locale_ru.json').then(function(r){return r.json()})
+  ]).then(function(res){
+    res[0].forEach(function(it){IDX[it.id]=it});
+    res[1].forEach(function(it){IDX[it.id]=it});
+    LOCALE=res[2]; dbReady=true;
+  }).catch(function(){});
 
-  var bar = document.getElementById('progbar'), txt = document.getElementById('progtxt');
-  var art = document.querySelector('.article');
-  function upd(){
-    var rect = art.getBoundingClientRect();
-    var total = art.offsetHeight - window.innerHeight + 200;
-    var passed = Math.min(Math.max(-rect.top + 120, 0), total);
-    var pct = total > 0 ? Math.round(passed/total*100) : 0;
-    pct = Math.max(0, Math.min(100, pct));
-    bar.style.width = pct + '%';
-    txt.textContent = 'Прочитано ' + pct + '%';
+  var tip=document.getElementById('tip'), tipActive=false;
+
+  function showTip(id,e){
+    var item=IDX[id]||{}, loc=LOCALE[id]||{};
+    var name=loc.name||id, qual=item.quality||'', stats=item.stats||{}, action=loc.action||'';
+    var h='<div class="tip-name">'+name+'</div>';
+    if(qual) h+='<span class="tip-rar" style="color:'+(QUAL_COLOR[qual]||'var(--txt3)')+'">'+( QUAL_LABEL[qual]||qual)+'</span>';
+    var skeys=Object.keys(stats).filter(function(k){return k!=='duration'});
+    skeys.forEach(function(k){var v=stats[k],lbl=STAT_LABEL[k]||k,val=v%1===0?v:Math.round(v*10)/10;h+='<div class="tip-stat"><span>'+lbl+'</span><b>'+val+'</b></div>'});
+    if(stats.duration) h+='<div class="tip-stat"><span>Длительность</span><b>'+stats.duration+' дн.</b></div>';
+    if(action){
+      h+='<hr class="tip-sep">';
+      var txt=action.replace(/<br\s*\/?>/gi,' ').replace(/<[^>]*>/g,'');
+      Object.keys(stats).forEach(function(k){var v=stats[k],val=v%1===0?v:Math.round(v*10)/10;txt=txt.replace(new RegExp('#'+k+'#','g'),val)});
+      h+='<div class="tip-action">'+txt+'</div>';
+    }
+    tip.innerHTML=h; tipActive=true; tip.classList.add('on'); moveTip(e);
   }
-  window.addEventListener('scroll', upd, {passive:true});
-  window.addEventListener('resize', upd); upd();
+
+  function moveTip(e){
+    var x=e.clientX+14,y=e.clientY+14,tw=tip.offsetWidth,th=tip.offsetHeight;
+    if(x+tw>window.innerWidth-8) x=e.clientX-tw-10;
+    if(y+th>window.innerHeight-8) y=e.clientY-th-10;
+    tip.style.left=x+'px'; tip.style.top=y+'px';
+  }
+
+  document.addEventListener('mouseover',function(e){
+    var el=e.target.closest('[data-id]');
+    if(!el||!dbReady) return;
+    var id=el.getAttribute('data-id');
+    if(!IDX[id]&&!LOCALE[id]) return;
+    showTip(id,e);
+  });
+  document.addEventListener('mouseout',function(e){
+    var el=e.target.closest('[data-id]');
+    if(el){tip.classList.remove('on');tipActive=false}
+  });
+  document.addEventListener('mousemove',function(e){if(tipActive) moveTip(e)});
+
+  /* TOC */
+  var links=[].slice.call(document.querySelectorAll('#toc a')), smap={};
+  links.forEach(function(a){var id=a.getAttribute('href').slice(1),el=document.getElementById(id);if(el) smap[id]={a:a,el:el}});
+  var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(l){l.classList.remove('on')});var s=smap[e.target.id];if(s) s.a.classList.add('on')}})},{rootMargin:'-90px 0px -72% 0px',threshold:0});
+  Object.keys(smap).forEach(function(k){obs.observe(smap[k].el)});
+
+  /* Progress */
+  var bar=document.getElementById('progbar'),ptxt=document.getElementById('progtxt'),art=document.querySelector('.article');
+  function upd(){var r=art.getBoundingClientRect(),t=art.offsetHeight-window.innerHeight+200,p=t>0?Math.round(Math.min(Math.max(-r.top+120,0),t)/t*100):0;bar.style.width=p+'%';ptxt.textContent='Прочитано '+p+'%'}
+  window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);upd();
 })();
 </script>
-
 </body>
 </html>
