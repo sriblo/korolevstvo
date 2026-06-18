@@ -132,6 +132,12 @@ a{color:inherit;text-decoration:none}
 .tip-sep{border:none;border-top:1px solid var(--line);margin:8px 0}
 .tip-action{font-size:12px;line-height:1.55;color:var(--txt2);margin-top:8px}
 
+/* Numbered list */
+.num-list{list-style:none;padding:0;counter-reset:nl;margin:0 0 24px}
+.num-list li{counter-increment:nl;display:flex;align-items:flex-start;gap:14px;font-family:var(--serif);font-size:17px;line-height:1.65;color:var(--txt2);margin-bottom:12px}
+.num-list li::before{content:counter(nl);flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--line2);color:var(--txt);font-family:var(--sans);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.num-list li b{color:var(--txt)}
+
 /* Calc card */
 .calc-card{display:flex;align-items:center;justify-content:space-between;gap:20px;background:var(--bg2);border:1px solid var(--line2);border-left:3px solid var(--gold-d);border-radius:10px;padding:18px 22px;margin:0 0 20px;text-decoration:none;transition:border-color .12s,background .12s}
 .calc-card:hover{border-color:var(--gold);background:var(--bg3)}
@@ -177,13 +183,7 @@ a{color:inherit;text-decoration:none}
       <span style="color:var(--txt)">День Пирата</span>
     </div>
     <div class="eyebrow">Гайд по ивенту</div>
-    <h1 class="h1">День <em>Пирата</em></h1>
-    <p class="lede">Квесты, монеты островного племени и полный разбор наград — <b>фляжка, попугаи и усиления свитков боли</b>.</p>
-    <div class="hero-meta">
-      <div class="hm"><span class="hm-k">Период</span><span class="hm-v">14–28 июня</span></div>
-      <div class="hm"><span class="hm-k">Монет в день</span><span class="hm-v">3 092</span></div>
-      <div class="hm"><span class="hm-k">Статус</span><span class="hm-v live">Актуально</span></div>
-    </div>
+    <h1 class="h1">День Пирата</h1>
   </div>
 </section>
 
@@ -209,15 +209,13 @@ a{color:inherit;text-decoration:none}
 <!-- §01 ОБЗОР -->
 <h2 class="h2" id="overview"><span class="s">§ 01</span> Обзор ивента</h2>
 <hr class="h2-rule">
-<p>«День пирата» — традиционное июньское событие, которое проходит с 14 по 28 июня включительно.</p>
-<p>Что можно получить за участие?</p>
-<ul style="font-family:var(--serif);font-size:17px;line-height:1.75;color:var(--txt2);margin:0 0 20px;padding-left:24px">
-  <li><b style="color:var(--txt)">Пиратская фляжка</b> — постоянный предмет экипировки.</li>
-  <li><b style="color:var(--txt)">Попугай</b> — питомец, дающий «Советы» (баффы на прирост репутации).</li>
-  <li><b style="color:var(--txt)">Усиления для Свитков боли</b> — Книги пыток, Эссенции страданий и агонии, которые навсегда апнут ваши свитки до Корсарских или Пиратских.</li>
-  <li><b style="color:var(--txt)">Легендарное второе оружие</b> — временный предмет экипировки (не уступающий оружию Аррана), который добывается с помощью карт сокровищ и Проклятого компаса (актуально до 31 июля).</li>
-  <li><b style="color:var(--txt)">Коллекция черных меток</b> — временный предмет (до 31 августа), меняющий облик персонажа на легендарного пирата и дающий баффы в PvP в обычных локациях и на Аренах.</li>
-</ul>
+<ol class="num-list">
+  <li><b>Пиратская фляжка</b> — постоянный предмет экипировки.</li>
+  <li><b>Попугай</b> — питомец, дающий «Советы» (баффы на прирост репутации).</li>
+  <li><b>Усиления для Свитков боли</b> — Книги пыток, Эссенции страданий и агонии, которые навсегда апнут ваши свитки до Корсарских или Пиратских.</li>
+  <li><b>Легендарное второе оружие</b> — временный предмет экипировки (не уступающий оружию Аррана), который добывается с помощью карт сокровищ и Проклятого компаса (актуально до 31 июля).</li>
+  <li><b>Коллекция черных меток</b> — временный предмет (до 31 августа), меняющий облик персонажа на легендарного пирата и дающий баффы в PvP в обычных локациях и на Аренах.</li>
+</ol>
 <a class="calc-card" href="../den_pirata/pirat_calc.html">
   <div class="calc-card-l">
     <div class="calc-card-tag">Калькулятор</div>
