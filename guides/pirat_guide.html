@@ -58,12 +58,12 @@ a{color:inherit;text-decoration:none}
 .aside-foot small{font-size:11px;color:var(--txt3);letter-spacing:.04em}
 
 .article{padding:48px 0 80px;max-width:760px;min-width:0}
-.h2{font-family:var(--serif);font-size:32px;font-weight:500;letter-spacing:-.02em;color:var(--txt);padding-top:52px;margin-bottom:8px;scroll-margin-top:90px;line-height:1.12;display:flex;align-items:baseline;gap:14px}
+.h2{font-family:var(--serif);font-size:32px;font-weight:500;letter-spacing:-.02em;color:#fff;padding-top:52px;margin-bottom:8px;scroll-margin-top:90px;line-height:1.12;display:flex;align-items:baseline;gap:14px}
 .article>.h2:first-child{padding-top:0}
-.h2 .s{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--gold-d);font-weight:400;flex-shrink:0}
-.h2 em{font-style:italic;color:var(--gold-l);font-weight:400}
+.h2 .s{font-family:var(--serif);font-style:normal;font-size:15px;color:#fff;font-weight:500;flex-shrink:0}
+.h2 em{font-style:normal;color:#fff;font-weight:500}
 .h2-rule{border:none;border-top:1px solid var(--line);margin:0 0 28px}
-.h3{font-family:var(--serif);font-size:21px;font-weight:500;color:var(--txt);margin:38px 0 14px;letter-spacing:-.01em}
+.h3{font-family:var(--serif);font-size:21px;font-weight:500;color:#fff;margin:38px 0 14px;letter-spacing:-.01em}
 .article p{font-family:var(--serif);font-size:17px;line-height:1.75;color:var(--txt2);margin-bottom:20px}
 .article p b{color:var(--txt);font-weight:600}
 
@@ -208,10 +208,10 @@ a{color:inherit;text-decoration:none}
   <nav class="toc" id="toc">
     <a href="#overview"><span class="ti">01</span>Обзор</a>
     <a href="#rep"><span class="ti">02</span>Репутация</a>
-    <a href="#ammo"><span class="ti">03</span>Расходка</a>
-    <a href="#quests"><span class="ti">04</span>Квесты</a>
-    <a href="#flask"><span class="ti">05</span>Фляжка</a>
-    <a href="#parrots"><span class="ti">06</span>Попугаи</a>
+    <a href="#quests"><span class="ti">03</span>Квесты</a>
+    <a href="#location"><span class="ti">04</span>Локация</a>
+    <a href="#ammo"><span class="ti">05</span>Расходка</a>
+    <a href="#rewards"><span class="ti">06</span>Награды</a>
     <a href="#pain34"><span class="ti">07</span>Боль 3–4</a>
     <a href="#pain5"><span class="ti">08</span>Боль 5+</a>
   </nav>
@@ -242,6 +242,68 @@ a{color:inherit;text-decoration:none}
   <div class="calc-card-go">Открыть →</div>
 </a>
 
+<!-- РЕПУТАЦИЯ -->
+<h2 class="h2" id="rep">Репутация Корсара</h2>
+<hr class="h2-rule">
+<p>Игроки зарабатывают репутацию Корсара, покупая бочонки за рубины или за монеты, полученные в Порту-Флинн за выполнение заданий. За прокачанную репутацию они получают подарок на личную страницу.</p>
+<p>Репутация Корсара открывает доступ к покупке лучших кораблей, расходки и предметов.</p>
+
+<h3 class="h3">Ранги</h3>
+<table class="qtable">
+  <thead><tr><th>Ранг</th><th>Звание</th><th style="text-align:right">Требуемые очки</th></tr></thead>
+  <tbody>
+    <tr><td><span class="rbadge">0</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_rep18_0.png" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Сухопутная крыса</span></div></td><td class="rew-r">0</td></tr>
+    <tr><td><span class="rbadge rb1">1</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_rep18_1.png" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Речная крыса</span></div></td><td class="rew-r">8 000</td></tr>
+    <tr><td><span class="rbadge rb2">2</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_rep18_2.png" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Абордажный пёс</span></div></td><td class="rew-r">19 000</td></tr>
+    <tr><td><span class="rbadge rb3">3</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_rep18_3.jpg" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Морской волк</span></div></td><td class="rew-r">27 000</td></tr>
+    <tr><td><span class="rbadge rb4">4</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_rep18_4.jpg" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Гроза кораблей</span></div></td><td class="rew-r">46 000</td></tr>
+  </tbody>
+</table>
+
+<h3 class="h3">Как прокачивать</h3>
+<div class="item-row" data-id="pirate_day_2013_repitem">
+  <div class="gico sz-lg"><img class="base" src="../icons/barrel_quest.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Бочонок рома</span></div>
+    <p class="item-desc">113 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> · +300 очков репутации Корсара</p>
+  </div>
+</div>
+<div class="item-row" data-id="pirate_day_2013_repitem_day">
+  <div class="gico sz-lg"><img class="base" src="../icons/barrel_quest.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Бочонок рома (×13)</span></div>
+    <p class="item-desc">1 469 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> · +3 900 очков репутации Корсара</p>
+  </div>
+</div>
+<div class="item-row" data-id="pirate_day_2013_repitem_pack">
+  <div class="gico sz-lg"><img class="base" src="../icons/barrel_quest.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
+  <div class="item-b">
+    <div class="item-top"><span class="item-name">Бочонок рома (скидка 40%)</span></div>
+    <p class="item-desc"><span class="todo">___</span> <img class="cico" src="../icons/currency_ruby_small.png" alt=""> · +5 000 очков репутации Корсара</p>
+  </div>
+</div>
+
+<!-- §03 КВЕСТЫ -->
+<h2 class="h2" id="quests">Квесты и монеты</h2>
+<hr class="h2-rule">
+<table class="qtable">
+  <thead><tr><th>Квест</th><th>Задание</th><th>Монеты</th></tr></thead>
+  <tbody>
+    <tr><td><div class="qn">Скромный подарок</div><span class="q-tag once">Разовый</span></td><td>—</td><td class="rew-r">1 001</td></tr>
+    <tr><td><div class="qn">Обломки</div><span class="q-tag daily">Ежедневный</span></td><td>Собрать 10 прочных обломков</td><td class="rew-r">420</td></tr>
+    <tr><td><div class="qn">Ремни с черепами</div><span class="q-tag daily">Ежедневный</span></td><td>Собрать 3 ремня</td><td class="rew-r">720</td></tr>
+    <tr><td><div class="qn">Вечеринка</div><span class="q-tag daily">Ежедневный</span></td><td>Добыть 3 сирены</td><td class="rew-r">420</td></tr>
+    <tr><td><div class="qn">Морское колдовство</div><span class="q-tag daily">Ежедневный</span></td><td>Убить 5 спрутов</td><td class="rew-r">420</td></tr>
+    <tr><td><div class="qn">Угроза блокады</div><span class="q-tag daily">Ежедневный</span></td><td>Уничтожить 10 кораблей</td><td class="rew-r">420</td></tr>
+    <tr><td><div class="qn">Морской дьявол</div><span class="q-tag daily">Ежедневный</span></td><td>Убить 1 Морского Дьявола</td><td class="rew-r">692</td></tr>
+    <tr class="qtotal-row"><td colspan="2">Итого ежедневно (6 квестов)</td><td class="qtotal">3 092</td></tr>
+  </tbody>
+</table>
+
+<!-- §04 ЛОКАЦИЯ -->
+<h2 class="h2" id="location">Локация</h2>
+<hr class="h2-rule">
+
 <h3 class="h3">Порт-Флинн</h3>
 <p>Чтобы попасть в Порт-Флинн, поговорите с Пиратом-проводником в городе своей расы.</p>
 <div class="loc-maps">
@@ -257,6 +319,10 @@ a{color:inherit;text-decoration:none}
 
 <h3 class="h3">Как выйти в Открытое море</h3>
 <p>Чтобы пуститься в плавание, нужно приобрести корабль у Боцмана Рейнольдса, в Легендарной лавке или в Королевской лавке. Существует несколько видов кораблей, которые становятся доступны по мере того, как вы зарабатываете репутацию корсара.</p>
+
+<!-- §05 РАСХОДКА -->
+<h2 class="h2" id="ammo">Расходка</h2>
+<hr class="h2-rule">
 
 <h3 class="h3">Корабли</h3>
 <p>Корабли можно купить у Боцмана Рейнольдса или в королевской и легендарной лавках.</p>
@@ -321,50 +387,6 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<!-- РЕПУТАЦИЯ -->
-<h2 class="h2" id="rep">Репутация Корсара</h2>
-<hr class="h2-rule">
-<p>Игроки зарабатывают репутацию Корсара, покупая бочонки за рубины или за монеты, полученные в Порту-Флинн за выполнение заданий. За прокачанную репутацию они получают подарок на личную страницу.</p>
-<p>Репутация Корсара открывает доступ к покупке лучших кораблей, расходки и предметов.</p>
-
-<h3 class="h3">Ранги</h3>
-<table class="qtable">
-  <thead><tr><th>Ранг</th><th>Звание</th><th style="text-align:right">Требуемые очки</th></tr></thead>
-  <tbody>
-    <tr><td><span class="rbadge">0</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_rep18_0.png" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Сухопутная крыса</span></div></td><td class="rew-r">0</td></tr>
-    <tr><td><span class="rbadge rb1">1</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_rep18_1.png" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Речная крыса</span></div></td><td class="rew-r">8 000</td></tr>
-    <tr><td><span class="rbadge rb2">2</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_rep18_2.png" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Абордажный пёс</span></div></td><td class="rew-r">19 000</td></tr>
-    <tr><td><span class="rbadge rb3">3</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_rep18_3.jpg" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Морской волк</span></div></td><td class="rew-r">27 000</td></tr>
-    <tr><td><span class="rbadge rb4">4</span></td><td><div style="display:flex;align-items:center;gap:10px"><img src="../icons/reputation_rep18_4.jpg" style="width:32px;height:32px;image-rendering:pixelated"><span class="qn">Гроза кораблей</span></div></td><td class="rew-r">46 000</td></tr>
-  </tbody>
-</table>
-
-<h3 class="h3">Как прокачивать</h3>
-<div class="item-row" data-id="pirate_day_2013_repitem">
-  <div class="gico sz-lg"><img class="base" src="../icons/barrel_quest.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
-  <div class="item-b">
-    <div class="item-top"><span class="item-name">Бочонок рома</span></div>
-    <p class="item-desc">113 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> · +300 очков репутации Корсара</p>
-  </div>
-</div>
-<div class="item-row" data-id="pirate_day_2013_repitem_day">
-  <div class="gico sz-lg"><img class="base" src="../icons/barrel_quest.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
-  <div class="item-b">
-    <div class="item-top"><span class="item-name">Бочонок рома (×13)</span></div>
-    <p class="item-desc">1 469 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> · +3 900 очков репутации Корсара</p>
-  </div>
-</div>
-<div class="item-row" data-id="pirate_day_2013_repitem_pack">
-  <div class="gico sz-lg"><img class="base" src="../icons/barrel_quest.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
-  <div class="item-b">
-    <div class="item-top"><span class="item-name">Бочонок рома (скидка 40%)</span></div>
-    <p class="item-desc"><span class="todo">___</span> <img class="cico" src="../icons/currency_ruby_small.png" alt=""> · +5 000 очков репутации Корсара</p>
-  </div>
-</div>
-
-<!-- §03 РАСХОДКА -->
-<h2 class="h2" id="ammo">Расходка</h2>
-<hr class="h2-rule">
 <p>Для того чтобы сражаться, вам понадобится расходка. В море это:</p>
 <ul class="plain-list">
   <li>Ядра</li>
@@ -420,26 +442,11 @@ a{color:inherit;text-decoration:none}
   <div class="gico sz-lg" data-id="pirate_day_2013_healpot_4"><img class="base" src="../icons/boards.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
 </div>
 
-<!-- §04 КВЕСТЫ -->
-<h2 class="h2" id="quests"><em>Квесты</em> и монеты</h2>
+<!-- §06 НАГРАДЫ -->
+<h2 class="h2" id="rewards">Награды</h2>
 <hr class="h2-rule">
-<table class="qtable">
-  <thead><tr><th>Квест</th><th>Задание</th><th>Монеты</th></tr></thead>
-  <tbody>
-    <tr><td><div class="qn">Скромный подарок</div><span class="q-tag once">Разовый</span></td><td>—</td><td class="rew-r">1 001</td></tr>
-    <tr><td><div class="qn">Обломки</div><span class="q-tag daily">Ежедневный</span></td><td>Собрать 10 прочных обломков</td><td class="rew-r">420</td></tr>
-    <tr><td><div class="qn">Ремни с черепами</div><span class="q-tag daily">Ежедневный</span></td><td>Собрать 3 ремня</td><td class="rew-r">720</td></tr>
-    <tr><td><div class="qn">Вечеринка</div><span class="q-tag daily">Ежедневный</span></td><td>Добыть 3 сирены</td><td class="rew-r">420</td></tr>
-    <tr><td><div class="qn">Морское колдовство</div><span class="q-tag daily">Ежедневный</span></td><td>Убить 5 спрутов</td><td class="rew-r">420</td></tr>
-    <tr><td><div class="qn">Угроза блокады</div><span class="q-tag daily">Ежедневный</span></td><td>Уничтожить 10 кораблей</td><td class="rew-r">420</td></tr>
-    <tr><td><div class="qn">Морской дьявол</div><span class="q-tag daily">Ежедневный</span></td><td>Убить 1 Морского Дьявола</td><td class="rew-r">692</td></tr>
-    <tr class="qtotal-row"><td colspan="2">Итого ежедневно (6 квестов)</td><td class="qtotal">3 092</td></tr>
-  </tbody>
-</table>
 
-<!-- §03 ФЛЯЖКА -->
-<h2 class="h2" id="flask">Пиратская <em>фляжка</em></h2>
-<hr class="h2-rule">
+<h3 class="h3">Пиратская фляжка</h3>
 <p>Мощный аксессуар с тремя уровнями качества. Каждый год ивента фляжка деградирует на один уровень. Элитную фляжку в текущем ивенте улучшить нельзя.</p>
 
 <div class="item-row" data-id="pirate_day_2015_flask_9">
@@ -480,9 +487,7 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<!-- §04 ПОПУГАИ -->
-<h2 class="h2" id="parrots"><em>Попугаи</em></h2>
-<hr class="h2-rule">
+<h3 class="h3">Пиратский попугай</h3>
 <p>Попугаи дают советы — временные бафы на прокачку репутаций или боевые характеристики. Советы активируются орехами у торговца припасами в городе своей расы. Тип ореха определяет силу совета.</p>
 
 <h3 class="h3">Белый попугай</h3>
