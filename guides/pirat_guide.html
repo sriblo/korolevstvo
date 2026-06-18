@@ -132,6 +132,14 @@ a{color:inherit;text-decoration:none}
 .tip-sep{border:none;border-top:1px solid var(--line);margin:8px 0}
 .tip-action{font-size:12px;line-height:1.55;color:var(--txt2);margin-top:8px}
 
+/* Calc card */
+.calc-card{display:flex;align-items:center;justify-content:space-between;gap:20px;background:var(--bg2);border:1px solid var(--line2);border-left:3px solid var(--gold-d);border-radius:10px;padding:18px 22px;margin:0 0 20px;text-decoration:none;transition:border-color .12s,background .12s}
+.calc-card:hover{border-color:var(--gold);background:var(--bg3)}
+.calc-card-tag{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-d);font-weight:700;margin-bottom:6px}
+.calc-card-name{font-family:var(--serif);font-size:19px;font-weight:500;color:var(--txt);margin-bottom:6px;letter-spacing:-.01em}
+.calc-card-desc{font-size:13px;line-height:1.5;color:var(--txt3)}
+.calc-card-go{flex-shrink:0;font-size:13px;font-weight:600;color:var(--gold-l);white-space:nowrap}
+
 .ftr{max-width:1180px;margin:0 auto;padding:32px 40px 60px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;font-size:12px;color:var(--txt3)}
 .ftr-l{font-family:var(--serif);font-style:italic}
 .ftr-r{display:flex;gap:18px}.ftr-r a:hover{color:var(--gold-l)}
@@ -199,14 +207,25 @@ a{color:inherit;text-decoration:none}
 <article class="article">
 
 <!-- §01 ОБЗОР -->
-<h2 class="h2" id="overview"><span class="s">§ 01</span> <em>Обзор</em> ивента</h2>
+<h2 class="h2" id="overview"><span class="s">§ 01</span> Обзор ивента</h2>
 <hr class="h2-rule">
-<p>День Пирата проходит ежегодно в июне. На картах появляются пираты, корабли, сирены и Морской Дьявол. Жители Рябинового острова выдают квесты за <b>монеты островного племени</b> — основную валюту ивента.</p>
-<p>На монеты в королевской лавке покупаются <b>Пиратская фляжка</b>, <b>попугаи</b>, апгрейды <b>свитков боли</b>, а также Сломанный компас, Камень путника и Патент корсара. Доступность предметов зависит от ранга репутации Корсара.</p>
-<div class="note">
-  <div class="note-k">Репутация Корсара</div>
-  <p>Прокачивается за квесты, убийство мобов и боссов. Чем выше ранг — тем больше предметов открыто в лавке. Самые дорогие и мощные вещи требуют высокого ранга.</p>
-</div>
+<p>«День пирата» — традиционное июньское событие, которое проходит с 14 по 28 июня включительно.</p>
+<p>Что можно получить за участие?</p>
+<ul style="font-family:var(--serif);font-size:17px;line-height:1.75;color:var(--txt2);margin:0 0 20px;padding-left:24px">
+  <li><b style="color:var(--txt)">Пиратская фляжка</b> — постоянный предмет экипировки.</li>
+  <li><b style="color:var(--txt)">Попугай</b> — питомец, дающий «Советы» (баффы на прирост репутации).</li>
+  <li><b style="color:var(--txt)">Усиления для Свитков боли</b> — Книги пыток, Эссенции страданий и агонии, которые навсегда апнут ваши свитки до Корсарских или Пиратских.</li>
+  <li><b style="color:var(--txt)">Легендарное второе оружие</b> — временный предмет экипировки (не уступающий оружию Аррана), который добывается с помощью карт сокровищ и Проклятого компаса (актуально до 31 июля).</li>
+  <li><b style="color:var(--txt)">Коллекция черных меток</b> — временный предмет (до 31 августа), меняющий облик персонажа на легендарного пирата и дающий баффы в PvP в обычных локациях и на Аренах.</li>
+</ul>
+<a class="calc-card" href="../den_pirata/pirat_calc.html">
+  <div class="calc-card-l">
+    <div class="calc-card-tag">Калькулятор</div>
+    <div class="calc-card-name">День Пирата</div>
+    <div class="calc-card-desc">Монеты островного племени, предметы ивента и репутация Корсар — сколько фармить и сколько донатить для апгрейдов.</div>
+  </div>
+  <div class="calc-card-go">Открыть →</div>
+</a>
 
 <!-- §02 КВЕСТЫ -->
 <h2 class="h2" id="quests"><span class="s">§ 02</span> <em>Квесты</em> и монеты</h2>
