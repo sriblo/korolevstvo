@@ -818,7 +818,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
   var QUAL_COLOR={white:'var(--r-none)',green:'var(--r-low)',blue:'var(--r-medium)',purple:'var(--r-high)',orange:'var(--r-special)',red:'var(--r-exclusive)'};
   var STAT_LABEL={
     max_health:'Здоровье',max_mana:'Мана',mana:'Мана',attack:'Атака',defense:'Защита',health:'Здоровье',damage:'Урон',damage_dot:'Урон (DoT)',heal:'Лечение',heal_sent:'Исходящее лечение',reputation:'Очки репутации',
-    change_health_regeneration_speed:'Регенерация здоровья',change_absorb_critical:'Поглощение крита',change_damage_sent_percent:'Исходящий урон',change_damage_received_percent:'Входящий урон',change_damage_sent:'Исходящий урон',damage_sent:'Исходящий урон',damage_received:'Входящий урон',change_attack:'Атака',change_max_health:'Здоровье',change_chance_critical_attack:'Шанс крита',change_critical_attack_multiplier:'Урон крита',change_heal_sent_percent:'Исходящее лечение',heal_percent:'Лечение',move_speed:'Скорость',rep_received_percent:'Репутация',change_run_speed:'Замедление',
+    change_health_regeneration_speed:'Регенерация здоровья',change_absorb_critical:'Поглощение крита',change_damage_sent_percent:'Исходящий урон',change_damage_received_percent:'Входящий урон',change_damage_sent:'Исходящий урон',damage_sent:'Исходящий урон',damage_received:'Входящий урон',change_attack:'Атака',change_max_health:'Здоровье',change_chance_critical_attack:'Шанс крита',change_critical_attack_multiplier:'Урон крита',change_heal_sent_percent:'Эффективность лечения',heal_percent:'Лечение',move_speed:'Скорость',rep_received_percent:'Репутация',change_run_speed:'Замедление',
     pvp1:'Завоеватель',pvp1_percent:'Завоеватель',pvp1_received_percent:'Завоеватель (получ.)',pvp2:'Гладиатор',pvp2_percent:'Гладиатор',pvp2_received_percent:'Гладиатор (получ.)',pvp6:'Властитель земель',pvp6_percent:'Властитель земель',pvp6_received_percent:'Властитель земель (получ.)',
     pve1:'Археолог',pve1_percent:'Археолог',pve1_received_percent:'Археолог (получ.)',pve2:'Ведьмак',pve2_percent:'Ведьмак',pve2_received_percent:'Ведьмак (получ.)',pve4:'Охотник на демонов',pve4_percent:'Охотник на демонов',pve4_received_percent:'Охотник на демонов (получ.)',pve5:'Дрессировщик',pve5_percent:'Дрессировщик',pve5_received_percent:'Дрессировщик (получ.)',
     rep17:'Экзорцист',rep17_percent:'Экзорцист',rep17_received_percent:'Экзорцист (получ.)',rep19:'Чародей',rep19_percent:'Чародей',rep19_received_percent:'Чародей (получ.)',rep21:'Королевская Гвардия',rep21_percent:'Королевская Гвардия',rep21_received_percent:'Королевская Гвардия (получ.)'
@@ -845,7 +845,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
     if(qual) h+='<span class="tip-rar" style="color:'+(QUAL_COLOR[qual]||'var(--txt3)')+'">'+( QUAL_LABEL[qual]||qual)+'</span>';
     var skeys=Object.keys(stats).filter(function(k){return k!=='duration'&&!STAT_SKIP[k]});
     skeys.forEach(function(k){var v=stats[k];if(typeof v==='string') return;var lbl=STAT_LABEL[k]||k,val=v%1===0?v:Math.round(v*10)/10,sfx=STAT_PCT[k]?'%':'';h+='<div class="tip-stat"><span>'+lbl+'</span><b>'+val+sfx+'</b></div>';});
-    if(stats.duration) h+='<div class="tip-stat"><span>Длительность</span><b>'+stats.duration+' дн.</b></div>';
+    if(stats.duration){var durUnit=stats.damage?'сек.':'дн.';h+='<div class="tip-stat"><span>Длительность</span><b>'+stats.duration+' '+durUnit+'</b></div>';}
     if(action){
       h+='<hr class="tip-sep">';
       var txt=action.replace(/<br\s*\/?>/gi,' ').replace(/<[^>]*>/g,'');
