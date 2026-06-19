@@ -824,6 +824,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
     rep17:'Экзорцист',rep17_percent:'Экзорцист',rep17_received_percent:'Экзорцист (получ.)',rep19:'Чародей',rep19_percent:'Чародей',rep19_received_percent:'Чародей (получ.)',rep21:'Королевская Гвардия',rep21_percent:'Королевская Гвардия',rep21_received_percent:'Королевская Гвардия (получ.)'
   };
   var STAT_PCT={change_health_regeneration_speed:1,change_absorb_critical:1,change_damage_sent_percent:1,change_damage_received_percent:1,change_damage_sent:1,damage_sent:1,damage_received:1,change_attack:1,change_max_health:1,change_chance_critical_attack:1,change_critical_attack_multiplier:1,change_heal_sent_percent:1,heal_percent:1,move_speed:1,rep_received_percent:1,change_run_speed:1,pvp1_percent:1,pvp1_received_percent:1,pvp2_percent:1,pvp2_received_percent:1,pvp6_percent:1,pvp6_received_percent:1,pve1_percent:1,pve1_received_percent:1,pve2_percent:1,pve2_received_percent:1,pve4_percent:1,pve4_received_percent:1,pve5_percent:1,pve5_received_percent:1,rep17_percent:1,rep17_received_percent:1,rep19_percent:1,rep19_received_percent:1,rep21_percent:1,rep21_received_percent:1};
+  var STAT_NEG={change_heal_sent_percent:1};
   var STAT_SKIP={rep19:1,rep19_percent:1,rep19_received_percent:1,skin:1,speech:1,target:1,ticket:1,owner_alive:1,speed:1,walk_speed:1,min_distance_to_target:1,max_distance_to_target:1,weapon2:1,item_1:1,item_2:1,item_3:1,item_4:1,item_5:1,item_6:1,item_7:1,item_8:1,item_useable:1,param_1:1,param_2:1,param_3:1,param_4:1,param_5:1,param_1_change:1,param_2_change:1,param_3_change:1,param_4_change:1,param_5_change:1};
 
   Promise.all([
@@ -844,7 +845,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
     var h='<div class="tip-name">'+name+'</div>';
     if(qual) h+='<span class="tip-rar" style="color:'+(QUAL_COLOR[qual]||'var(--txt3)')+'">'+( QUAL_LABEL[qual]||qual)+'</span>';
     var skeys=Object.keys(stats).filter(function(k){return k!=='duration'&&!STAT_SKIP[k]});
-    skeys.forEach(function(k){var v=stats[k];if(typeof v==='string') return;var lbl=STAT_LABEL[k]||k,val=v%1===0?v:Math.round(v*10)/10,sfx=STAT_PCT[k]?'%':'';h+='<div class="tip-stat"><span>'+lbl+'</span><b>'+val+sfx+'</b></div>';});
+    skeys.forEach(function(k){var v=stats[k];if(typeof v==='string') return;var lbl=STAT_LABEL[k]||k,val=v%1===0?v:Math.round(v*10)/10;if(STAT_NEG[k]) val=-Math.abs(val);var sfx=STAT_PCT[k]?'%':'';h+='<div class="tip-stat"><span>'+lbl+'</span><b>'+val+sfx+'</b></div>';});
     if(stats.duration){var durUnit=stats.damage?'сек.':'дн.';h+='<div class="tip-stat"><span>Длительность</span><b>'+stats.duration+' '+durUnit+'</b></div>';}
     if(action){
       h+='<hr class="tip-sep">';
