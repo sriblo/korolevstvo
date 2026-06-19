@@ -213,22 +213,25 @@
   .guides{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
   .guide-card{
     border:1px solid var(--line);border-radius:8px;
-    background:var(--bg2);padding:22px 24px;
-    display:flex;align-items:flex-start;gap:18px;cursor:pointer;text-decoration:none;color:inherit;
-    transition:border-color .18s,background .18s;
+    background:var(--bg2);
+    display:flex;align-items:flex-end;cursor:pointer;text-decoration:none;color:inherit;
+    transition:border-color .18s;overflow:hidden;position:relative;min-height:140px;
   }
-  .guide-card:hover{border-color:var(--line2);background:var(--bg3)}
-  .guide-card .num{
-    font-family:var(--serif);font-style:italic;font-size:13px;color:var(--gold-d);
-    padding-right:18px;border-right:1px solid var(--line);
-    align-self:stretch;display:flex;align-items:center;font-feature-settings:'tnum';
-    letter-spacing:.04em;
+  .guide-card:hover{border-color:var(--line2)}
+  .guide-card .bg{
+    position:absolute;inset:0;background-size:cover;background-position:center;
+    opacity:.7;transition:opacity .25s;
   }
-  .guide-card .body{flex:1}
-  .guide-card .ttl{font-family:var(--serif);font-size:17px;font-weight:500;letter-spacing:-.005em;margin-bottom:4px}
-  .guide-card .dsc{font-family:var(--serif);font-size:13px;color:var(--txt2);line-height:1.5;margin-bottom:10px}
-  .guide-card .tag{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt3);font-weight:600}
-  .guide-card.soon .tag{color:var(--gold-d)}
+  .guide-card:hover .bg{opacity:.85}
+  .guide-card .bg::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(to right,rgba(10,8,6,.85) 0%,rgba(10,8,6,.4) 70%,rgba(10,8,6,.0) 100%);
+  }
+  .guide-card .body{flex:1;padding:22px 24px;position:relative;z-index:1}
+  .guide-card .ttl{font-family:var(--serif);font-size:17px;font-weight:500;letter-spacing:-.005em;margin-bottom:6px;color:var(--txt)}
+  .guide-card .dsc{font-family:var(--serif);font-size:13px;color:var(--txt2);line-height:1.5;margin-bottom:0}
+  .guide-card .arr{position:absolute;right:20px;bottom:20px;font-size:16px;color:var(--gold-d);z-index:1;transition:transform .15s,color .15s}
+  .guide-card:hover .arr{transform:translateX(3px);color:var(--gold)}
   .all-guides-btn{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--gold);border:1px solid rgba(var(--gold-tint),.3);border-radius:20px;padding:6px 16px;text-decoration:none;transition:border-color .15s,color .15s;white-space:nowrap}
   .all-guides-btn:hover{color:var(--gold-l);border-color:rgba(var(--gold-tint),.6)}
 
@@ -442,12 +445,12 @@
   </div>
   <div class="guides">
     <a class="guide-card" href="guides/pirat_guide.html">
-      <div class="num">§ I</div>
+      <div class="bg" style="background-image:url('den_pirata/bg_inner_pirate.png')"></div>
       <div class="body">
-        <div class="ttl">День Пирата</div>
-        <div class="dsc">Репутация, попугаи, свитки боли, фляжка — полный разбор ивента.</div>
-        <div class="tag">Ивент · Актуально</div>
+        <div class="ttl">Гайд: День Пирата</div>
+        <div class="dsc">Полный обзор события: локации, квесты и награды.</div>
       </div>
+      <span class="arr">→</span>
     </a>
   </div>
 
