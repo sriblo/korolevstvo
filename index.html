@@ -214,7 +214,7 @@
   .guide-card{
     border:1px solid var(--line);border-radius:8px;
     background:var(--bg2);
-    display:flex;align-items:flex-end;cursor:pointer;text-decoration:none;color:inherit;
+    display:flex;align-items:center;cursor:pointer;text-decoration:none;color:inherit;
     transition:border-color .18s;overflow:hidden;position:relative;min-height:140px;
   }
   .guide-card:hover{border-color:var(--line2)}
@@ -230,7 +230,7 @@
   .guide-card .body{flex:1;padding:22px 24px;position:relative;z-index:1}
   .guide-card .ttl{font-family:var(--serif);font-size:17px;font-weight:500;letter-spacing:-.005em;margin-bottom:6px;color:var(--txt)}
   .guide-card .dsc{font-family:var(--serif);font-size:13px;color:var(--txt2);line-height:1.5;margin-bottom:0}
-  .guide-card .arr{position:absolute;right:20px;bottom:20px;font-size:16px;color:var(--gold-d);z-index:1;transition:transform .15s,color .15s}
+  .guide-card .arr{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--gold-d);z-index:1;transition:transform .15s,color .15s}
   .guide-card:hover .arr{transform:translateX(3px);color:var(--gold)}
   .all-guides-btn{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--gold);border:1px solid rgba(var(--gold-tint),.3);border-radius:20px;padding:6px 16px;text-decoration:none;transition:border-color .15s,color .15s;white-space:nowrap}
   .all-guides-btn:hover{color:var(--gold-l);border-color:rgba(var(--gold-tint),.6)}
