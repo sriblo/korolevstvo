@@ -229,6 +229,8 @@
   .guide-card .dsc{font-family:var(--serif);font-size:13px;color:var(--txt2);line-height:1.5;margin-bottom:10px}
   .guide-card .tag{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt3);font-weight:600}
   .guide-card.soon .tag{color:var(--gold-d)}
+  .all-guides-btn{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--gold);border:1px solid rgba(var(--gold-tint),.3);border-radius:20px;padding:6px 16px;text-decoration:none;transition:border-color .15s,color .15s;white-space:nowrap}
+  .all-guides-btn:hover{color:var(--gold-l);border-color:rgba(var(--gold-tint),.6)}
 
   /* ──────────────────────────── Footer ──────────────────────────── */
   .ftr{
@@ -434,28 +436,20 @@
 
   <div class="sec-h">
     <div>
-      <div class="sec-t">Гайды по <em>локациям</em></div>
-      <div class="sec-d" style="margin-top:8px">Тактики, маршруты, советы по прохождению.</div>
+      <div class="sec-t">Гайды по <em>ивентам</em></div>
+      <div class="sec-d" style="margin-top:8px">Разборы ивентов: репутации, награды, цепочки апгрейдов.</div>
     </div>
-    <div class="sec-c">скоро</div>
+    <a class="all-guides-btn" href="guides/all_guides.html">Все гайды →</a>
   </div>
   <div class="guides">
-    <div class="guide-card soon">
+    <a class="guide-card" href="guides/pirat_guide.html">
       <div class="num">§ I</div>
       <div class="body">
-        <div class="ttl">Гайд: Месяц цветущего хмеля</div>
-        <div class="dsc">Где фармить лепреконов, как быстрее всего закрыть ежедневные квесты, что брать в первую очередь.</div>
-        <div class="tag">В разработке</div>
+        <div class="ttl">День Пирата</div>
+        <div class="dsc">Репутация, попугаи, свитки боли, фляжка — полный разбор ивента.</div>
+        <div class="tag">Ивент · Актуально</div>
       </div>
-    </div>
-    <div class="guide-card soon">
-      <div class="num">§ II</div>
-      <div class="body">
-        <div class="ttl">Гайд: Зов глубин</div>
-        <div class="dsc">Маршрут по подводной локации, тактики против боссов, оптимизация фарма жемчужин.</div>
-        <div class="tag">В разработке</div>
-      </div>
-    </div>
+    </a>
   </div>
 
 </section>
