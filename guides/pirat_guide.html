@@ -50,7 +50,7 @@ a{color:inherit;text-decoration:none}
 .toc{display:flex;flex-direction:column;border-left:1px solid var(--line)}
 .toc a{position:relative;padding:8px 0 8px 15px;font-size:13px;color:var(--txt2);font-weight:500;line-height:1.4;transition:color .12s;margin-left:-1px;border-left:1px solid transparent}
 .toc a:hover{color:var(--txt)}.toc a.on{color:var(--gold-l);border-left-color:var(--gold)}
-.toc a .ti{color:var(--txt3);font-feature-settings:'tnum';margin-right:8px;font-size:11px}
+.toc a.sub{padding-left:28px;font-size:12px;color:var(--txt3)}.toc a .ti{color:var(--txt3);font-feature-settings:'tnum';margin-right:8px;font-size:11px}
 .toc a.on .ti{color:var(--gold-d)}
 .aside-foot{margin-top:26px;padding:16px 16px 16px 15px}
 .progress{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-bottom:10px}
@@ -220,8 +220,12 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
     <a href="#location"><span class="ti">04</span>Локация</a>
     <a href="#ammo"><span class="ti">05</span>Расходка</a>
     <a href="#rewards"><span class="ti">06</span>Награды</a>
-    <a href="#pain34"><span class="ti">07</span>Боль 3–4</a>
-    <a href="#pain5"><span class="ti">08</span>Боль 5+</a>
+    <a class="sub" href="#flask">Пиратская фляжка</a>
+    <a class="sub" href="#parrot">Пиратский попугай</a>
+    <a class="sub" href="#pain34">Боль 3–4 уровень</a>
+    <a class="sub" href="#pain5">Боль 5+ уровень</a>
+    <a class="sub" href="#weapon2">Второе оружие</a>
+    <a class="sub" href="#marks">Коллекция черных меток</a>
   </nav>
   <div class="aside-foot">
     <div class="progress"><span id="progbar"></span></div>
@@ -354,21 +358,21 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
   <div class="gico sz-lg"><img class="base" src="../icons/drake_white_throne.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Боевой Дрэйк Белого Престола</span></div>
-    <p class="item-desc">1 258 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 3 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Речная крыса.</p>
+    <p class="item-desc">1 258 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 3 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Речная крыса.</p>
   </div>
 </div>
 <div class="item-row" data-id="pirate_day_2013_fregat_human">
   <div class="gico sz-lg"><img class="base" src="../icons/frigate_white_throne.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Фрегат Белого Престола</span></div>
-    <p class="item-desc">2 097 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 5 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Абордажный пёс.</p>
+    <p class="item-desc">2 097 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 5 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Абордажный пёс.</p>
   </div>
 </div>
 <div class="item-row" data-id="pirate_day_2013_battle_fregat_human">
   <div class="gico sz-lg"><img class="base" src="../icons/frigate_white_throne.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Боевой Фрегат Белого Престола</span></div>
-    <p class="item-desc">3 355 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 8 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Морской волк.</p>
+    <p class="item-desc">3 355 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 8 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Морской волк.</p>
   </div>
 </div>
 
@@ -384,21 +388,21 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
   <div class="gico sz-lg"><img class="base" src="../icons/drake_league_of_blood.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Боевой Дрэйк Лиги Крови</span></div>
-    <p class="item-desc">1 258 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 3 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Речная крыса.</p>
+    <p class="item-desc">1 258 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 3 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Речная крыса.</p>
   </div>
 </div>
 <div class="item-row" data-id="pirate_day_2013_fregat_elf">
   <div class="gico sz-lg"><img class="base" src="../icons/frigate_league_of_blood.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Фрегат Лиги Крови</span></div>
-    <p class="item-desc">2 097 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 5 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Абордажный пёс.</p>
+    <p class="item-desc">2 097 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 5 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Абордажный пёс.</p>
   </div>
 </div>
 <div class="item-row" data-id="pirate_day_2013_battle_fregat_elf">
   <div class="gico sz-lg"><img class="base" src="../icons/frigate_league_of_blood.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Боевой Фрегат Лиги Крови</span></div>
-    <p class="item-desc">3 355 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 8 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Морской волк.</p>
+    <p class="item-desc">3 355 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 8 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Морской волк.</p>
   </div>
 </div>
 
@@ -461,14 +465,14 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
 <h2 class="h2" id="rewards">Награды</h2>
 <hr class="h2-rule">
 
-<h3 class="h3">Пиратская фляжка</h3>
+<h3 class="h3" id="flask">Пиратская фляжка</h3>
 <p>Пиратская фляжка — мощный предмет экипировки, без которого вам не обойтись, если вы хотите комфортно играть. Фляжки деградируют своим качеством с каждым годом: если у вас была <b>Пиратская фляжка (героическая)</b>, то с наступлением ивента она станет <b>Пиратской Фляжкой (элитной)</b>, то есть потеряет один уровень апгрейда. Улучшить элитную фляжку во время ивента нельзя — поэтому, чтобы получить фляжку <b>легендарного</b> или <b>эпического</b> качества, вам придётся сначала купить <b>героическую</b>, предварительно прокачав репутацию до соответствующего уровня.</p>
 
 <div class="item-row" data-id="pirate_day_2015_flask_9">
   <div class="gico sz-lg"><img class="base" src="../icons/pirate_flask.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Пиратская Фляжка</span></div>
-    <p class="item-desc">Покупается за 5&nbsp;030 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 12 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Корсар.</p>
+    <p class="item-desc">Покупается за 5&nbsp;030 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 12 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Корсар.</p>
   </div>
 </div>
 <div class="chain-arrow"><span>улучшается через</span></div>
@@ -476,7 +480,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
   <div class="gico sz-lg"><img class="base" src="../icons/scrap_metal_quest.jpg" alt=""><img class="fr" src="../frames/border_exclusive.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Легендарный обломок вражеских доспехов</span></div>
-    <p class="item-desc">Покупается за 6&nbsp;707 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 16 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Морской волк.</p>
+    <p class="item-desc">Покупается за 6&nbsp;707 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 16 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Морской волк.</p>
   </div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
@@ -491,7 +495,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
   <div class="gico sz-lg"><img class="base" src="../icons/scrap_metal_quest.jpg" alt=""><img class="fr" src="../frames/border_special.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Эпический обломок вражеских доспехов</span></div>
-    <p class="item-desc">Покупается за 9&nbsp;222 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 22 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Гроза кораблей.</p>
+    <p class="item-desc">Покупается за 9&nbsp;222 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 22 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Гроза кораблей.</p>
   </div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
@@ -502,7 +506,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
   </div>
 </div>
 
-<h3 class="h3">Пиратский попугай</h3>
+<h3 class="h3" id="parrot">Пиратский попугай</h3>
 <p>Попугаи дают советы — временные бафы на прокачку репутаций или боевые характеристики. Советы активируются орехами у торговца припасами в городе своей расы. Тип ореха определяет силу совета.</p>
 
 <h3 class="h3">Белый попугай</h3>
@@ -510,7 +514,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
   <div class="gico sz-lg"><img class="base" src="../icons/parrot_weapon.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Белый попугай</span></div>
-    <p class="item-desc">1 258 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 3 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Абордажный пёс.</p>
+    <p class="item-desc">1 258 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 3 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Абордажный пёс.</p>
   </div>
 </div>
 <p>Белый попугай позволяет получить только <b>Совет белого попугая</b> — бафы на прокачку репутаций на 1, 5 или 10 дней. Боевых советов нет.</p>
@@ -545,7 +549,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
   <div class="gico sz-lg"><img class="base" src="../icons/blood_bucket.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Краска эмалевая зеленая</span></div>
-    <p class="item-desc">3 355 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 8 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Морской волк.</p>
+    <p class="item-desc">3 355 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 8 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Морской волк.</p>
   </div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
@@ -585,7 +589,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
   <div class="gico sz-lg"><img class="base" src="../icons/blood_bucket.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Краска эмалевая синяя</span></div>
-    <p class="item-desc">5 032 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 12 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Гроза кораблей.</p>
+    <p class="item-desc">5 032 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 12 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Гроза кораблей.</p>
   </div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
@@ -639,7 +643,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
   <div class="gico sz-lg"><img class="base" src="../icons/blood_bucket.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
   <div class="item-b">
     <div class="item-top"><span class="item-name">Краска эмалевая фиолетовая</span></div>
-    <p class="item-desc">8 384 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 20 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Гроза кораблей.</p>
+    <p class="item-desc">8 384 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 20 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Гроза кораблей.</p>
   </div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
@@ -715,6 +719,12 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
     <div class="item-b"><div class="item-top"><span class="item-name" style="font-size:14px">Тайна попугая</span></div><p class="item-desc" style="font-size:13px">Все репутации · 14 дней</p></div>
   </div>
 </div>
+<h3 class="h3" id="weapon2">Легендарное второе оружие</h3>
+<p>Раздел в разработке.</p>
+
+<h3 class="h3" id="marks">Коллекция черных меток</h3>
+<p>Раздел в разработке.</p>
+
 <h2 class="h2" id="pain34">Боль для <em>3–4 уровня</em></h2>
 <hr class="h2-rule">
 <p>Цепочка апгрейдов для персонажей 3 и 4 уровня.</p>
@@ -726,7 +736,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
 <div class="chain-arrow"><span>+ Книга корсарских пыток</span></div>
 <div class="item-row" data-id="pirate_day_2014_scroll_damage_dot_2_1_upgrade">
   <div class="gico sz-lg"><img class="base" src="../icons/grimoire_flame.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
-  <div class="item-b"><div class="item-top"><span class="item-name">Книга корсарских пыток</span></div><p class="item-desc">Покупается за 2 096 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 5 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Абордажный пёс.</p></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Книга корсарских пыток</span></div><p class="item-desc">Покупается за 2 096 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 5 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Абордажный пёс.</p></div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
 <div class="item-row" data-id="pirate_day_2014_scroll_damage_dot_2_1">
@@ -736,7 +746,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
 <div class="chain-arrow"><span>+ Корсарская эссенция страданий</span></div>
 <div class="item-row" data-id="pirate_day_2015_scroll_damage_dot_2_1_upgrade">
   <div class="gico sz-lg"><img class="base" src="../icons/bottle_of_pain.jpg" alt=""><img class="fr" src="../frames/border_none.png" alt=""></div>
-  <div class="item-b"><div class="item-top"><span class="item-name">Корсарская эссенция страданий</span></div><p class="item-desc">Покупается за 4 192 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 10 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Морской волк.</p></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Корсарская эссенция страданий</span></div><p class="item-desc">Покупается за 4 192 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 10 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Морской волк.</p></div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
 <div class="item-row" data-id="pirate_day_2015_scroll_damage_dot_2_1">
@@ -746,7 +756,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
 <div class="chain-arrow"><span>+ Корсарская эссенция агонии</span></div>
 <div class="item-row" data-id="pirate_day_2017_scroll_damage_dot_2_1_upgrade">
   <div class="gico sz-lg"><img class="base" src="../icons/bottle_of_pain.jpg" alt=""><img class="fr" src="../frames/border_medium.png" alt=""></div>
-  <div class="item-b"><div class="item-top"><span class="item-name">Корсарская эссенция агонии</span></div><p class="item-desc">Покупается за 8 384 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 20 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Гроза кораблей.</p></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Корсарская эссенция агонии</span></div><p class="item-desc">Покупается за 8 384 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 20 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Гроза кораблей.</p></div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
 <div class="item-row" data-id="pirate_day_2017_scroll_damage_dot_2_1">
@@ -780,7 +790,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
 <div class="chain-arrow"><span>+ Книга пиратских пыток</span></div>
 <div class="item-row" data-id="pirate_day_2014_scroll_damage_dot_5_5_upgrade">
   <div class="gico sz-lg"><img class="base" src="../icons/grimoire_flame.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
-  <div class="item-b"><div class="item-top"><span class="item-name">Книга пиратских пыток</span></div><p class="item-desc">Покупается за 2 096 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 5 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Абордажный пёс.</p></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Книга пиратских пыток</span></div><p class="item-desc">Покупается за 2 096 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 5 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Абордажный пёс.</p></div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
 <div class="item-row" data-id="pirate_day_2014_scroll_damage_dot_5_5">
@@ -790,7 +800,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
 <div class="chain-arrow"><span>+ Пиратская эссенция страданий</span></div>
 <div class="item-row" data-id="pirate_day_2015_scroll_damage_dot_5_5_upgrade">
   <div class="gico sz-lg"><img class="base" src="../icons/bottle_of_pain.jpg" alt=""><img class="fr" src="../frames/border_low.png" alt=""></div>
-  <div class="item-b"><div class="item-top"><span class="item-name">Пиратская эссенция страданий</span></div><p class="item-desc">Покупается за 4 192 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 10 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Морской волк.</p></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Пиратская эссенция страданий</span></div><p class="item-desc">Покупается за 4 192 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 10 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Морской волк.</p></div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
 <div class="item-row" data-id="pirate_day_2015_scroll_damage_dot_5_5">
@@ -800,7 +810,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
 <div class="chain-arrow"><span>+ Пиратская эссенция агонии</span></div>
 <div class="item-row" data-id="pirate_day_2017_scroll_damage_dot_5_5_upgrade">
   <div class="gico sz-lg"><img class="base" src="../icons/bottle_of_pain.jpg" alt=""><img class="fr" src="../frames/border_high.png" alt=""></div>
-  <div class="item-b"><div class="item-top"><span class="item-name">Пиратская эссенция агонии</span></div><p class="item-desc">Покупается за 8 384 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 20 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Ранг: Гроза кораблей.</p></div>
+  <div class="item-b"><div class="item-top"><span class="item-name">Пиратская эссенция агонии</span></div><p class="item-desc">Покупается за 8 384 <img class="cico" src="../icons/pirate_coin_small.png" alt=""> или 20 <img class="cico" src="../icons/currency_ruby_small.png" alt="">. Доступно на ранге: Гроза кораблей.</p></div>
 </div>
 <div class="chain-arrow"><span>даёт</span></div>
 <div class="item-row" data-id="pirate_day_2017_scroll_damage_dot_5_5">
@@ -845,7 +855,7 @@ details.adv-det>.adv-wrap{margin:0;border-radius:0 0 10px 10px;border-top:none}
     rep17:'Экзорцист',rep17_percent:'Экзорцист',rep17_received_percent:'Экзорцист (получ.)',rep19:'Чародей',rep19_percent:'Чародей',rep19_received_percent:'Чародей (получ.)',rep21:'Королевская Гвардия',rep21_percent:'Королевская Гвардия',rep21_received_percent:'Королевская Гвардия (получ.)'
   };
   var STAT_PCT={change_health_regeneration_speed:1,change_absorb_critical:1,change_damage_sent_percent:1,change_damage_received_percent:1,change_damage_sent:1,damage_sent:1,damage_received:1,change_attack:1,change_max_health:1,change_chance_critical_attack:1,change_critical_attack_multiplier:1,change_heal_sent_percent:1,heal_percent:1,move_speed:1,rep_received_percent:1,pvp1_percent:1,pvp1_received_percent:1,pvp2_percent:1,pvp2_received_percent:1,pvp6_percent:1,pvp6_received_percent:1,pve1_percent:1,pve1_received_percent:1,pve2_percent:1,pve2_received_percent:1,pve4_percent:1,pve4_received_percent:1,pve5_percent:1,pve5_received_percent:1,rep17_percent:1,rep17_received_percent:1,rep19_percent:1,rep19_received_percent:1,rep21_percent:1,rep21_received_percent:1};
-  var STAT_SKIP={skin:1,speech:1,target:1,ticket:1,owner_alive:1,speed:1,walk_speed:1,min_distance_to_target:1,max_distance_to_target:1,weapon2:1,item_1:1,item_2:1,item_3:1,item_4:1,item_5:1,item_6:1,item_7:1,item_8:1,item_useable:1,param_1:1,param_2:1,param_3:1,param_4:1,param_5:1,param_1_change:1,param_2_change:1,param_3_change:1,param_4_change:1,param_5_change:1};
+  var STAT_SKIP={rep19:1,rep19_percent:1,rep19_received_percent:1,skin:1,speech:1,target:1,ticket:1,owner_alive:1,speed:1,walk_speed:1,min_distance_to_target:1,max_distance_to_target:1,weapon2:1,item_1:1,item_2:1,item_3:1,item_4:1,item_5:1,item_6:1,item_7:1,item_8:1,item_useable:1,param_1:1,param_2:1,param_3:1,param_4:1,param_5:1,param_1_change:1,param_2_change:1,param_3_change:1,param_4_change:1,param_5_change:1};
 
   Promise.all([
     fetch('../db/buffs.json').then(function(r){return r.json()}),
