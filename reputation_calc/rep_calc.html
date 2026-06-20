@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Прокачка репутаций — Калькуляторы Королевства</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:      #d4a843;
+    --gold-l:    #f5d878;
+    --gold-d:    #a07d2b;
+    --gold-tint: 212,168,67;
+
+    --bg:#0b0907;
+    --bg2:#120e09;
+    --bg3:#1a160f;
+    --line:rgba(var(--gold-tint),.09);
+    --line2:rgba(var(--gold-tint),.18);
+    --txt:#ece4cf;
+    --txt2:#a99775;
+    --txt3:#6c5d44;
+    --green:#8ab860;
+    --inp:rgba(6,4,2,.6);
+
+    --serif:'Fraunces',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+  }
+  /* tone variants (shared with home) */
+  [data-tone="brass"]{ --gold:#c9b552; --gold-l:#e8d670; --gold-d:#8c7d28; --gold-tint:201,181,82; --txt:#ece6cc; --txt2:#a89c70; }
+  [data-tone="sand"]{  --gold:#c2a878; --gold-l:#e0c89c; --gold-d:#8a7858; --gold-tint:194,168,120; --txt:#ece2c8; --txt2:#a89578; }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{min-height:100%}
+  html,body{background:var(--bg);color:var(--txt);font-family:var(--sans);font-size:14px;-webkit-font-smoothing:antialiased}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(var(--gold-tint),.14), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 100% 5%, rgba(80,30,15,.18), transparent 60%),
+      var(--bg);
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* ──────────────────────────── Page heading ──────────────────────────── */
+  .head{max-width:1140px;margin:0 auto;padding:46px 40px 30px;position:relative}
+  .eyebrow{
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;
+    display:inline-flex;align-items:center;gap:10px;margin-bottom:18px;
+  }
+  .eyebrow::before{content:'';width:24px;height:1px;background:var(--gold)}
+  .h1{
+    font-family:var(--serif);font-size:46px;line-height:1.04;font-weight:400;letter-spacing:-.025em;
+    margin-bottom:14px;
+  }
+  .h1 em{font-style:italic;color:var(--gold-l);font-weight:300}
+  .lede{
+    font-family:var(--serif);font-size:18px;line-height:1.5;color:var(--txt2);
+    max-width:560px;font-weight:400;
+  }
+
+  /* ──────────────────────────── Layout ──────────────────────────── */
+  .page{
+    max-width:1140px;margin:0 auto;padding:0 40px 90px;
+    display:grid;grid-template-columns:380px 1fr;gap:18px;align-items:start;
+  }
+  .col{display:flex;flex-direction:column;gap:18px}
+
+  /* ──────────────────────────── Card ──────────────────────────── */
+  .card{
+    background:var(--bg2);border:1px solid var(--line);border-radius:10px;overflow:hidden;
+  }
+  .card-title{
+    padding:15px 20px 13px;
+    font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-d);
+    display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);
+  }
+  .card-title::before{content:'';width:14px;height:1px;background:linear-gradient(90deg,var(--gold-d),transparent)}
+
+  /* ──────────────────────────── Input rows ──────────────────────────── */
+  .irow{
+    display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:12px;
+    padding:12px 20px;border-bottom:1px solid var(--line);transition:background .15s;
+  }
+  .irow:last-child{border-bottom:none}
+  .irow:hover{background:var(--bg3)}
+  .ico-pill{
+    width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:8px;font-size:16px;
+  }
+  .ilbl{font-family:var(--serif);font-size:16px;font-weight:500;color:var(--txt);line-height:1.25}
+
+  input[type=number]{
+    width:104px;background:var(--inp);border:1px solid var(--line2);border-radius:8px;
+    color:var(--gold-l);padding:8px 11px;font-size:18px;font-family:var(--sans);font-weight:600;
+    text-align:right;outline:none;-moz-appearance:textfield;
+    transition:border-color .2s,box-shadow .2s;font-feature-settings:'tnum';
+  }
+  input[type=number]:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(var(--gold-tint),.12)}
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+
+  select{
+    background:var(--inp);border:1px solid var(--line2);border-radius:8px;color:var(--txt);
+    padding:9px 11px;font-size:12px;font-family:var(--sans);outline:none;cursor:pointer;
+    transition:border-color .15s;max-width:180px;
+  }
+  select:focus{border-color:var(--gold)}
+
+  /* ──────────────────────────── Reputation selector ──────────────────────────── */
+  .rep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:16px}
+  .rep-btn{
+    display:flex;flex-direction:column;align-items:center;gap:7px;
+    padding:13px 6px 11px;border-radius:10px;cursor:pointer;text-align:center;
+    border:1px solid var(--line);background:rgba(0,0,0,.25);
+    transition:border-color .15s,background .15s,transform .15s;
+  }
+  .rep-btn:hover{border-color:var(--line2);background:var(--bg3);transform:translateY(-1px)}
+  .rep-btn.active{
+    border-color:var(--gold);background:rgba(var(--gold-tint),.1);
+    box-shadow:0 0 18px rgba(var(--gold-tint),.12);
+  }
+  .rep-btn.wip{cursor:default;pointer-events:none}
+  .rep-btn.wip .rep-btn-ico img,.rep-btn.wip .rep-btn-ico span{filter:grayscale(1);opacity:.4}
+  .rep-btn.wip .rep-btn-name{color:var(--txt3)}
+  .rep-btn-ico{height:38px;display:flex;align-items:center;justify-content:center;line-height:1}
+  .rep-btn-name{
+    font-size:9px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--txt2);line-height:1.25;
+  }
+  .rep-btn.active .rep-btn-name{color:var(--gold-l)}
+
+  /* ──────────────────────────── Buffs ──────────────────────────── */
+  .buff-row{
+    display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:12px;
+    padding:11px 20px;border-bottom:1px solid var(--line);
+  }
+  .buff-row:last-child{border-bottom:none}
+  .buff-name{font-family:var(--serif);font-size:15px;font-weight:500;color:var(--txt)}
+  .buff-quality{
+    font-size:10px;font-weight:600;letter-spacing:.04em;padding:2px 7px;border-radius:4px;
+    display:inline-block;margin-top:3px;font-family:var(--sans);
+  }
+  .bq-white{background:rgba(236,228,207,.08);color:#d8cfb6;border:1px solid rgba(236,228,207,.16)}
+  .bq-green{background:rgba(138,184,96,.14);color:#9fcf72;border:1px solid rgba(138,184,96,.3)}
+  .bq-blue {background:rgba(96,150,216,.14);color:#86b0e0;border:1px solid rgba(96,150,216,.3)}
+  .bq-seal {background:rgba(var(--gold-tint),.15);color:var(--gold-l);border:1px solid rgba(var(--gold-tint),.3)}
+  .buff-ctrl{display:flex;align-items:center;gap:8px}
+  .buff-pct{font-family:var(--sans);font-size:11px;color:var(--gold);min-width:38px;text-align:right;font-weight:600;font-feature-settings:'tnum'}
+  .buff-row select{padding:6px 8px;font-size:11px;max-width:none}
+  .buff-chk{display:flex;align-items:center;gap:7px;cursor:pointer}
+  .buff-chk input{accent-color:var(--gold);width:16px;height:16px}
+  .buff-chk span{font-size:11px;color:var(--txt2)}
+  .buff-total{
+    padding:13px 20px;display:flex;justify-content:space-between;align-items:center;
+    border-top:1px solid var(--line);background:var(--bg3);
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);font-weight:600;
+  }
+  .buff-total-val{font-family:var(--serif);font-size:17px;font-weight:600;color:var(--gold-l);letter-spacing:0;text-transform:none}
+  .buff-empty{padding:16px 20px;font-size:12px;color:var(--txt3)}
+
+  /* item-icon (base + frame) */
+  .gico{position:relative;width:34px;height:34px;flex-shrink:0}
+  .gico img.base,.gico img.fr{position:absolute;inset:0;width:34px;height:34px;image-rendering:pixelated}
+  .gico-em{
+    width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:8px;font-size:15px;flex-shrink:0;
+  }
+
+  /* ──────────────────────────── Result ──────────────────────────── */
+  .res-main{padding:28px 28px 22px;border-bottom:1px solid var(--line)}
+  .res-label{font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-d);margin-bottom:10px}
+  .res-days{
+    font-family:var(--serif);font-size:72px;font-weight:400;line-height:.95;color:var(--gold-l);
+    letter-spacing:-.03em;font-feature-settings:'tnum';
+  }
+  .res-days span{font-family:var(--sans);font-size:22px;color:var(--txt2);margin-left:10px;font-weight:500;letter-spacing:0}
+  .res-days.impossible{font-size:40px}
+  .res-sub{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--txt2);margin-top:12px;line-height:1.5}
+
+  .res-progress{padding:18px 28px;border-bottom:1px solid var(--line)}
+  .progress-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--txt3);margin-bottom:8px;font-feature-settings:'tnum'}
+  .progress-bar{height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden}
+  .progress-fill{
+    height:100%;border-radius:3px;transition:width .4s ease;
+    background:linear-gradient(90deg,var(--gold-d),var(--gold-l));
+    box-shadow:0 0 10px rgba(var(--gold-tint),.4);
+  }
+
+  .res-stats{display:grid;grid-template-columns:1fr 1fr}
+  .stat-cell{padding:16px 24px;border-bottom:1px solid var(--line)}
+  .stat-cell:nth-child(odd){border-right:1px solid var(--line)}
+  .stat-cell:nth-last-child(-n+2){border-bottom:none}
+  .stat-lbl{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3);margin-bottom:6px}
+  .stat-val{font-family:var(--serif);font-size:19px;font-weight:500;color:var(--txt);letter-spacing:-.01em}
+  .stat-val.gold{color:var(--gold-l)}
+
+  /* ──────────────────────────── Rank path ──────────────────────────── */
+  .rank-path{padding:12px 16px}
+  .rp-row{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:8px;border:1px solid transparent}
+  .rp-row.active{background:rgba(var(--gold-tint),.08);border-color:var(--line2)}
+  .rp-ico{
+    width:30px;height:30px;flex-shrink:0;border-radius:6px;overflow:hidden;
+    background:rgba(0,0,0,.4);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .rp-ico img{width:30px;height:30px;image-rendering:pixelated}
+  .rp-ico.dim{opacity:.35}
+  .rp-name{font-family:var(--serif);font-size:15px;color:var(--txt2);flex:1;min-width:0}
+  .rp-name.current{color:var(--gold-l);font-weight:600}
+  .rp-pts{font-family:var(--sans);font-size:10px;color:var(--txt3);margin-top:1px;font-feature-settings:'tnum'}
+  .rp-pts.need{color:var(--gold-d)}
+  .rp-now{font-size:10px;color:var(--gold-d);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+
+  /* ──────────────────────────── Tone picker ──────────────────────────── */
+  .tone{
+    position:fixed;bottom:18px;right:18px;z-index:80;
+    background:rgba(11,9,7,.92);backdrop-filter:blur(20px);
+    border:1px solid var(--line2);border-radius:10px;padding:8px;
+    display:flex;align-items:center;gap:4px;box-shadow:0 12px 40px rgba(0,0,0,.6);
+  }
+  .tone-l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3);font-weight:700;padding:0 6px 0 4px}
+  .tone-btn{width:28px;height:28px;border:1px solid var(--line);border-radius:6px;cursor:pointer;background:none;padding:0;transition:border-color .12s,transform .12s;display:flex;align-items:center;justify-content:center}
+  .tone-btn:hover{transform:translateY(-1px)}
+  .tone-btn.on{border-color:var(--gold);box-shadow:0 0 0 2px rgba(var(--gold-tint),.2)}
+  .tone-btn .swatch{width:14px;height:14px;border-radius:50%;display:block}
+  .tone-btn[data-t="amber"] .swatch{background:linear-gradient(135deg,#f5d878,#a07d2b)}
+  .tone-btn[data-t="brass"] .swatch{background:linear-gradient(135deg,#e8d670,#8c7d28)}
+  .tone-btn[data-t="sand"]  .swatch{background:linear-gradient(135deg,#e0c89c,#8a7858)}
+
+  @media(max-width:860px){
+    .page{grid-template-columns:1fr;padding:0 16px 70px}
+    .head{padding:32px 16px 22px}
+    .h1{font-size:36px}
+    .rep-grid{grid-template-columns:repeat(5,1fr);gap:6px;padding:12px}
+    .rep-btn{padding:9px 3px 8px}
+    .rep-btn-ico{height:30px}
+    .rep-btn-ico img{width:30px!important;height:30px!important}
+    .rep-btn-name{font-size:8px}
+    .res-days{font-size:56px}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="logo" id="site-logo" href="../index.html"></a>
+  <nav class="nav" id="site-nav"></nav>
+  <script src="../nav.js"></script>
+</header>
+
+<section class="head">
+  <div class="eyebrow">Калькулятор</div>
+  <h1 class="h1">Прокачка <em>репутаций</em></h1>
+  <p class="lede">Выбери фракцию, укажи текущий ранг и темп — посчитаем, сколько дней до цели с учётом бафов.</p>
+</section>
+
+<div class="page">
+
+  <!-- LEFT COLUMN -->
+  <div class="col">
+
+    <div class="card">
+      <div class="card-title">Репутация</div>
+      <div class="rep-grid" id="rep-grid"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Исходные данные</div>
+
+      <div class="irow">
+        <div class="ico-pill">🏅</div>
+        <div class="ilbl">Текущий ранг</div>
+        <select id="cur-rank" onchange="calc()"></select>
+      </div>
+
+      <div class="irow">
+        <div class="ico-pill">✨</div>
+        <div class="ilbl">Очков набрано</div>
+        <input type="number" id="cur-pts" value="0" min="0" oninput="calc()">
+      </div>
+
+      <div class="irow">
+        <div class="ico-pill">🎯</div>
+        <div class="ilbl">Целевой ранг</div>
+        <select id="tgt-rank" onchange="calc()"></select>
+      </div>
+
+      <div class="irow">
+        <div class="ico-pill">📅</div>
+        <div class="ilbl">Очков в день</div>
+        <input type="number" id="ppd" value="100" min="1" oninput="calc()">
+      </div>
+    </div>
+
+    <div class="card" id="buffs-card">
+      <div class="card-title">Бафы</div>
+      <div id="buffs-body"></div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="col">
+
+    <div class="card">
+      <div class="res-main">
+        <div class="res-label">Дней до цели</div>
+        <div class="res-days" id="res-days">—</div>
+        <div class="res-sub" id="res-sub"></div>
+      </div>
+
+      <div class="res-progress">
+        <div class="progress-labels">
+          <span id="prog-cur">0</span>
+          <span id="prog-tgt">0</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+
+      <div class="res-stats">
+        <div class="stat-cell">
+          <div class="stat-lbl">Очков осталось</div>
+          <div class="stat-val gold" id="stat-need">—</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Очков в день</div>
+          <div class="stat-val" id="stat-ppd">—</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Текущий ранг</div>
+          <div class="stat-val" id="stat-cur-rank">—</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Целевой ранг</div>
+          <div class="stat-val" id="stat-tgt-rank">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Путь к цели</div>
+      <div class="rank-path" id="rank-path"></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="tone" id="tone">
+  <span class="tone-l">Тон</span>
+  <button class="tone-btn on" data-t="amber" title="Амбра"><span class="swatch"></span></button>
+  <button class="tone-btn" data-t="brass" title="Латунь"><span class="swatch"></span></button>
+  <button class="tone-btn" data-t="sand" title="Песок"><span class="swatch"></span></button>
+</div>
+
+<script>
+const REPUTATIONS = [
+  {
+    id: 'vedmak', name: 'Ведьмак', ico: '🐺', folder: 'reputations/vedmak',
+    ranks: [
+      { name: 'Неприметный',          pts: 0,       ico: 'vedmak_neprimetnyi_0.png' },
+      { name: 'Смельчак',             pts: 1100,    ico: 'vedmak_smelchak_1.png' },
+      { name: 'Сорвиголова',          pts: 3200,    ico: 'vedmak_sorvigolova_2.png' },
+      { name: 'Бескомпромиссный',     pts: 5750,    ico: 'vedmak_beskompromissnyi_3.png' },
+      { name: 'Знаменитость',         pts: 23500,   ico: 'vedmak_znamenitost_4.png' },
+      { name: 'Кулак правосудия',     pts: 43800,   ico: 'vedmak_kulak_pravosudiya_5.png' },
+      { name: 'Спаситель',            pts: 97700,   ico: 'vedmak_spasitel_6.png' },
+      { name: 'Надежда Королевства',  pts: 228000,  ico: 'vedmak_nadezhda_korolevstva_7.png' },
+      { name: 'Проклятье чудовищ',    pts: 456000,  ico: 'vedmak_proklyatiye_chudovisch_8.png' },
+      { name: 'Великий ведьмак',       pts: 490950,  ico: 'vedmak_velikii_vedmak_9.png' },
+      { name: 'Легендарный ведьмак I', pts: 510000,  ico: 'vedmak_legendarnyi_vedmak_i_10.png' },
+      { name: 'Легендарный ведьмак II',pts: 530000,  ico: 'vedmak_legendarnyi_vedmak_ii_11.png' },
+    ]
+  },
+  {
+    id: 'gladiator', name: 'Гладиатор', ico: '⚔️', folder: 'reputations/gladiator',
+    ranks: [
+      { name: 'Деревянный меч',  pts: 0,     ico: 'gladiator_derevyannyi_mech_0.png' },
+      { name: 'Железный меч',    pts: 450,   ico: 'gladiator_zheleznyi_mech_1.png' },
+      { name: 'Бронзовый меч',   pts: 2100,  ico: 'gladiator_bronzovyi_mech_2.png' },
+      { name: 'Серебряный меч',  pts: 3500,  ico: 'gladiator_serebryannyi_mech_3.png' },
+      { name: 'Золотой меч',     pts: 10300, ico: 'gladiator_zolotoy_mech_4.png' },
+      { name: 'Платиновый меч',  pts: 33650, ico: 'gladiator_platinovyi_mech_5.png' },
+      { name: 'Алмазный меч',    pts: 36000, ico: 'gladiator_almaznyi_mech_6.png' },
+      { name: 'Рубиновый меч',   pts: 40000, ico: 'gladiator_rubinovyi_mech_7.png' },
+    ]
+  },
+  {
+    id: 'zavoevatel', name: 'Завоеватель', ico: '🏆', folder: 'reputations/zavoyevatel',
+    ranks: [
+      { name: 'Бесславный',             pts: 0,     ico: 'zavoevatel_besslavnyi_0.png' },
+      { name: 'Патриот',                pts: 200,   ico: 'zavoevatel_patriot_1.png' },
+      { name: 'Лидер',                  pts: 3000,  ico: 'zavoevatel_lider_2.png' },
+      { name: 'Полководец',             pts: 9000,  ico: 'zavoevatel_polkovodec_3.png' },
+      { name: 'Великий Завоеватель',    pts: 25000, ico: 'zavoevatel_velikiy_zavoevatel_4.png' },
+      { name: 'Легендарный завоеватель',pts: 52800, ico: 'zavoevatel_legendarnyi_zavoevatel_5.png' },
+      { name: 'Великий стратег I',      pts: 58000, ico: 'zavoevatel_velikiy_strateg_i_6.png' },
+      { name: 'Великий стратег II',     pts: 64000, ico: 'zavoevatel_velikiy_strateg_ii_7.png' },
+      { name: 'Великий стратег III',    pts: 72000, ico: 'zavoevatel_velikiy_strateg_iii_8.png' },
+    ]
+  },
+  {
+    id: 'arxeolog', name: 'Археолог', ico: '🏺', folder: 'reputations/arkheolog',
+    ranks: [
+      { name: 'Простак с лопатой', pts: 0,     ico: 'arkheolog_prostak_s_lopatoi_0.png' },
+      { name: 'Добытчик',          pts: 1000,  ico: 'arkheolog_dobytchik_1.png' },
+      { name: 'Черный археолог',   pts: 2000,  ico: 'arkheolog_chernyi_arkheolog_2.png' },
+      { name: 'Исследователь',     pts: 4000,  ico: 'arkheolog_issledovatel_3.png' },
+      { name: 'Коллекционер',      pts: 8000,  ico: 'arkheolog_kollekcioner_4.png' },
+      { name: 'Кладоискатель',     pts: 16000, ico: 'arkheolog_kladoiskatel_5.png' },
+      { name: 'Мастер',            pts: 32000, ico: 'arkheolog_master_6.png' },
+      { name: 'Эксперт',           pts: 64000, ico: 'arkheolog_ekspert_7.png' },
+      { name: 'Глава экспедиции',  pts: 83000, ico: 'arkheolog_glava_ekspeditsyi_8.png' },
+    ]
+  },
+  {
+    id: 'hunter', name: 'Охотник на демонов', ico: '👁️', folder: 'reputations/ohotnik_na_demonov',
+    ranks: [
+      { name: 'Охотник 1-го круга', pts: 0,      ico: 'ohotnik_i_kruga_0.png' },
+      { name: 'Охотник 2-го круга', pts: 500,    ico: 'ohotnik_ii_kruga_1.png' },
+      { name: 'Охотник 3-го круга', pts: 2800,   ico: 'ohotnik_iii_kruga_2.png' },
+      { name: 'Охотник 4-го круга', pts: 7300,   ico: 'ohotnik_iv_kruga_3.png' },
+      { name: 'Охотник 5-го круга', pts: 15700,  ico: 'ohotnik_v_kruga_4.png' },
+      { name: 'Охотник 6-го круга', pts: 34000,  ico: 'ohotnik_vi_kruga_5.png' },
+      { name: 'Охотник 7-го круга', pts: 79700,  ico: 'ohotnik_vii_kruga_6.png' },
+      { name: 'Охотник 8-го круга', pts: 110000, ico: 'ohotnik_viii_kruga_7.png' },
+    ]
+  },
+  {
+    id: 'dresser', name: 'Дрессировщик', ico: '🐾', folder: 'reputations/dressirovschik',
+    ranks: [
+      { name: 'Любитель',                pts: 0,    ico: 'dressirovschik_lyubitel_0.png' },
+      { name: 'Ученик',                  pts: 250,  ico: 'dressirovschik_uchenik_1.png' },
+      { name: 'Молодой мастер',          pts: 300,  ico: 'dressirovschik_molodoi_master_2.png' },
+      { name: 'Профессионал',            pts: 450,  ico: 'dressirovschik_professional_3.png' },
+      { name: 'Укротитель',              pts: 450,  ico: 'dressirovschik_ukrotitel_4.png' },
+      { name: 'Мастер дрессировки',      pts: 450,  ico: 'dressirovschik_master_dressirovki_5.png' },
+      { name: 'Знаменитый дрессировщик', pts: 1100, ico: 'dressirovschik_znamenityi_dressirovschik_6.png' },
+      { name: 'Великий дрессировщик',    pts: 2000, ico: 'dressirovschik_velikii_dressirovschik_7.png' },
+      { name: 'Легендарный дрессировщик',pts: 3000, ico: 'dressirovschik_legendarnyi_dressirovschik_8.png' },
+    ]
+  },
+  {
+    id: 'vlast', name: 'Властитель земель', ico: '🗺️', folder: 'reputations/vlastitel_zemel',
+    ranks: [
+      { name: 'Безземельный', pts: 0,      ico: 'vlastitel_zemel_bezzemelnyi_0.png' },
+      { name: 'Чужестранец',  pts: 30000,  ico: 'vlastitel_zemel_chuzhestranec_1.png' },
+      { name: 'Налетчик',     pts: 45000,  ico: 'vlastitel_zemel_nalyotchik_2.png' },
+      { name: 'Землевладелец',pts: 65000,  ico: 'vlastitel_zemel_zemlevladelec_3.png' },
+      { name: 'Смотритель',   pts: 90000,  ico: 'vlastitel_zemel_smotritel_4.png' },
+      { name: 'Феодал',       pts: 120000, ico: 'vlastitel_zemel_feodal_5.png' },
+      { name: 'Губернатор',   pts: 150000, ico: 'vlastitel_zemel_gubernator_6.png' },
+      { name: 'Черный барон', pts: 150000, ico: 'vlastitel_zemel_chyornyi_baron_7.png' },
+      { name: 'Наместник',    pts: 150000, ico: 'vlastitel_zemel_namestnik_8.png' },
+      { name: 'Лорд',         pts: 150000, ico: 'vlastitel_zemel_lord_9.png' },
+    ]
+  },
+  {
+    id: 'guard', name: 'Королевская гвардия', ico: '🛡️', folder: 'reputations/korolevskaya_gvardiya',
+    ranks: [
+      { name: 'Новобранец',        pts: 0,      ico: 'korolevskaya_gvardiya_novobranec_0.png' },
+      { name: 'Гвардеец',          pts: 120,    ico: 'korolevskaya_gvardiya_gvardeec_1.png' },
+      { name: 'Ветеран Гвардии',   pts: 600,    ico: 'korolevskaya_gvardiya_veteran_gvardii_2.png' },
+      { name: 'Знаменосец Гвардии',pts: 2400,   ico: 'korolevskaya_gvardiya_znamenosec_gvardii_3.png' },
+      { name: 'Чемпион Гвардии',   pts: 7200,   ico: 'korolevskaya_gvardiya_chempion_gvardii_4.png' },
+      { name: 'Капитан Гвардии',   pts: 21600,  ico: 'korolevskaya_gvardiya_kapitan_gvardii_5.png' },
+      { name: 'Командор Гвардии',  pts: 43200,  ico: 'korolevskaya_gvardiya_komandor_gvardii_6.png' },
+      { name: 'Генерал Гвардии',   pts: 95040,  ico: 'korolevskaya_gvardiya_general_gvardii_7.png' },
+      { name: 'Маршал Гвардии',    pts: 169840, ico: 'korolevskaya_gvardiya_marshal_gvardii_8.png' },
+      { name: 'Великий Маршал',    pts: 230000, ico: 'korolevskaya_gvardiya_velikii_marshal_9.png' },
+      { name: 'Опора трона I',     pts: 240000, ico: 'korolevskaya_gvardiya_opora_trona_i_10.png' },
+    ]
+  },
+  {
+    id: 'orden', name: 'Орден Короны', ico: '👑', folder: 'reputations/orden_korony',
+    ranks: [
+      { name: 'Неофит',        pts: 0,       ico: 'orden_neofit_0.png' },
+      { name: 'Оруженосец I',  pts: 3500,    ico: 'orden_oruzhenosec_i_1.png' },
+      { name: 'Оруженосец II', pts: 8500,    ico: 'orden_oruzhenosec_ii_2.png' },
+      { name: 'Оруженосец III',pts: 30000,   ico: 'orden_oruzhenosec_iii_3.png' },
+      { name: 'Оруженосец IV', pts: 52500,   ico: 'orden_oruzhenosec_iv_4.png' },
+      { name: 'Оруженосец V',  pts: 55000,   ico: 'orden_oruzhenosec_v_5.png' },
+      { name: 'Рыцарь I',      pts: 60000,   ico: 'orden_rycar_i_6.png' },
+      { name: 'Рыцарь II',     pts: 70000,   ico: 'orden_rycar_ii_7.png' },
+      { name: 'Рыцарь III',    pts: 80000,   ico: 'orden_rycar_iii_8.png' },
+      { name: 'Рыцарь IV',     pts: 130000,  ico: 'orden_rycar_iv_9.png' },
+      { name: 'Рыцарь V',      pts: 150000,  ico: 'orden_rycar_v_10.png' },
+      { name: 'Командор I',    pts: 180000,  ico: 'orden_komandor_i_11.png' },
+      { name: 'Командор II',   pts: 220000,  ico: 'orden_komandor_ii_12.png' },
+      { name: 'Командор III',  pts: 260000,  ico: 'orden_komandor_iii_13.png' },
+      { name: 'Командор IV',   pts: 300000,  ico: 'orden_komandor_iv_14.png' },
+      { name: 'Командор V',    pts: 360000,  ico: 'orden_komandor_v_15.png' },
+      { name: 'Магистр I',     pts: 440000,  ico: 'orden_magistr_i_16.png' },
+      { name: 'Магистр II',    pts: 572000,  ico: 'orden_magistr_ii_17.png' },
+      { name: 'Магистр III',   pts: 660000,  ico: 'orden_magistr_iii_18.png' },
+      { name: 'Магистр IV',    pts: 792000,  ico: 'orden_magistr_iv_19.png' },
+      { name: 'Магистр V',     pts: 968000,  ico: 'orden_magistr_v_20.png' },
+    ]
+  },
+  {
+    id: 'exorcist', name: 'Экзорцист', ico: '✝️', folder: 'reputations/eksorcist',
+    ranks: [
+      { name: 'Неофит',                    pts: 0,     ico: 'eksorcist_neofit_0.png' },
+      { name: 'Адепт',                     pts: 400,   ico: 'eksorcist_adept_1.png' },
+      { name: 'Истребитель нежити',        pts: 500,   ico: 'eksorcist_istrebitel_nezhiti_2.png' },
+      { name: 'Инквизитор',               pts: 600,   ico: 'eksorcist_inkvizitor_3.png' },
+      { name: 'Старший инквизитор',        pts: 700,   ico: 'eksorcist_starshii_inkvizitor_4.png' },
+      { name: 'Экзорцист первого круга',   pts: 800,   ico: 'eksorcist_eksorcist_i_kruga_5.png' },
+      { name: 'Экзорцист второго круга',   pts: 900,   ico: 'eksorcist_eksorcist_ii_kruga_6.png' },
+      { name: 'Экзорцист третьего круга',  pts: 1000,  ico: 'eksorcist_eksorcist_iii_kruga_7.png' },
+      { name: 'Великий экзорцист',         pts: 1200,  ico: 'eksorcist_velikii_eksorcist_8.png' },
+      { name: 'Хранитель Каэны',           pts: 12000, ico: 'eksorcist_hranitel_kaeny_9.png' },
+      { name: 'Хранитель Королевства',     pts: 41900, ico: 'eksorcist_hranitel_korolevstva_10.png' },
+      { name: 'Верховный экзорцист',       pts: 80000, ico: 'eksorcist_verkhovnyi_eksorcist_11.png' },
+    ]
+  },
+];
+
+// Бафы советов: [белый%, зелёный%, синий%]; master — уникальный баф; svitok: [зелёный%, синий%]
+const BUFFS = {
+  vedmak:     { council: [7, 14, 21], seal: 25,                                                          svitok: [null, null] },
+  gladiator:  { council: [5, 10, 15], master: { pct: 20, name: 'Мастер Арены', ico: 'buff/master_aren.png' }, svitok: [null, null] },
+  zavoevatel: { council: [17, 34, 51], master: { mult: 2, name: 'Мастер Войны', ico: 'buff/master_voiny.png' }, svitok: [null, null] },
+  vlast:      { council: [5, 6, 7] },
+  arxeolog:   { council: [5, 10, 15],                                                                     svitok: [5,    null] },
+  hunter:     { council: [10, 20, 30] },
+  dresser:    { council: [13, 26, 39] },
+  guard:      { council: [17, 34, 51],                                                                    svitok: [null, 20]   },
+  orden:      { council: [0, 0, 0] },
+  exorcist:   { council: [100, 100, 100] },
+};
+
+const COUNCILS = ['Попугая', 'Орка', 'Кабана', 'Индюка'];
+const COUNCIL_ICONS = ['buff/parrot_weapon.png', 'buff/sovet_orka.png', 'buff/sovet_kabana.png', 'buff/sovet_indyuka.png'];
+const SEAL_ICO = 'buff/kingdom_seal_1.png';
+let buffState = { councils: [0, 0, 0, 0], seal: false, master: false, svitok: 0 };
+
+let activeRep = REPUTATIONS[0];
+
+function fmt(n){ return n.toLocaleString('ru-RU'); }
+function icoPath(rep, rank){ return rank.ico ? `${rep.folder}/${rank.ico}` : null; }
+function icoHtmlSmall(rep, rank, size){
+  const src = icoPath(rep, rank);
+  if (!src) return `<span style="font-size:${size*0.7}px;opacity:.4">${rep.ico}</span>`;
+  return `<img src="${src}" style="width:${size}px;height:${size}px;image-rendering:pixelated">`;
+}
+
+/* ── REP GRID ── */
+function buildRepGrid(){
+  const grid = document.getElementById('rep-grid');
+  grid.innerHTML = REPUTATIONS.map(r => {
+    const maxRank = r.ranks ? r.ranks[r.ranks.length - 1] : null;
+    const src = maxRank && maxRank.ico ? `${r.folder}/${maxRank.ico}` : null;
+    const icoHtml = src
+      ? `<img src="${src}" style="width:36px;height:36px;image-rendering:pixelated;filter:drop-shadow(0 0 8px rgba(var(--gold-tint),.4))">`
+      : `<span style="font-size:24px">${r.ico}</span>`;
+    return `
+      <div class="rep-btn${r.wip ? ' wip' : ''}${r.id === activeRep.id ? ' active' : ''}" onclick="selectRep('${r.id}')">
+        <div class="rep-btn-ico">${icoHtml}</div>
+        <div class="rep-btn-name">${r.name}</div>
+      </div>`;
+  }).join('');
+}
+
+/* ── RANK SELECTS ── */
+function buildRankSelects(){
+  const ranks = activeRep.ranks;
+  const cur = document.getElementById('cur-rank');
+  const tgt = document.getElementById('tgt-rank');
+  const opts = ranks.map((r, i) =>
+    `<option value="${i}"${r.wip ? ' disabled' : ''}>${r.name}${r.wip ? ' (скоро)' : ''}</option>`
+  ).join('');
+  const curVal = Math.min(parseInt(cur.value) || 0, ranks.length - 2);
+  const tgtVal = Math.min(parseInt(tgt.value) || 1, ranks.length - 1);
+  cur.innerHTML = opts;
+  tgt.innerHTML = opts;
+  cur.value = curVal;
+  tgt.value = Math.max(tgtVal, curVal + 1);
+}
+
+/* ── BUFFS ── */
+function getTotalBuff(){
+  const b = BUFFS[activeRep.id];
+  if (!b) return 0;
+  const [w, g, bl] = b.council;
+  const pctByQ = [0, w, g, bl];
+  let total = buffState.councils.reduce((sum, q) => sum + pctByQ[q], 0);
+  if (b.seal && buffState.seal) total += b.seal;
+  if (b.master && b.master.pct && buffState.master) total += b.master.pct;
+  if (b.svitok && buffState.svitok > 0){
+    const pct = b.svitok[buffState.svitok - 1];
+    if (pct !== null) total += pct;
+  }
+  return total;
+}
+function getMasterMult(){
+  const b = BUFFS[activeRep.id];
+  if (b && b.master && b.master.mult && buffState.master) return b.master.mult;
+  return 1;
+}
+
+function buildBuffs(){
+  const b = BUFFS[activeRep.id];
+  const body = document.getElementById('buffs-body');
+  if (!b || (b.council[0] === 0 && b.council[1] === 0 && b.council[2] === 0 && !b.seal)){
+    body.innerHTML = `<div class="buff-empty">Нет данных по бафам</div>`;
+    return;
+  }
+
+  const [w, g, bl] = b.council;
+  const pctByQ = [0, w, g, bl];
+  const lblByQ = ['Нет', 'Белый', 'Зелёный', 'Синий'];
+  const frByQ  = ['', '../frames/border_none.png', '../frames/border_low.png', '../frames/border_medium.png'];
+
+  let html = COUNCILS.map((name, i) => {
+    const q = buffState.councils[i];
+    const pct = pctByQ[q];
+    const opts = [0,1,2,3].map(v =>
+      `<option value="${v}"${q===v?' selected':''}>${lblByQ[v]}${v>0?' (+'+pctByQ[v]+'%)':''}</option>`
+    ).join('');
+    const imgSrc = COUNCIL_ICONS[i];
+    const icoHtml = imgSrc
+      ? `<div class="gico"><img class="base" src="${imgSrc}">${q > 0 ? `<img class="fr" src="${frByQ[q]}">` : ''}</div>`
+      : `<div class="gico-em">📜</div>`;
+    return `
+      <div class="buff-row">
+        ${icoHtml}
+        <div class="buff-name">Совет ${name}</div>
+        <div class="buff-ctrl">
+          <div class="buff-pct">${q > 0 ? '+'+pct+'%' : ''}</div>
+          <select onchange="setCouncil(${i}, this.value)">${opts}</select>
+        </div>
+      </div>`;
+  }).join('');
+
+  if (b.seal){
+    html += `
+      <div class="buff-row">
+        <div class="gico"><img class="base" src="${SEAL_ICO}"><img class="fr" src="../frames/border_exclusive.png"></div>
+        <div>
+          <div class="buff-name">Королевская печать</div>
+          <span class="buff-quality bq-seal">+${b.seal}%</span>
+        </div>
+        <div class="buff-ctrl">
+          <label class="buff-chk">
+            <input type="checkbox" id="buff-seal" ${buffState.seal ? 'checked' : ''} onchange="toggleSeal()">
+            <span>есть</span>
+          </label>
+        </div>
+      </div>`;
+  }
+
+  if (b.master){
+    const masterLabel = b.master.mult ? `×${b.master.mult}` : `+${b.master.pct}%`;
+    html += `
+      <div class="buff-row">
+        <div class="gico"><img class="base" src="${b.master.ico}"><img class="fr" src="../frames/border_none.png"></div>
+        <div>
+          <div class="buff-name">${b.master.name}</div>
+          <span class="buff-quality bq-white">${masterLabel}</span>
+        </div>
+        <div class="buff-ctrl">
+          <label class="buff-chk">
+            <input type="checkbox" id="buff-master" ${buffState.master ? 'checked' : ''} onchange="toggleMaster()">
+            <span>есть</span>
+          </label>
+        </div>
+      </div>`;
+  }
+
+  if (b.svitok){
+    const [sg, sb] = b.svitok;
+    const q = buffState.svitok;
+    const frByQ2 = ['', '../frames/border_low.png', '../frames/border_medium.png'];
+    const activePct = q > 0 ? b.svitok[q - 1] : null;
+    const opts = [
+      `<option value="0"${q===0?' selected':''}>Нет</option>`,
+      `<option value="1"${q===1?' selected':''}${sg===null?' disabled':''}>Зелёный${sg!==null?' (+'+sg+'%)':' (неизвестно)'}</option>`,
+      `<option value="2"${q===2?' selected':''}${sb===null?' disabled':''}>Синий${sb!==null?' (+'+sb+'%)':' (неизвестно)'}</option>`,
+    ].join('');
+    html += `
+      <div class="buff-row">
+        <div class="gico"><img class="base" src="buff/svitok_favorita.png">${q > 0 ? `<img class="fr" src="${frByQ2[q]}">` : ''}</div>
+        <div class="buff-name">Свиток Фаворита</div>
+        <div class="buff-ctrl">
+          <div class="buff-pct">${activePct !== null && q > 0 ? '+'+activePct+'%' : ''}</div>
+          <select onchange="setSvitok(this.value)">${opts}</select>
+        </div>
+      </div>`;
+  }
+
+  const total = getTotalBuff();
+  const mult = getMasterMult();
+  const totalLabel = mult > 1
+    ? (total > 0 ? `+${total}% × ${mult}` : `×${mult}`)
+    : `+${total}%`;
+  html += `
+    <div class="buff-total">
+      <span>Суммарный баф</span>
+      <span class="buff-total-val">${totalLabel}</span>
+    </div>`;
+
+  body.innerHTML = html;
+}
+
+function setCouncil(i, val){ buffState.councils[i] = parseInt(val); buildBuffs(); calc(); }
+function toggleSeal(){ buffState.seal = document.getElementById('buff-seal').checked; buildBuffs(); calc(); }
+function toggleMaster(){ buffState.master = document.getElementById('buff-master').checked; buildBuffs(); calc(); }
+function setSvitok(val){ buffState.svitok = parseInt(val); buildBuffs(); calc(); }
+
+/* ── SELECT REP ── */
+function selectRep(id){
+  activeRep = REPUTATIONS.find(r => r.id === id);
+  buffState = { councils: [0, 0, 0, 0], seal: false, master: false, svitok: 0 };
+  buildRepGrid();
+  buildRankSelects();
+  buildBuffs();
+  calc();
+}
+
+/* ── CALC ── */
+function calc(){
+  const ranks  = activeRep.ranks;
+  const curIdx = parseInt(document.getElementById('cur-rank').value) || 0;
+  let   tgtIdx = parseInt(document.getElementById('tgt-rank').value) || 1;
+  const curPts = Math.max(0, parseInt(document.getElementById('cur-pts').value) || 0);
+  const ppd    = Math.max(1, parseInt(document.getElementById('ppd').value) || 1);
+
+  if (tgtIdx <= curIdx){
+    tgtIdx = Math.min(curIdx + 1, ranks.length - 1);
+    document.getElementById('tgt-rank').value = tgtIdx;
+  }
+
+  let need = 0;
+  for (let i = curIdx; i < tgtIdx; i++){
+    const stepReq = ranks[i + 1].pts;
+    need += (i === curIdx) ? Math.max(0, stepReq - curPts) : stepReq;
+  }
+
+  const buffPct    = getTotalBuff();
+  const masterMult = getMasterMult();
+  const ppdFinal   = Math.round(ppd * (1 + buffPct / 100) * masterMult);
+  const days    = need > 0 ? Math.ceil(need / ppdFinal) : 0;
+  const nextReq = ranks[curIdx + 1] ? ranks[curIdx + 1].pts : 1;
+  const pct     = Math.min(100, Math.round(curPts / nextReq * 100));
+
+  const daysEl = document.getElementById('res-days');
+  if (need === 0){
+    daysEl.classList.add('impossible');
+    daysEl.innerHTML = `Достигнут <span>✓</span>`;
+    document.getElementById('res-sub').textContent = 'Целевой ранг уже получен';
+  } else {
+    daysEl.classList.remove('impossible');
+    daysEl.innerHTML = `${fmt(days)}<span>дней</span>`;
+    document.getElementById('res-sub').textContent = buffPct > 0
+      ? `${fmt(ppdFinal)} очков/день (×${(1+buffPct/100).toFixed(2)} с бафом) · ещё ${fmt(need)} очков`
+      : `при ${fmt(ppd)} очков/день · ещё ${fmt(need)} очков`;
+  }
+
+  document.getElementById('prog-cur').textContent = fmt(curPts) + ' очков';
+  document.getElementById('prog-tgt').textContent = fmt(nextReq) + ' очков';
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  document.getElementById('stat-need').textContent = need > 0 ? fmt(need) : '0';
+  document.getElementById('stat-ppd').textContent  = buffPct > 0 ? `${fmt(ppdFinal)} (+${buffPct}%)` : fmt(ppd);
+  document.getElementById('stat-cur-rank').textContent = ranks[curIdx].name;
+  document.getElementById('stat-tgt-rank').textContent = ranks[tgtIdx].name;
+
+  buildRankPath(curIdx, tgtIdx, curPts);
+}
+
+/* ── RANK PATH ── */
+function buildRankPath(curIdx, tgtIdx, curPts){
+  const ranks = activeRep.ranks;
+  const path  = document.getElementById('rank-path');
+  const rows  = [];
+  for (let i = curIdx; i <= tgtIdx; i++){
+    const r       = ranks[i];
+    const isCur   = i === curIdx;
+    const isTgt   = i === tgtIdx;
+    const stepReq = ranks[i + 1] ? ranks[i + 1].pts : null;
+
+    let statusText, statusClass;
+    if (isTgt){ statusText = 'Цель'; statusClass = 'need'; }
+    else if (isCur){ statusText = stepReq ? `${fmt(curPts)} / ${fmt(stepReq)} очков` : ''; statusClass = ''; }
+    else { statusText = stepReq ? `${fmt(stepReq)} очков с нуля` : ''; statusClass = 'need'; }
+
+    rows.push(`
+      <div class="rp-row${(isCur || isTgt) ? ' active' : ''}">
+        <div class="rp-ico${(!isCur && !isTgt) ? ' dim' : ''}">${icoHtmlSmall(activeRep, r, 30)}</div>
+        <div style="flex:1;min-width:0">
+          <div class="rp-name${(isCur || isTgt) ? ' current' : ''}">${r.name}</div>
+          <div class="rp-pts ${statusClass}">${statusText}</div>
+        </div>
+        ${isCur ? '<div class="rp-now">сейчас</div>' : ''}
+      </div>`);
+  }
+  path.innerHTML = rows.join('');
+}
+
+/* ── TONE PICKER ── */
+(function(){
+  const saved = localStorage.getItem('kor-tone');
+  if (saved && saved !== 'amber') document.documentElement.setAttribute('data-tone', saved);
+  document.querySelectorAll('.tone-btn').forEach(btn => {
+    if (btn.dataset.t === (saved || 'amber')) {
+      document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+    }
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.t;
+      if (t === 'amber') document.documentElement.removeAttribute('data-tone');
+      else document.documentElement.setAttribute('data-tone', t);
+      localStorage.setItem('kor-tone', t);
+      document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+    });
+  });
+})();
+
+/* ── INIT ── */
+buildRepGrid();
+buildRankSelects();
+buildBuffs();
+calc();
+
+document.getElementById('cur-rank').addEventListener('change', function(){
+  const cur = parseInt(this.value);
+  const tgt = document.getElementById('tgt-rank');
+  if (parseInt(tgt.value) <= cur) tgt.value = Math.min(cur + 1, activeRep.ranks.length - 1);
+  calc();
+});
+</script>
+</body>
+</html>
