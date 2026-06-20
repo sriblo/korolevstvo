@@ -102,7 +102,7 @@ const REP_BUFFS = {
       id: 'master_aren',
       name: 'Мастер Арены',
       quality: 'white',
-      visual: 'master_aren',   // icons in reputation_calc/buff/
+      visual: 'master_aren',
       ext: 'png',
       source: 'Командорский клуб',
       type: 'percent',
@@ -117,34 +117,43 @@ const REP_BUFFS = {
       visual: 'master_voiny',
       ext: 'png',
       source: 'Командорский клуб',
-      type: 'multiplier',   // умножает итог × 2
+      type: 'multiplier',
       multiplier: 2,
-      bonuses: { zavoevatel: null },  // null = это множитель, а не %
+      bonuses: { zavoevatel: null },
     },
 
-    // ── Археолог ──
-    {
-      id: 'svitok_favorita_green',
-      name: 'Свиток Фаворита (зелёный)',
-      quality: 'green',
-      visual: 'svitok_favorita',
-      ext: 'png',
-      source: 'Подписка / Командорский клуб',
-      type: 'percent',
-      bonuses: { arxeolog: 5 },
-    },
+    // ── Свитки Фаворита ─────────────────────────────────────────────────────
+    // Источник: tournament_02_2011_reputation_* (buffs.json)
+    // Длительность: 12 часов. visual: light_scroll
+    // Стакаются с советами, но не между собой (одна репутация — один свиток).
 
-    // ── Королевская Гвардия ──
-    {
-      id: 'svitok_favorita_blue',
-      name: 'Свиток Фаворита (синий)',
-      quality: 'blue',
-      visual: 'svitok_favorita',
-      ext: 'png',
-      source: 'Подписка / Командорский клуб',
-      type: 'percent',
-      bonuses: { guard: 20 },
-    },
+    // Гладиатор: white=5%, green=10%, blue=15%, purple=20%
+    { id: 'tournament_02_2011_reputation_gladiator_1', name: 'Свиток Фаворита', quality: 'white',  visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { gladiator: 5 } },
+    { id: 'tournament_02_2011_reputation_gladiator_2', name: 'Свиток Фаворита', quality: 'green',  visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { gladiator: 10 } },
+    { id: 'tournament_02_2011_reputation_gladiator_3', name: 'Свиток Фаворита', quality: 'blue',   visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { gladiator: 15 } },
+    { id: 'tournament_02_2011_reputation_gladiator_4', name: 'Свиток Фаворита', quality: 'purple', visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { gladiator: 20 } },
+
+    // Завоеватель: green=35%, blue=70%
+    { id: 'tournament_02_2011_reputation_conqueror_1', name: 'Свиток Фаворита', quality: 'green', visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { zavoevatel: 35 } },
+    { id: 'tournament_02_2011_reputation_conqueror_2', name: 'Свиток Фаворита', quality: 'blue',  visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { zavoevatel: 70 } },
+
+    // Археолог: white=5%, green=7.5%, blue=10%, purple=12.5%
+    { id: 'tournament_02_2011_reputation_archeolog_1', name: 'Свиток Фаворита', quality: 'white',  visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { arxeolog: 5 } },
+    { id: 'tournament_02_2011_reputation_archeolog_2', name: 'Свиток Фаворита', quality: 'green',  visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { arxeolog: 7.5 } },
+    { id: 'tournament_02_2011_reputation_archeolog_3', name: 'Свиток Фаворита', quality: 'blue',   visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { arxeolog: 10 } },
+    { id: 'tournament_02_2011_reputation_archeolog_4', name: 'Свиток Фаворита', quality: 'purple', visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { arxeolog: 12.5 } },
+
+    // Ведьмак: white=10%, green=15%, blue=20%, purple=25%
+    { id: 'tournament_02_2011_reputation_witcher_1', name: 'Свиток Фаворита', quality: 'white',  visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { vedmak: 10 } },
+    { id: 'tournament_02_2011_reputation_witcher_2', name: 'Свиток Фаворита', quality: 'green',  visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { vedmak: 15 } },
+    { id: 'tournament_02_2011_reputation_witcher_3', name: 'Свиток Фаворита', quality: 'blue',   visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { vedmak: 20 } },
+    { id: 'tournament_02_2011_reputation_witcher_4', name: 'Свиток Фаворита', quality: 'purple', visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { vedmak: 25 } },
+
+    // Королевская Гвардия: white=10%, green=15%, blue=20%, purple=25%
+    { id: 'tournament_02_2011_reputation_guardsman_1', name: 'Свиток Фаворита', quality: 'white',  visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { guard: 10 } },
+    { id: 'tournament_02_2011_reputation_guardsman_2', name: 'Свиток Фаворита', quality: 'green',  visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { guard: 15 } },
+    { id: 'tournament_02_2011_reputation_guardsman_3', name: 'Свиток Фаворита', quality: 'blue',   visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { guard: 20 } },
+    { id: 'tournament_02_2011_reputation_guardsman_4', name: 'Свиток Фаворита', quality: 'purple', visual: 'light_scroll', ext: 'jpg', type: 'percent', bonuses: { guard: 25 } },
 
   ],
 
