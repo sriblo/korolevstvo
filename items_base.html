@@ -535,22 +535,22 @@ a{color:inherit;text-decoration:none}
       </div>
       <div class="sb-items open">
         <div class="sb-item sb-sub" data-view="eq_warrior" onclick="show(this)">
-          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/warrior.png" alt="" onerror="iconFallback(this)">Воин
+          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/warrior.png" alt="" onerror="iconFallback(this)">Воин
         </div>
         <div class="sb-item sb-sub" data-view="eq_paladin" onclick="show(this)">
-          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/paladin.png" alt="" onerror="iconFallback(this)">Паладин
+          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/paladin.png" alt="" onerror="iconFallback(this)">Паладин
         </div>
         <div class="sb-item sb-sub" data-view="eq_mage" onclick="show(this)">
-          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/mage.png" alt="" onerror="iconFallback(this)">Маг
+          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/mage.png" alt="" onerror="iconFallback(this)">Маг
         </div>
         <div class="sb-item sb-sub" data-view="eq_cleric" onclick="show(this)">
-          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/cleric.png" alt="" onerror="iconFallback(this)">Монах
+          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/cleric.png" alt="" onerror="iconFallback(this)">Монах
         </div>
         <div class="sb-item sb-sub" data-view="eq_rogue" onclick="show(this)">
-          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/rogue.png" alt="" onerror="iconFallback(this)">Головорез
+          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/rogue.png" alt="" onerror="iconFallback(this)">Головорез
         </div>
         <div class="sb-item sb-sub" data-view="eq_shooter" onclick="show(this)">
-          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/shooter.png" alt="" onerror="iconFallback(this)">Лучник
+          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/shooter.png" alt="" onerror="iconFallback(this)">Лучник
         </div>
         <div class="sb-divider"></div>
         <div class="sb-item sb-sub" data-view="jewelry" onclick="show(this)">Украшения</div>
@@ -791,7 +791,7 @@ function render(view) {
 function renderEquipment(c) {
   const clsTabs = Object.entries(CLASS_NAMES).map(([id, name]) =>
     `<div class="cls-tab${activeCls===id?' on':''}" onclick="switchCls('${id}')">` +
-    `<img class="cls-tab-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/${CLASS_ICON_FILE[id]}" onerror="this.style.display='none'">${name}</div>`
+    `<img class="cls-tab-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/${CLASS_ICON_FILE[id]}" onerror="this.style.display='none'">${name}</div>`
   ).join('');
 
   const qTabs = QUALITIES.map(q =>
@@ -832,19 +832,19 @@ function switchQ(q) {
 
 
 const CLASS_BUFFS = [
-  { name:'Зоркий глаз',   cls:'Лучник',    quality:'green', effect:'+15% наносимый урон',      img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_alert_eye.png' },
-  { name:'Ураган',        cls:'Маг',       quality:'green', effect:'+15% наносимый урон',      img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_hurricane.png' },
-  { name:'Благословение', cls:'Монах',     quality:'green', effect:'+8% запас здоровья',       img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_regeneration.png' },
-  { name:'Святое слово',  cls:'Паладин',   quality:'green', effect:'+8% запас здоровья',       img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_sacred_word.png' },
-  { name:'Пылающий щит', cls:'Воин',      quality:'green', effect:'-8% получаемый урон',      img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_elemental_shield.png' },
-  { name:'Дар теней',    cls:'Головорез', quality:'green', effect:'-8% получаемый урон',      img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_shadow_gift.png' },
+  { name:'Зоркий глаз',   cls:'Лучник',    quality:'green', effect:'+15% наносимый урон',      img:'https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_alert_eye.png' },
+  { name:'Ураган',        cls:'Маг',       quality:'green', effect:'+15% наносимый урон',      img:'https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_hurricane.png' },
+  { name:'Благословение', cls:'Монах',     quality:'green', effect:'+8% запас здоровья',       img:'https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_regeneration.png' },
+  { name:'Святое слово',  cls:'Паладин',   quality:'green', effect:'+8% запас здоровья',       img:'https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_sacred_word.png' },
+  { name:'Пылающий щит', cls:'Воин',      quality:'green', effect:'-8% получаемый урон',      img:'https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_elemental_shield.png' },
+  { name:'Дар теней',    cls:'Головорез', quality:'green', effect:'-8% получаемый урон',      img:'https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_shadow_gift.png' },
 ];
 
 const WITCH_FLAME = {
   name:'Ведьмин огонь', quality:'green',
   effects:['+30% наносимый урон', '-16% получаемый урон', '+16% запас здоровья'],
   note:'Заменяет все классовые бафы — нельзя использовать вместе с ними',
-  img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/acid_flame.png'
+  img:'https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/acid_flame.png'
 };
 
 function renderBuffsClass(c) {
