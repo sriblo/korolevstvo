@@ -1,0 +1,3077 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>База предметов — Королевство</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   База предметов — redesign aligned with index_new.html
+   Palette, glow background, refined type. Class names unchanged
+   so every render function keeps working.
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* gold tone — default: amber (matches index_new) */
+  --gold:      #d4a843;
+  --gold-l:    #f5d878;
+  --gold-d:    #a07d2b;
+  --gold-tint: 212,168,67;
+
+  --bg:  #0b0907;
+  --bg2: #120e09;
+  --bg3: #1a160f;
+  --bg4: #241d12;
+  --line:  rgba(var(--gold-tint),.09);
+  --line2: rgba(var(--gold-tint),.18);
+  --txt:  #ece4cf;
+  --txt2: #a99775;
+  --txt3: #6c5d44;
+  --green:#8ab860;
+
+  --serif: 'Fraunces', Georgia, serif;
+  --sans:  'Inter', system-ui, sans-serif;
+  --top-h: 60px;
+  --sidebar-w: 252px;
+}
+[data-tone="brass"]{ --gold:#c9b552; --gold-l:#e8d670; --gold-d:#8c7d28; --gold-tint:201,181,82; --txt:#ece6cc; --txt2:#a89c70; }
+[data-tone="sand"]{  --gold:#c2a878; --gold-l:#e0c89c; --gold-d:#8a7858; --gold-tint:194,168,120; --txt:#ece2c8; --txt2:#a89578; }
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;background:var(--bg);color:var(--txt);font-family:var(--sans);font-size:14px;-webkit-font-smoothing:antialiased}
+body{
+  background:
+    radial-gradient(ellipse 70% 50% at 18% -8%, rgba(var(--gold-tint),.10), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 100% 2%, rgba(80,30,15,.16), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+}
+a{color:inherit;text-decoration:none}
+
+/* ── TOP BAR (ported from index_new) ── */
+.top{
+  height:var(--top-h);padding:0 28px;border-bottom:1px solid var(--line);
+  background:rgba(11,9,7,.82);backdrop-filter:blur(20px);
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:16px;
+}
+.logo{display:flex;align-items:center;gap:11px}
+.logo img{width:28px;height:28px;filter:drop-shadow(0 0 10px rgba(var(--gold-tint),.4))}
+.logo-n{font-family:var(--serif);font-size:16px;font-weight:600;letter-spacing:-.01em;line-height:1}
+.logo-s{font-size:11px;color:var(--txt3);margin-top:2px;letter-spacing:.02em}
+.nav{margin-left:22px;display:flex;gap:2px;align-items:center}
+.nav a{padding:7px 11px;border-radius:6px;font-size:13px;color:var(--txt2);font-weight:500;transition:background .12s,color .12s}
+.nav a:hover{color:var(--txt);background:var(--bg2)}
+.nav a.on{color:var(--gold-l);background:var(--bg3)}
+.nav a .count{font-size:10px;color:var(--txt3);margin-left:6px}
+.top .site-search{order:2;margin-left:auto}
+.edit-toggle-btn{order:3}
+
+/* ── HERO (compact banner, matches calculators/guides) ── */
+.hero{
+  position:relative;overflow:hidden;border-bottom:1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(11,9,7,0) 0%, rgba(11,9,7,.45) 70%, var(--bg) 100%),
+    linear-gradient(90deg, rgba(11,9,7,.94) 0%, rgba(11,9,7,.7) 42%, rgba(11,9,7,.28) 100%),
+    url('all_images/cards_newspaper.png') center 32%/cover no-repeat,
+    var(--bg);
+}
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:.4;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+.hero-i{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:40px 44px 34px}
+.hero-crumb{font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.hero-crumb::before{content:'';width:24px;height:1px;background:var(--gold)}
+.hero-crumb a{color:var(--txt2);transition:color .12s}
+.hero-crumb a:hover{color:var(--gold-l)}
+.hero-crumb .dot{color:var(--txt3)}
+.hero-name{font-family:var(--serif);font-size:46px;font-weight:400;letter-spacing:-.025em;line-height:1.04;color:var(--txt);max-width:780px;text-shadow:0 4px 24px rgba(0,0,0,.65)}
+.hero-name em{font-style:italic;color:var(--gold-l);font-weight:300}
+.hero-meta{margin-top:16px;font-family:var(--serif);font-size:16px;color:var(--txt);opacity:.92;max-width:600px;line-height:1.5;text-shadow:0 2px 10px rgba(0,0,0,.7)}
+
+/* ── LAYOUT ── */
+.layout{display:flex;min-height:calc(100vh - var(--top-h))}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar-w);flex-shrink:0;
+  background:linear-gradient(180deg, rgba(var(--gold-tint),.02), transparent 240px), var(--bg2);
+  border-right:1px solid var(--line);
+  position:sticky;top:var(--top-h);
+  height:calc(100vh - var(--top-h));
+  overflow-y:auto;
+  padding:0 0 48px;
+}
+.sidebar::-webkit-scrollbar{width:5px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(var(--gold-tint),.16);border-radius:3px}
+.sidebar::-webkit-scrollbar-thumb:hover{background:rgba(var(--gold-tint),.28)}
+
+/* sidebar search — elevated, sticky, primary way to find items */
+.sb-search{
+  position:sticky;top:0;z-index:5;
+  padding:16px 14px 12px;
+  background:linear-gradient(180deg, var(--bg2) 72%, transparent);
+  backdrop-filter:blur(6px);
+}
+.sb-search input{
+  width:100%;padding:10px 12px 10px 34px;border-radius:8px;
+  background:var(--bg);border:1px solid var(--line2);
+  color:var(--txt);font-size:13px;font-family:var(--sans);
+  outline:none;transition:border-color .15s,box-shadow .15s;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 12 12' fill='none' stroke='%237a6a50' stroke-width='1.5'%3E%3Ccircle cx='5' cy='5' r='3.5'/%3E%3Cpath d='M8 8l3 3'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:13px center;
+}
+.sb-search input::placeholder{color:var(--txt3)}
+.sb-search input:focus{border-color:var(--gold-d);box-shadow:0 0 0 3px rgba(var(--gold-tint),.10)}
+
+/* section group */
+.sb-group{margin-bottom:1px}
+.sb-group-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 16px;cursor:pointer;
+  font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;
+  color:var(--txt3);transition:color .15s,background .12s;user-select:none;
+}
+.sb-group-header:hover{color:var(--txt2);background:var(--bg3)}
+.sb-group-header.open{color:var(--gold-d)}
+.sb-group-header.on{color:var(--gold-l) !important}
+.sb-chevron{font-size:8px;transition:transform .2s;opacity:.55}
+.sb-group-header.open .sb-chevron{transform:rotate(90deg)}
+
+.sb-items{display:none}
+.sb-items.open{display:block;padding-bottom:4px}
+
+.sb-item{
+  display:flex;align-items:center;gap:10px;
+  padding:7px 16px 7px 22px;cursor:pointer;
+  font-size:13px;color:var(--txt2);
+  transition:background .12s,color .12s,border-color .12s;
+  border-left:2px solid transparent;
+}
+.sb-item:hover{background:var(--bg3);color:var(--txt)}
+.sb-item.on{background:linear-gradient(90deg,rgba(var(--gold-tint),.07),transparent);color:var(--gold-l);border-left-color:var(--gold)}
+
+.sb-ico{width:16px;height:16px;border-radius:3px;flex-shrink:0;background:var(--bg4);border:1px solid var(--line2)}
+.sb-item.on .sb-ico{border-color:rgba(var(--gold-tint),.3);background:rgba(var(--gold-tint),.08)}
+
+.sb-solo{
+  display:flex;align-items:center;padding:9px 16px;cursor:pointer;
+  font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;
+  color:var(--txt3);transition:background .12s,color .15s;border-left:2px solid transparent;
+}
+.sb-solo:hover{background:var(--bg3);color:var(--txt2)}
+.sb-solo.on{background:var(--bg3);color:var(--gold-l);border-left-color:var(--gold)}
+
+.sb-divider{height:1px;background:var(--line);margin:6px 14px}
+.sb-sub{padding-left:30px !important;font-size:12.5px;letter-spacing:0}
+.sb-cls-ico{width:17px;height:17px;border-radius:3px;flex-shrink:0;object-fit:contain}
+.sb-tech-header{
+  padding:9px 16px 5px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  color:var(--txt3);opacity:.5;margin-top:6px;
+}
+
+/* ── CONTENT ── */
+.content{flex:1;min-width:0;padding:40px 44px 96px;max-width:1180px}
+
+.empty-state{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:60vh;gap:16px;color:var(--txt3);
+  font-family:var(--serif);font-size:18px;font-style:italic;
+}
+.empty-state svg{opacity:.16}
+
+.c-title{font-family:var(--serif);font-size:30px;font-weight:500;letter-spacing:-.02em;margin-bottom:6px;line-height:1.1}
+.c-sub{font-size:11px;color:var(--txt3);margin-bottom:26px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+
+/* quality tabs */
+.q-tabs{display:flex;gap:2px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:26px}
+.q-tab{
+  padding:9px 14px;font-size:12px;font-weight:600;letter-spacing:.03em;cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-1px;color:var(--txt3);
+  transition:color .15s,border-color .15s;
+}
+.q-tab:hover{color:var(--txt2)}
+.q-tab.on{border-bottom-color:var(--gold);color:var(--gold-l)}
+.q-tab[data-q="white"].on      {border-bottom-color:#bbb;color:#ccc}
+.q-tab[data-q="green"].on      {border-bottom-color:#6aaa40;color:#8acc60}
+.q-tab[data-q="blue"].on       {border-bottom-color:#4888cc;color:#78aae0}
+.q-tab[data-q="purple"].on     {border-bottom-color:#9060cc;color:#b888ee}
+.q-tab[data-q="purple_plus"].on{border-bottom-color:#c070e0;color:#d898f8}
+.q-tab[data-q="red"].on        {border-bottom-color:#cc3030;color:#ee5050}
+.q-tab[data-q="orange"].on     {border-bottom-color:#cc7020;color:#f0a040}
+
+/* class tabs */
+.cls-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:22px}
+.cls-tab{
+  display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:8px;cursor:pointer;
+  font-size:13px;color:var(--txt2);font-weight:500;border:1px solid transparent;
+  transition:background .12s,color .12s,border-color .12s;
+}
+.cls-tab:hover{background:var(--bg3);color:var(--txt)}
+.cls-tab.on{background:var(--bg3);color:var(--gold-l);border-color:var(--line2)}
+.cls-tab-ico{width:17px;height:17px;border-radius:2px;flex-shrink:0;object-fit:contain}
+
+/* item table */
+.item-table{width:100%;border-collapse:collapse}
+.item-table th{
+  padding:10px 14px;text-align:right;font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--txt3);font-weight:600;border-bottom:1px solid var(--line);
+}
+.item-table th:first-child{text-align:left}
+.item-table td{padding:12px 14px;border-bottom:1px solid rgba(var(--gold-tint),.045);font-family:var(--serif);font-size:14px}
+.item-table tr:last-child td{border-bottom:none}
+.item-table tr:hover td{background:rgba(var(--gold-tint),.03)}
+.slot-name{color:var(--txt2);font-weight:500;display:flex;align-items:center;gap:10px}
+.slot-ico{width:20px;height:20px;border-radius:3px;background:var(--bg4);border:1px solid var(--line);flex-shrink:0}
+.stat-val{color:var(--txt);font-feature-settings:'tnum';text-align:right}
+.stat-empty{color:var(--txt3);text-align:right;font-size:13px}
+
+/* rune list */
+.rune-list{display:flex;flex-direction:column;gap:2px}
+.rune-row{
+  display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:10px;
+  border:1px solid transparent;transition:background .12s,border-color .12s;
+}
+.rune-row:hover{background:var(--bg2);border-color:var(--line)}
+.rune-ico{width:34px;height:34px;border-radius:4px;background:var(--bg4);flex-shrink:0;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}
+.ico-img{width:100%;height:100%;object-fit:cover;border-radius:4px}
+.ico-frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.rune-info{flex:1;min-width:0}
+.rune-name{font-family:var(--serif);font-size:15px;font-weight:500;margin-bottom:3px}
+.rune-meta{font-size:11px;color:var(--txt3);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.q-badge{display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.05em;font-family:var(--sans)}
+.q-badge.white {background:rgba(200,200,200,.1);color:#bbb}
+.q-badge.green  {background:rgba(106,170,64,.15);color:#8acc60}
+.q-badge.blue   {background:rgba(72,136,204,.15);color:#78aae0}
+.q-badge.purple {background:rgba(144,96,204,.15);color:#b888ee}
+.q-badge.red    {background:rgba(204,48,48,.15);color:#ee5050}
+.q-badge.orange {background:rgba(204,112,32,.15);color:#f0a040}
+
+.soon-block{padding:36px;border:1px dashed var(--line2);border-radius:12px;color:var(--txt3);font-family:var(--serif);font-style:italic;font-size:16px;text-align:center}
+
+/* equipment / item card grid */
+.eq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px;margin-top:4px}
+.eq-card{
+  display:flex;flex-direction:column;align-items:center;gap:9px;
+  padding:16px 10px 13px;
+  background:var(--bg2);border:1px solid var(--line);border-radius:12px;
+  transition:border-color .15s,background .15s,transform .12s;
+}
+.eq-card:hover{border-color:var(--line2);background:var(--bg3);transform:translateY(-2px);cursor:default}
+.eq-card .rune-ico{width:32px;height:32px}
+.eq-card .ico-img{object-fit:none;width:32px;height:32px}
+.eq-slot-name{font-size:11.5px;color:var(--txt3);text-align:center;line-height:1.35}
+.eq-no-img{width:32px;height:32px;background:var(--bg4);border-radius:5px;border:1px dashed var(--line2);display:flex;align-items:center;justify-content:center;color:var(--txt3);font-size:10px;opacity:.4}
+
+/* buff cards */
+.buff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(208px,1fr));gap:9px}
+.pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.ring-quad-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:9px;margin-bottom:4px}
+.ring-quad-header{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3);text-align:center;padding:4px 0}
+.buff-card{
+  display:flex;flex-direction:row;align-items:center;gap:12px;padding:13px 15px;
+  background:var(--bg2);border:1px solid var(--line);border-radius:12px;
+  transition:border-color .15s,background .15s,transform .12s;cursor:default;
+}
+.buff-card:hover{border-color:var(--line2);background:var(--bg3);transform:translateY(-1px)}
+.buff-card.special{border-color:rgba(var(--gold-tint),.22);background:rgba(var(--gold-tint),.05)}
+.buff-ico{width:32px;height:32px;flex-shrink:0}
+.buff-ico img{display:block;width:32px;height:32px}
+.buff-card .rune-ico{width:32px;height:32px;flex-shrink:0}
+.buff-card .ico-img{width:32px;height:32px;object-fit:none}
+.buff-text{flex:1;min-width:0}
+.buff-name,.rune-name,.eq-slot-name,.c-title{overflow-wrap:break-word;word-break:normal;white-space:normal}
+.buff-name{font-family:var(--serif);font-size:14px;font-weight:500;color:var(--txt);line-height:1.3}
+.buff-cls{font-size:11px;color:var(--txt3);margin-top:2px}
+
+.jewel-section-head{
+  font-family:var(--serif);font-size:21px;font-weight:500;letter-spacing:-.01em;
+  color:var(--gold-l);margin:38px 0 14px;padding-bottom:11px;border-bottom:1px solid var(--line2);
+}
+.jewel-section-head:first-child{margin-top:4px}
+.art-section-divider{
+  display:flex;align-items:center;gap:14px;margin:28px 0 16px;
+  font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:var(--txt3);
+}
+.art-section-divider::before,.art-section-divider::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* item tooltip */
+.eq-tt{
+  position:fixed;z-index:300;pointer-events:none;display:none;
+  background:var(--bg3);border:1px solid var(--line2);border-radius:10px;
+  padding:13px 15px;min-width:210px;max-width:340px;width:max-content;
+  box-shadow:0 14px 40px rgba(0,0,0,.6);
+}
+.tt-desc,.tt-action{max-width:316px;word-wrap:break-word;white-space:pre-wrap}
+.eq-tt.vis{display:block}
+.tt-head{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.tt-ico{width:40px;height:40px;flex-shrink:0;border-radius:5px;background:var(--bg4);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.tt-name{font-family:var(--serif);font-size:15px;font-weight:500;color:var(--txt)}
+.tt-row{display:flex;justify-content:space-between;gap:16px;padding:3px 0;font-size:12px;border-bottom:1px solid var(--line)}
+.tt-row:last-child{border-bottom:none}
+.tt-key{color:var(--txt2)}
+.tt-val{color:var(--txt);white-space:nowrap;font-feature-settings:'tnum'}
+.tt-empty{color:var(--txt3);font-size:12px;font-style:italic}
+.tt-sep{height:1px;background:var(--line);margin:7px 0}
+.tt-kind{font-size:11px;color:var(--txt3);margin-bottom:4px}
+.tt-id{font-size:10px;color:var(--line2);margin-top:8px;font-family:monospace;word-break:break-all}
+.tt-desc{font-size:12px;color:var(--txt2);line-height:1.5;margin:4px 0}
+.tt-action{font-size:12px;color:var(--gold-l);line-height:1.5;margin:4px 0}
+.tt-price{display:flex;align-items:center;gap:5px;justify-content:space-between;padding:3px 0;font-size:12px}
+.tt-price-key{color:var(--txt2)}
+.tt-price-val{color:var(--txt);display:flex;align-items:center;gap:4px;font-feature-settings:'tnum'}
+.tt-coin{width:14px;height:14px;display:inline-block;flex-shrink:0;object-fit:contain;vertical-align:middle}
+
+/* copy toast */
+.copy-toast {
+  position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(12px);
+  background:var(--bg3); border:1px solid var(--line2); color:var(--txt2);
+  font:12px/1 monospace; padding:8px 15px; border-radius:7px;
+  opacity:0; pointer-events:none; transition:opacity .18s, transform .18s; z-index:9999;
+}
+.copy-toast.vis { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ── TONE PICKER (from index_new) ── */
+.tone{
+  position:fixed;bottom:18px;right:18px;z-index:80;
+  background:rgba(11,9,7,.92);backdrop-filter:blur(20px);
+  border:1px solid var(--line2);border-radius:11px;padding:8px;
+  display:flex;align-items:center;gap:4px;box-shadow:0 12px 40px rgba(0,0,0,.6);
+}
+.tone-l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3);font-weight:700;padding:0 6px 0 4px}
+.tone-btn{
+  width:28px;height:28px;border:1px solid var(--line);border-radius:7px;cursor:pointer;
+  background:none;padding:0;transition:border-color .12s,transform .12s;
+  display:flex;align-items:center;justify-content:center;
+}
+.tone-btn:hover{transform:translateY(-1px)}
+.tone-btn.on{border-color:var(--gold);box-shadow:0 0 0 2px rgba(var(--gold-tint),.2)}
+.tone-btn .swatch{width:14px;height:14px;border-radius:50%;display:block}
+.tone-btn[data-t="amber"] .swatch{background:linear-gradient(135deg,#f5d878,#a07d2b)}
+.tone-btn[data-t="brass"] .swatch{background:linear-gradient(135deg,#e8d670,#8c7d28)}
+.tone-btn[data-t="sand"]  .swatch{background:linear-gradient(135deg,#e0c89c,#8a7858)}
+
+/* ── MOBILE ── */
+@media(max-width:760px){
+  .top{padding:0 16px;gap:10px}
+  .nav{display:none}
+  .hero-i{padding:30px 16px 26px}
+  .hero-name{font-size:32px}
+  .hero-meta{font-size:14px}
+  .top .site-search input{width:150px}
+  .sidebar{position:static;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--line)}
+  .sb-search{position:static}
+  .layout{flex-direction:column}
+  .content{padding:24px 16px 64px}
+  .c-title{font-size:25px}
+  .tone{bottom:12px;right:12px}
+}
+
+/* ── EDITOR ── */
+.edit-toggle-btn {
+  padding:6px 13px; border-radius:7px; border:1px solid var(--line2);
+  background:transparent; color:var(--txt2); font-size:12px; cursor:pointer;
+  display:flex; align-items:center; gap:6px; transition:background .12s, color .12s;
+}
+.edit-toggle-btn:hover { background:var(--bg3); color:var(--txt); }
+.edit-toggle-btn.active { border-color:var(--gold); color:var(--gold-l); background:var(--bg3); }
+.edit-toggle-btn .dot { width:7px; height:7px; border-radius:50%; background:currentColor; }
+
+/* settings panel */
+.settings-overlay { display:none; position:fixed; inset:0; z-index:500; background:rgba(0,0,0,.5); }
+.settings-panel {
+  position:fixed; top:70px; right:18px; width:320px; z-index:501;
+  background:var(--bg3); border:1px solid var(--line2); border-radius:12px;
+  padding:18px; display:none; flex-direction:column; gap:13px;
+  box-shadow:0 16px 48px rgba(0,0,0,.6);
+}
+.settings-panel.open { display:flex; }
+.settings-title { font-family:var(--serif); font-size:15px; font-weight:500; color:var(--gold-l); margin-bottom:4px; }
+.settings-row { display:flex; flex-direction:column; gap:6px; }
+.settings-row label { font-size:11px; color:var(--txt2); }
+.settings-row input[type=password], .settings-row input[type=text] {
+  background:var(--bg2); border:1px solid var(--line2); color:var(--txt);
+  border-radius:7px; padding:8px 11px; font-size:12px; outline:none; width:100%;
+}
+.settings-row input:focus { border-color:var(--gold); }
+.settings-btns { display:flex; gap:8px; flex-wrap:wrap; }
+.s-btn { padding:7px 13px; border-radius:7px; border:1px solid var(--line2); background:transparent; color:var(--txt2); font-size:12px; cursor:pointer; transition:background .12s,color .12s; }
+.s-btn:hover { background:var(--bg4); color:var(--txt); }
+.s-btn.primary { border-color:var(--gold); color:var(--gold-l); }
+.s-btn.primary:hover { background:var(--bg4); }
+.s-status { font-size:11px; color:var(--txt3); }
+.s-status.ok { color:#6fcf97; }
+.s-status.err { color:#eb5757; }
+
+/* context menu */
+.ctx-menu {
+  position:fixed; z-index:600; background:var(--bg3); border:1px solid var(--line2);
+  border-radius:10px; padding:5px; min-width:200px; box-shadow:0 10px 32px rgba(0,0,0,.55); display:none;
+}
+.ctx-menu.open { display:block; }
+.ctx-item-name { padding:7px 11px 5px; font-size:12px; color:var(--txt3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:220px; }
+.ctx-sep { height:1px; background:var(--line); margin:3px 0; }
+.ctx-row { padding:8px 11px; font-size:12px; color:var(--txt2); border-radius:6px; cursor:pointer; white-space:nowrap; display:flex; align-items:center; gap:7px; }
+.ctx-row:hover { background:var(--bg4); color:var(--txt); }
+.ctx-row.active-flag { color:var(--gold-l); }
+.ctx-submenu-wrap { position:relative; }
+.ctx-submenu { position:absolute; left:100%; top:0; background:var(--bg3); border:1px solid var(--line2); border-radius:10px; padding:5px; min-width:200px; box-shadow:0 10px 32px rgba(0,0,0,.55); display:none; }
+.ctx-submenu-wrap:hover .ctx-submenu { display:block; }
+
+/* pending bar */
+.pending-bar {
+  position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
+  background:var(--bg3); border:1px solid var(--gold); border-radius:12px;
+  padding:9px 17px; display:none; align-items:center; gap:13px; z-index:400;
+  box-shadow:0 6px 24px rgba(0,0,0,.6);
+}
+.pending-bar.open { display:flex; }
+.pending-count { font-size:12px; color:var(--txt2); }
+.pending-count strong { color:var(--gold-l); }
+.p-btn { padding:6px 15px; border-radius:7px; font-size:12px; cursor:pointer; border:none; }
+.p-btn.save { background:var(--gold); color:#1a1000; font-weight:600; }
+.p-btn.save:hover { background:var(--gold-l); }
+.p-btn.cancel { background:transparent; border:1px solid var(--line2); color:var(--txt2); }
+.p-btn.cancel:hover { color:var(--txt); }
+
+/* badges */
+.badge-tech, .badge-buff { position:absolute; top:2px; right:2px; font-size:9px; font-weight:700; border-radius:3px; padding:1px 4px; pointer-events:none; line-height:1.4; }
+.badge-tech { background:rgba(90,90,90,.85); color:#ccc; }
+.badge-buff { background:rgba(111,207,151,.2); color:#6fcf97; }
+.rune-ico { position:relative; }
+
+/* tech section */
+.tech-section { margin-top:18px; }
+.tech-header {
+  display:inline-flex; align-items:center; gap:7px; padding:7px 13px;
+  border:1px solid var(--line); border-radius:8px; cursor:pointer;
+  font-size:12px; color:var(--txt3); margin-bottom:10px; transition:color .12s, border-color .12s;
+}
+.tech-header:hover { color:var(--txt2); border-color:var(--line2); }
+.tech-chev { font-size:10px; transition:transform .15s; }
+.tech-header.open .tech-chev { transform:rotate(90deg); }
+.tech-grid { margin-top:2px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="logo" id="site-logo" href="index_new.html"></a>
+  <nav class="nav" id="site-nav"></nav>
+  <script src="nav.js"></script>
+  <button class="edit-toggle-btn" id="edit-toggle-btn" onclick="toggleEditMode()" title="Режим редактирования">
+    <span class="dot"></span> Редактор
+  </button>
+</header>
+
+<!-- Settings panel -->
+<div class="settings-overlay" id="settings-overlay" onclick="closeSettings()"></div>
+<div class="settings-panel" id="settings-panel">
+  <div class="settings-title">Редактор базы предметов</div>
+  <div class="settings-row">
+    <label>GitHub Personal Access Token</label>
+    <input type="password" id="gh-token-input" placeholder="ghp_..." autocomplete="off">
+    <div id="token-status" class="s-status"></div>
+  </div>
+  <div class="settings-btns">
+    <button class="s-btn primary" onclick="saveToken()">Сохранить токен</button>
+    <button class="s-btn" onclick="testToken()">Проверить</button>
+    <button class="s-btn" onclick="closeSettings()">Закрыть</button>
+  </div>
+</div>
+
+<!-- Context menu -->
+<div class="ctx-menu" id="ctx-menu">
+  <div class="ctx-item-name" id="ctx-item-name">—</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-row" id="ctx-tech-row" onclick="ctxToggleFlag('tech')">
+    <span>☐</span> Технический предмет
+  </div>
+  <div class="ctx-row" id="ctx-buff-row" onclick="ctxToggleFlag('buff')">
+    <span>☐</span> Баф
+  </div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-submenu-wrap">
+    <div class="ctx-row">Переместить в… ▶</div>
+    <div class="ctx-submenu" id="ctx-move-submenu"></div>
+  </div>
+</div>
+
+<!-- Pending changes bar -->
+<div class="pending-bar" id="pending-bar">
+  <span class="pending-count" id="pending-count">Изменений: <strong>0</strong></span>
+  <button class="p-btn save" onclick="saveChanges()">Сохранить в GitHub</button>
+  <button class="p-btn cancel" onclick="cancelChanges()">Отмена</button>
+</div>
+
+<section class="hero">
+  <div class="hero-i">
+    <div class="hero-crumb">
+      <a href="index_new.html">Королевство</a>
+      <span class="dot">·</span>
+      <span style="color:var(--txt)">База знаний</span>
+    </div>
+    <h1 class="hero-name">База <em>предметов</em></h1>
+    <div class="hero-meta">Все предметы игры в одном месте — экипировка, бижутерия, руны, артефакты, бафы, карты и многое другое.</div>
+  </div>
+</section>
+
+<div class="layout">
+
+  <!-- ── SIDEBAR ── -->
+  <nav class="sidebar">
+
+    <div class="sb-search">
+      <input type="text" id="sb-search-input" placeholder="Поиск по базе…" oninput="onSearch(this.value)" autocomplete="off">
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-group-header open" onclick="toggleGroup(this)">
+        Снаряжение <span class="sb-chevron">▶</span>
+      </div>
+      <div class="sb-items open">
+        <div class="sb-item sb-sub" data-view="eq_warrior" onclick="show(this)">
+          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/warrior.png" alt="" onerror="iconFallback(this)">Воин
+        </div>
+        <div class="sb-item sb-sub" data-view="eq_paladin" onclick="show(this)">
+          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/paladin.png" alt="" onerror="iconFallback(this)">Паладин
+        </div>
+        <div class="sb-item sb-sub" data-view="eq_mage" onclick="show(this)">
+          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/mage.png" alt="" onerror="iconFallback(this)">Маг
+        </div>
+        <div class="sb-item sb-sub" data-view="eq_cleric" onclick="show(this)">
+          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/cleric.png" alt="" onerror="iconFallback(this)">Монах
+        </div>
+        <div class="sb-item sb-sub" data-view="eq_rogue" onclick="show(this)">
+          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/rogue.png" alt="" onerror="iconFallback(this)">Головорез
+        </div>
+        <div class="sb-item sb-sub" data-view="eq_shooter" onclick="show(this)">
+          <img class="sb-cls-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/shooter.png" alt="" onerror="iconFallback(this)">Лучник
+        </div>
+        <div class="sb-divider"></div>
+        <div class="sb-item sb-sub" data-view="jewelry" onclick="show(this)">Украшения</div>
+        <div class="sb-item sb-sub" data-view="artifacts" onclick="show(this)">Артефакты</div>
+        <div class="sb-item sb-sub" data-view="battle_bags" onclick="show(this)">Боевые сумки</div>
+        <div class="sb-item sb-sub" data-view="runes" onclick="show(this)">Руны</div>
+      </div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-group-header" onclick="toggleGroup(this)">
+        Бафы <span class="sb-chevron">▶</span>
+      </div>
+      <div class="sb-items">
+        <div class="sb-item sb-sub" data-view="buffs_event" onclick="show(this)">Ивентовые бафы</div>
+        <div class="sb-item sb-sub" data-view="buffs_food" onclick="show(this)">Еда</div>
+        <div class="sb-item sb-sub" data-view="teleport_scrolls" onclick="show(this)">Свитки телепорта</div>
+      </div>
+    </div>
+
+    <div class="sb-divider" style="margin:8px 0"></div>
+    <div class="sb-tech-header">Технические</div>
+
+    <div class="sb-group">
+      <div class="sb-group-header" onclick="toggleGroup(this)">
+        Сортировка <span class="sb-chevron">▶</span>
+      </div>
+      <div class="sb-items">
+        <div class="sb-item sb-sub" data-view="tech_stats"      onclick="show(this)">Влияют на статы</div>
+        <div class="sb-item sb-sub" data-view="tech_no_stats"   onclick="show(this)">Не влияют на статы</div>
+        <div class="sb-item sb-sub" data-view="tech_equipment"  onclick="show(this)">Снаряжение (всё)</div>
+      </div>
+    </div>
+
+    <div class="sb-divider" style="margin:8px 0"></div>
+
+    <div class="sb-group">
+      <div class="sb-group-header" onclick="toggleGroup(this)">
+        Ивенты <span class="sb-chevron">▶</span>
+      </div>
+      <div class="sb-items">
+        <div class="sb-item sb-sub" data-view="event_colder"        onclick="show(this)">Колдер</div>
+        <div class="sb-item sb-sub" data-view="event_expedition"    onclick="show(this)">Экспедиция</div>
+        <div class="sb-item sb-sub" data-view="event_flowers"       onclick="show(this)">Месяц пробуждения цветов</div>
+        <div class="sb-item sb-sub" data-view="event_st_patric"     onclick="show(this)">Месяц цветущего хмеля</div>
+        <div class="sb-item sb-sub" data-view="event_dniwe"         onclick="show(this)">Зов глубин</div>
+        <div class="sb-item sb-sub" data-view="event_pirate_day"    onclick="show(this)">День Пирата</div>
+        <div class="sb-item sb-sub" data-view="event_goblin_land"   onclick="show(this)">Гоблинский Рай</div>
+        <div class="sb-item sb-sub" data-view="event_dragons"       onclick="show(this)">Небесные Драконы</div>
+        <div class="sb-item sb-sub" data-view="event_halloween"     onclick="show(this)">Тыквенный Фестиваль</div>
+        <div class="sb-item sb-sub" data-view="event_birthday"      onclick="show(this)">День Рождения Королевства</div>
+      </div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-group-header" onclick="toggleGroup(this)">
+        Прочее <span class="sb-chevron">▶</span>
+      </div>
+      <div class="sb-items">
+        <div class="sb-item sb-sub" data-view="other_costumes"    onclick="show(this)">Костюмы</div>
+        <div class="sb-item sb-sub" data-view="other_caldron"     onclick="show(this)">Земли мёртвых</div>
+        <div class="sb-item sb-sub" data-view="other_arena"       onclick="show(this)">Арена</div>
+        <div class="sb-item sb-sub" data-view="other_emotions"    onclick="show(this)">Эмоции</div>
+      </div>
+    </div>
+
+    <div class="sb-divider" style="margin:8px 0"></div>
+
+    <div class="sb-group">
+      <div class="sb-group-header" onclick="toggleGroup(this)">
+        Карты <span class="sb-chevron">▶</span>
+      </div>
+      <div class="sb-items">
+        <div class="sb-item sb-sub" data-view="cards_spades"   onclick="show(this)">Пики</div>
+        <div class="sb-item sb-sub" data-view="cards_hearts"   onclick="show(this)">Червы</div>
+        <div class="sb-item sb-sub" data-view="cards_clubs"    onclick="show(this)">Трефы</div>
+        <div class="sb-item sb-sub" data-view="cards_diamonds" onclick="show(this)">Бубны</div>
+        <div class="sb-item sb-sub" data-view="cards_other"    onclick="show(this)">Остальные масти</div>
+        <div class="sb-item sb-sub" data-view="cards_albums"   onclick="show(this)">Альбомы</div>
+      </div>
+    </div>
+
+    <div class="sb-divider" style="margin:8px 0"></div>
+
+    <div class="sb-group">
+      <div class="sb-group-header" onclick="toggleGroup(this)">
+        Профессии <span class="sb-chevron">▶</span>
+      </div>
+      <div class="sb-items">
+        <div class="sb-item sb-sub" data-view="prof_craft"  onclick="show(this)">Ремесленник</div>
+        <div class="sb-item sb-sub" data-view="prof_herb"   onclick="show(this)">Травник</div>
+        <div class="sb-item sb-sub" data-view="prof_mine"   onclick="show(this)">Рудокоп</div>
+        <div class="sb-item sb-sub" data-view="prof_hunt"   onclick="show(this)">Охотник</div>
+        <div class="sb-item sb-sub" data-view="prof_fish"   onclick="show(this)">Рыболов</div>
+        <div class="sb-item sb-sub" data-view="prof_cook"   onclick="show(this)">Повар</div>
+      </div>
+    </div>
+
+    <div class="sb-divider" style="margin:8px 0"></div>
+
+    <div class="sb-group">
+      <div class="sb-group-header" onclick="toggleGroup(this)">
+        Репутации <span class="sb-chevron">▶</span>
+      </div>
+      <div class="sb-items">
+        <div class="sb-item sb-sub" data-view="rep_witcher"    onclick="show(this)">Ведьмак</div>
+        <div class="sb-item sb-sub" data-view="rep_demon"      onclick="show(this)">Охотник на демонов</div>
+        <div class="sb-item sb-sub" data-view="rep_gladiator"  onclick="show(this)">Гладиатор</div>
+        <div class="sb-item sb-sub" data-view="rep_conqueror"  onclick="show(this)">Завоеватель</div>
+        <div class="sb-item sb-sub" data-view="rep_explorer"   onclick="show(this)">Первооткрыватель</div>
+      </div>
+    </div>
+
+    <div class="sb-divider" style="margin:8px 0"></div>
+
+    <div class="sb-group">
+      <div class="sb-group-header" onclick="toggleGroup(this)">
+        Архив <span class="sb-chevron">▶</span>
+      </div>
+      <div class="sb-items">
+        <div class="sb-item sb-sub" data-view="archive_equipment"  onclick="show(this)">Экипировка</div>
+        <div class="sb-item sb-sub" data-view="archive_profession" onclick="show(this)">Профессии</div>
+        <div class="sb-item sb-sub" data-view="archive_conqueror"  onclick="show(this)">Завоеватель</div>
+        <div class="sb-item sb-sub" data-view="archive_quest"      onclick="show(this)">Квестовые предметы</div>
+        <div class="sb-item sb-sub" data-view="archive_rings"      onclick="show(this)">Кольца</div>
+        <div class="sb-item sb-sub" data-view="archive_tournament" onclick="show(this)">Стальной турнир</div>
+      </div>
+    </div>
+
+  </nav>
+
+  <!-- ── CONTENT ── -->
+  <div class="content" id="content">
+    <div class="empty-state">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M16 24h16M24 16v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Выбери раздел слева
+    </div>
+  </div>
+
+</div>
+
+<script src="https://sriblo.github.io/Korolevstvo-Calculator/data.js"></script>
+<script>
+const SLOTS = [
+  { id:'weapon',    name:'Оружие' },
+  { id:'pants',     name:'Штаны' },
+  { id:'belt',      name:'Пояс' },
+  { id:'boots',     name:'Сапоги' },
+  { id:'gloves',    name:'Перчатки' },
+  { id:'shoulders', name:'Наплечники' },
+  { id:'chest',     name:'Нагрудник' },
+  { id:'helm',      name:'Шлем' },
+  { id:'offhand',   name:'Второе оружие' },
+];
+
+function icoHtml(img, quality) {
+  const frame = QUALITY_FRAME[quality] || '';
+  return `<div class="rune-ico">` +
+    `<img class="ico-img" src="${img}" alt="" onerror="iconFallback(this)">` +
+    (frame ? `<img class="ico-frame" src="${frame}" alt="">` : '') +
+    `</div>`;
+}
+let activeQ   = 'purple';
+let activeCls = 'warrior';
+
+/* префикс "Усиленный/Усиленные" по названию предмета */
+const УСИЛ = {
+  'Меч':'Усиленный',     'Щит':'Усиленный',     'Шлем':'Усиленный',
+  'Нагрудник':'Усиленный','Пояс':'Усиленный',    'Молот':'Усиленный',
+  'Посох':'Усиленный',   'Орб':'Усиленный',      'Кинжал':'Усиленный',
+  'Лук':'Усиленный',     'Колчан':'Усиленный',
+  'Наплечники':'Усиленные','Штаны':'Усиленные',  'Перчатки':'Усиленные',
+  'Сапоги':'Усиленные',
+};
+
+function clearActive() {
+  document.querySelectorAll('.sb-item').forEach(e => e.classList.remove('on'));
+}
+
+function toggleGroup(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+
+function show(el) {
+  clearActive();
+  el.classList.add('on');
+  render(el.dataset.view);
+}
+
+function render(view) {
+  const c = document.getElementById('content');
+  if (view.startsWith('eq_'))       renderEquipmentDb(c, view.slice(3));
+  else if (view === 'artifacts')     renderArtifactsDb(c);
+  else if (view === 'runes')         renderRunesDb(c);
+  else if (view === 'jewelry')       renderJewelry(c);
+  else if (view === 'battle_bags')   renderBattleBags(c);
+  else if (view === 'buffs_class')   renderBuffsClass(c);
+  else if (view === 'buffs_event')   renderEventBuffsDb(c);
+  else if (view === 'buffs_food')    renderFood(c);
+  else if (view === 'teleport_scrolls') renderTeleportScrolls(c);
+  else if (view === 'tech_stats')     renderTechStats(c);
+  else if (view === 'tech_no_stats')  renderTechNoStats(c);
+  else if (view === 'tech_equipment') renderTechEquipment(c);
+  else if (view === 'other_costumes')      renderCostumes(c);
+  else if (view === 'other_colder')        renderOtherSection(c, 'colder');
+  else if (view === 'other_halloween')     renderOtherSection(c, 'halloween');
+  else if (view === 'other_caldron')       renderOtherSection(c, 'caldron');
+  else if (view === 'other_st_patric')     renderOtherSection(c, 'st_patric');
+  else if (view === 'other_dragons')       renderOtherSection(c, 'dragons');
+  else if (view === 'other_dniwe')         renderOtherSection(c, 'dniwe');
+  else if (view === 'other_pirate_day')    renderOtherSection(c, 'pirate_day');
+  else if (view === 'other_goblin_land')   renderOtherSection(c, 'goblin_land');
+  else if (view === 'other_expedition')    renderOtherSection(c, 'expedition');
+  else if (view === 'other_arena')         renderOtherSection(c, 'arena');
+  else if (view === 'other_emotions')      renderOtherSection(c, 'emotions');
+  else if (view === 'event_colder')        renderOtherSection(c, 'colder');
+  else if (view === 'event_halloween')     renderOtherSection(c, 'halloween');
+  else if (view === 'event_st_patric')     renderOtherSection(c, 'st_patric');
+  else if (view === 'event_dragons')       renderOtherSection(c, 'dragons');
+  else if (view === 'event_dniwe')         renderOtherSection(c, 'dniwe');
+  else if (view === 'event_pirate_day')    renderOtherSection(c, 'pirate_day');
+  else if (view === 'event_goblin_land')   renderOtherSection(c, 'goblin_land');
+  else if (view === 'event_expedition')    renderOtherSection(c, 'expedition');
+  else if (view === 'event_flowers')       renderOtherSection(c, 'flowers');
+  else if (view === 'event_birthday')      renderOtherSection(c, 'birthday');
+  else if (view.startsWith('cards_'))      renderCardsSection(c, view.slice(6));
+  else if (view.startsWith('prof_'))       renderProfSection(c, view.slice(5));
+  else if (view.startsWith('rep_'))        renderRepSection(c, view.slice(4));
+  else if (view === 'archive_equipment')   renderArchiveSection(c, 'Экипировка');
+  else if (view === 'archive_profession')  renderArchiveSection(c, 'Профессии');
+  else if (view === 'archive_conqueror')   renderArchiveSection(c, 'Завоеватель');
+  else if (view === 'archive_quest')       renderArchiveSection(c, 'Квестовые предметы');
+  else if (view === 'archive_rings')       renderArchiveRings(c);
+  else if (view === 'archive_tournament')  renderArchiveTournament(c);
+}
+
+function renderEquipment(c) {
+  const clsTabs = Object.entries(CLASS_NAMES).map(([id, name]) =>
+    `<div class="cls-tab${activeCls===id?' on':''}" onclick="switchCls('${id}')">` +
+    `<img class="cls-tab-ico" src="https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/classes/${CLASS_ICON_FILE[id]}" onerror="this.style.display='none'">${name}</div>`
+  ).join('');
+
+  const qTabs = QUALITIES.map(q =>
+    `<div class="q-tab${activeQ===q.id?' on':''}" data-q="${q.id}" onclick="switchQ('${q.id}')">${q.label}</div>`
+  ).join('');
+
+  const setName = CLASS_SET_NAMES[activeCls]?.[activeQ] || '';
+  const cards = SLOTS.map(slot => {
+    const img = getItemImg(activeCls, slot.id, activeQ);
+    const hasData = !!(STATS[activeCls]?.[activeQ]?.[slot.id]);
+    let ico;
+    if (img) {
+      ico = icoHtml(img, activeQ);
+    } else if (hasData) {
+      const frame = QUALITY_FRAME[activeQ] || '';
+      ico = `<div class="rune-ico">${frame ? `<img class="ico-frame" src="${frame}" style="position:static;width:32px;height:32px">` : ''}</div>`;
+    } else {
+      ico = `<div class="eq-no-img"></div>`;
+    }
+    const baseName = CLASS_ITEM_NAMES[activeCls]?.[slot.id] || slot.name;
+    const prefix = activeQ === 'purple_plus' ? (УСИЛ[baseName] || 'Усиленный') + ' ' : '';
+    const itemName = setName ? `${prefix}${baseName} ${setName}` : `${prefix}${baseName}`;
+    return `<div class="eq-card" onmouseenter="ttShow('${activeCls}','${slot.id}','${activeQ}','${itemName}','${img||''}',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()">${ico}<div class="eq-slot-name">${itemName}</div></div>`;
+  }).join('');
+
+  c.innerHTML = `
+    <div class="c-title">Основная экипировка</div>
+    <div class="cls-tabs">${clsTabs}</div>
+    <div class="q-tabs">${qTabs}</div>
+    <div class="eq-grid">${cards}</div>`;
+}
+
+function switchQ(q) {
+  activeQ = q;
+  const view = document.querySelector('.sb-item.on')?.dataset.view;
+  if (view) render(view);
+}
+
+
+const CLASS_BUFFS = [
+  { name:'Зоркий глаз',   cls:'Лучник',    quality:'green', effect:'+15% наносимый урон',      img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_alert_eye.png' },
+  { name:'Ураган',        cls:'Маг',       quality:'green', effect:'+15% наносимый урон',      img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_hurricane.png' },
+  { name:'Благословение', cls:'Монах',     quality:'green', effect:'+8% запас здоровья',       img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_regeneration.png' },
+  { name:'Святое слово',  cls:'Паладин',   quality:'green', effect:'+8% запас здоровья',       img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_sacred_word.png' },
+  { name:'Пылающий щит', cls:'Воин',      quality:'green', effect:'-8% получаемый урон',      img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_elemental_shield.png' },
+  { name:'Дар теней',    cls:'Головорез', quality:'green', effect:'-8% получаемый урон',      img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/skill_shadow_gift.png' },
+];
+
+const WITCH_FLAME = {
+  name:'Ведьмин огонь', quality:'green',
+  effects:['+30% наносимый урон', '-16% получаемый урон', '+16% запас здоровья'],
+  note:'Заменяет все классовые бафы — нельзя использовать вместе с ними',
+  img:'https://sriblo.github.io/Korolevstvo-Calculator/https://sriblo.github.io/Korolevstvo-Calculator/stats_calculator/buffs/class_buff/acid_flame.png'
+};
+
+function renderBuffsClass(c) {
+  const cards = CLASS_BUFFS.map((b, i) => `
+    <div class="buff-card" onmouseenter="ttShowBuff(${i},event)" onmousemove="ttMove(event)" onmouseleave="ttHide()">
+      ${icoHtml(b.img, b.quality)}
+      <div class="buff-text">
+        <div class="buff-name">${b.name}</div>
+        <div class="buff-cls">${b.cls}</div>
+      </div>
+    </div>`).join('');
+
+  const wf = WITCH_FLAME;
+  const wfCard = `
+    <div class="buff-card special" onmouseenter="ttShowWF(event)" onmousemove="ttMove(event)" onmouseleave="ttHide()">
+      ${icoHtml(wf.img, wf.quality)}
+      <div class="buff-text"><div class="buff-name">${wf.name}</div></div>
+    </div>`;
+
+  c.innerHTML = `
+    <div class="c-title">Классовые бафы</div>
+    <div class="buff-grid">${cards}${wfCard}</div>`;
+}
+
+
+const JEWELRY_SLOTS_DB = [
+  { id:'ring1,ring2', name:'Кольца' },
+  { id:'amulet',      name:'Амулеты' },
+  { id:'bracelet1',   name:'Браслеты' },
+  { id:'medallion',   name:'Медальоны' },
+  { id:'trophy',      name:'Трофеи' },
+  { id:'talisman',    name:'Талисманы' },
+  { id:'accessory1',  name:'Аксессуары' },
+  { id:'accessory2',  name:'Брелки' },
+];
+
+async function renderJewelry(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const allItems = await loadDb('equipment_none');
+
+  // Separate ring handling
+  const allRings = allItems.filter(i => i.slot === 'ring1,ring2');
+
+  const FALCON_IDS  = new Set(['fair_attack_defense_ring','fair_attack_ring_gift','fair_defense_ring_gift','fair_attack_ring','fair_defense_ring','one_ring_to_rule_them_all']);
+  const SQUIRE_IDS  = new Set(['crafted_ring_10','reinforced_crafted_ring_10']);
+  const KNIGHT_IDS  = new Set(['crafted_ring_15','reinforced_crafted_ring_15']);
+  const LORD_IDS    = new Set(['crafted_ring_20','reinforced_crafted_ring_20']);
+  const BARON_IDS   = new Set(['crafted_ring_666','reinforced_crafted_ring_666']);
+  const CRAFTED_IDS = new Set([...SQUIRE_IDS,...KNIGHT_IDS,...LORD_IDS,...BARON_IDS]);
+
+  const falconRings = allRings.filter(i => FALCON_IDS.has(i.id));
+  const squireRings = allRings.filter(i => SQUIRE_IDS.has(i.id));
+  const knightRings = allRings.filter(i => KNIGHT_IDS.has(i.id));
+  const lordRings   = allRings.filter(i => LORD_IDS.has(i.id));
+  const baronRings  = allRings.filter(i => BARON_IDS.has(i.id));
+  const otherRings  = allRings.filter(i => !FALCON_IDS.has(i.id) && !CRAFTED_IDS.has(i.id) && !isArchiveRing(i.id));
+
+  // сортировка внутри группы: обычное → усиленное
+  function ringOrder(items) {
+    return [...items].sort((a,b) => (a.id.startsWith('reinforced_') ? 1 : 0) - (b.id.startsWith('reinforced_') ? 1 : 0));
+  }
+
+  otherRings.sort((a,b) => a.reqlvl - b.reqlvl);
+
+  let allSorted = [];
+  let html = '';
+
+  function addGroup(label, items) {
+    if (!items.length) return;
+    const base = allSorted.length;
+    allSorted = allSorted.concat(items);
+    html += `<div class="art-section-divider">${label}</div><div class="eq-grid">`;
+    items.forEach((item, i) => { html += dbItemCard(item, base + i); });
+    html += `</div>`;
+  }
+
+  addGroup('Кольца Фалькона', sortByQuality(falconRings));
+  addGroup('Кольцо сквайра', ringOrder(squireRings));
+  addGroup('Кольцо рыцаря', ringOrder(knightRings));
+  addGroup('Кольцо лорда',  ringOrder(lordRings));
+  addGroup('Кольцо барона', ringOrder(baronRings));
+  if (otherRings.length) addGroup('Остальные кольца', otherRings);
+
+  // Other jewelry types (non-ring)
+  const JEWELRY_NAMES = {amulet:'Амулеты', bracelet1:'Браслеты', medallion:'Медальоны', trophy:'Трофеи', talisman:'Талисманы', accessory1:'Аксессуары', accessory2:'Брелки'};
+  for (const slot of ['amulet','bracelet1','medallion','trophy','talisman','accessory1','accessory2']) {
+    const slotItems = allItems.filter(i => i.slot === slot);
+    if (!slotItems.length) continue;
+    addGroup(JEWELRY_NAMES[slot] || slot, sortByQuality(slotItems));
+  }
+
+  _ttDbItems = allSorted;
+  c.innerHTML = `<div class="c-title">Украшения</div>${html || '<div class="soon-block">Нет данных</div>'}`;
+}
+
+
+function renderSoon(c, title) {
+  c.innerHTML = `
+    <div class="c-title">${title}</div>
+    <div class="c-sub" style="margin-bottom:24px">Скоро</div>
+    <div class="soon-block">Данные добавляются</div>`;
+}
+
+const _tt = document.createElement('div');
+_tt.className = 'eq-tt';
+document.body.appendChild(_tt);
+
+const _copyToast = document.createElement('div');
+_copyToast.id = 'copy-toast';
+_copyToast.className = 'copy-toast';
+document.body.appendChild(_copyToast);
+
+function fmtVal(v, pct) { return (v >= 0 ? '+' : '') + v + (pct ? '%' : ''); }
+
+function ttHead(img, quality, name) {
+  const q = QUALITIES.find(function(q2){ return q2.id === quality; });
+  const color = q ? q.color : 'var(--txt)';
+  const frame = QUALITY_FRAME[quality] || '';
+  const frameHtml = frame ? `<img class="ico-frame" src="${frame}" alt="">` : '';
+  const ico = img
+    ? `<div class="tt-ico"><img class="ico-img" src="${img}" alt="" onerror="iconFallback(this)">${frameHtml}</div>`
+    : (frame ? `<div class="tt-ico">${frameHtml}</div>` : '');
+  return `<div class="tt-head">${ico}<div class="tt-name" style="color:${color}">${name}</div></div>`;
+}
+
+function ttShow(cls, slotId, quality, itemName, img, e) {
+  const stats = STATS[cls]?.[quality]?.[slotId];
+  let html = ttHead(img, quality, itemName);
+  if (!stats) {
+    html += `<div class="tt-empty">Данные не добавлены</div>`;
+  } else {
+    html += STAT_LABELS
+      .filter(s => stats[s.key] != null)
+      .map(s => {
+        const v = stats[s.key];
+        return `<div class="tt-row"><span class="tt-key">${s.label}</span><span class="tt-val">${fmtVal(v,s.pct)}</span></div>`;
+      }).join('');
+  }
+  _tt.innerHTML = html;
+  _tt.classList.add('vis');
+  ttMove(e);
+}
+function ttShowBuff(idx, e) {
+  const b = CLASS_BUFFS[idx];
+  let html = ttHead(b.img, b.quality, b.name);
+  html += `<div class="tt-row"><span class="tt-key">${b.cls}</span><span class="tt-val">${b.effect}</span></div>`;
+  _tt.innerHTML = html;
+  _tt.classList.add('vis');
+  ttMove(e);
+}
+function ttShowWF(e) {
+  const wf = WITCH_FLAME;
+  let html = ttHead(wf.img, wf.quality, wf.name);
+  html += wf.effects.map(ef => `<div class="tt-row"><span class="tt-key" style="color:var(--txt2)">${ef}</span></div>`).join('');
+  html += `<div class="tt-row" style="margin-top:4px"><span class="tt-key" style="font-style:italic;color:var(--txt3)">${wf.note}</span></div>`;
+  _tt.innerHTML = html;
+  _tt.classList.add('vis');
+  ttMove(e);
+}
+async function renderFood(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const allBuffs = await loadDb('buffs');
+  const foods = allBuffs.filter(i => i.id.startsWith('cook_') && !i.id.startsWith('cook_recipe_'));
+
+  const FOOD_LOCATIONS = [
+    { prefix: 'cook_floring_buff_',        label: 'Еда Флоринга' },
+    { prefix: 'cook_kohill_islands_buff_', label: 'Еда Кохилльского архипелага' },
+    { prefix: 'cook_gaina_buff_',          label: 'Еда Гайны' },
+    { prefix: 'cook_spring_shore_buff_',   label: 'Еда Весеннего берега' },
+    { prefix: 'cook_hirn_buff_',           label: 'Еда Хирна' },
+    { prefix: 'cook_south_fyorl_buff_',    label: 'Еда Южного Фьорла' },
+    { prefix: 'cook_north_fyorl_buff_',    label: 'Еда Северного Фьорла' },
+  ];
+
+  let allSorted = [];
+  let html = '';
+
+  for (const loc of FOOD_LOCATIONS) {
+    const items = foods.filter(i => i.id.startsWith(loc.prefix)).sort((a, b) => a.id.localeCompare(b.id));
+    if (!items.length) continue;
+    const base = allSorted.length;
+    allSorted = allSorted.concat(items);
+    html += `<div class="art-section-divider">${loc.label} (${items.length})</div><div class="eq-grid">`;
+    items.forEach((item, i) => { html += dbItemCard(item, base + i); });
+    html += `</div>`;
+  }
+
+  _ttDbItems = allSorted;
+  c.innerHTML = `<div class="c-title">Еда</div>${html}`;
+}
+
+function ttMove(e) {
+  const x = e.clientX + 14, y = e.clientY + 14;
+  _tt.style.left = Math.min(x, window.innerWidth  - _tt.offsetWidth  - 8) + 'px';
+  _tt.style.top  = Math.min(y, window.innerHeight - _tt.offsetHeight - 8) + 'px';
+}
+function ttHide() { _tt.classList.remove('vis'); }
+
+function copyItemId(e, id) {
+  e.stopPropagation();
+  navigator.clipboard.writeText(id).then(() => {
+    const toast = document.getElementById('copy-toast');
+    toast.textContent = id;
+    toast.classList.add('vis');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => toast.classList.remove('vis'), 1800);
+  });
+}
+
+function sv(val, suffix='') {
+  return val == null
+    ? `<td class="stat-empty">—</td>`
+    : `<td class="stat-val">${val}${suffix}</td>`;
+}
+
+// ── Locale ───────────────────────────────────────────────────────────────────
+
+let _locale = null;
+(async () => {
+  try {
+    const r = await fetch('https://sriblo.github.io/Korolevstvo-Calculator/db/item_locale_ru.json');
+    _locale = await r.json();
+  } catch(e) {}
+})();
+
+function locName(id)   { return _locale?.[id]?.name        || null; }
+function locKind(id)   { return _locale?.[id]?.kind        || null; }
+function locDesc(id)   { return _locale?.[id]?.description || null; }
+function locAction(id, stats) {
+  let t = _locale?.[id]?.action;
+  if (!t) return null;
+  if (stats) t = t.replace(/#([^#]+)#/g, (m, k) => stats[k] != null ? stats[k] : m);
+  return t.replace(/<br\s*\/?>/gi, '\n');
+}
+
+// Форматирование цены: значение в медных монетах
+function fmtGold(copper) {
+  if (!copper || copper <= 1) return null;
+  const g = Math.floor(copper / 10000);
+  const s = Math.floor((copper % 10000) / 100);
+  const c = copper % 100;
+  if (g && s) return `${g.toLocaleString('ru')} зол. ${s} сер.`;
+  if (g)      return `${g.toLocaleString('ru')} зол.`;
+  if (s)      return `${s} сер.`;
+  return `${c} мед.`;
+}
+
+// ── DB helpers ───────────────────────────────────────────────────────────────
+
+const DB_CLASSES = {
+  warrior:'Воин', paladin:'Паладин', mage:'Маг',
+  cleric:'Монах', rogue:'Головорез', shooter:'Лучник',
+};
+
+const EQ_MAIN_SLOTS = [
+  { id:'weapon1',   name:'Оружие' },
+  { id:'weapon2',   name:'Второе оружие' },
+  { id:'helm',      name:'Шлем' },
+  { id:'chest',     name:'Нагрудник' },
+  { id:'shoulders', name:'Наплечники' },
+  { id:'pants',     name:'Штаны' },
+  { id:'gloves',    name:'Перчатки' },
+  { id:'belt',      name:'Пояс' },
+  { id:'boots',     name:'Сапоги' },
+];
+
+// Все метки — точные названия из locale-data.swf (attributes::*)
+const DB_STAT_LABELS = [
+  { key:'attack',                                      label:'Атака' },
+  { key:'defense',                                     label:'Защита' },
+  { key:'max_health',                                  label:'Запас здоровья' },
+  { key:'mana',                                        label:'Запас маны' },
+  { key:'max_mana',                                    label:'Запас маны' },
+  { key:'hp',                                          label:'Запас здоровья' },
+  { key:'hp_inc',                                      label:'Запас здоровья' },
+  { key:'mana_inc',                                    label:'Запас маны' },
+  { key:'armor',                                       label:'Броня' },
+  { key:'armor_absorb',                                label:'Поглощение урона',                                pct:true },
+  { key:'block',                                       label:'Толщина щита' },
+  { key:'block_chance',                                label:'Шанс блока',                                      pct:true },
+  { key:'dodge_chance',                                label:'Шанс увернуться',                                 pct:true },
+  { key:'hit_chance',                                  label:'Шанс попасть',                                    pct:true },
+  { key:'attack_spell',                                label:'Маг. атака' },
+  { key:'magic_resist',                                label:'Защита от магии',                                 pct:true },
+  { key:'change_heal_sent_percent',                    label:'Эффективность лечения',                           pct:true },
+  { key:'change_health_regeneration_speed',            label:'Восстановление жизни вне боя' },
+  { key:'mana_conservation',                           label:'Уменьш. расхода маны',                            pct:true },
+  { key:'critical_attack_multiplier',                  label:'Сила крит. урона',                                pct:true },
+  { key:'chance_critical_attack',                      label:'Шанс крит. удара',                                pct:true },
+  { key:'crit_chance',                                 label:'Шанс крит. урона',                                pct:true },
+  { key:'crit_chance_magic',                           label:'Шанс крит. урона магией',                         pct:true },
+  { key:'change_absorb_critical',                      label:'Защита от крит. удара',                           pct:true },
+  { key:'resist_to_fire_percent',                      label:'Сопр. магии огня',                                pct:true },
+  { key:'resist_to_wind_percent',                      label:'Сопр. магии ветра',                               pct:true },
+  { key:'resist_to_light_percent',                     label:'Сопр. магии света',                               pct:true },
+  { key:'weakness_to_fire_percent',                    label:'Защита стихий',                                   pct:true },
+  { key:'weakness_to_light_percent',                   label:'Защита стихий',                                   pct:true },
+  { key:'weakness_to_wind_percent',                    label:'Защита стихий',                                   pct:true },
+  { key:'change_damage_sent_percent',                  label:'Эффективность атаки',                             pct:true },
+  { key:'change_damage_received_percent',              label:'Эффективность защиты',                            pct:true },
+  { key:'boost_damage',                                label:'Усиление урона',                                  pct:true },
+  { key:'change_damage_feedback_percent',              label:'Вампиризм',                                       pct:true },
+  { key:'spell_penetration',                           label:'Уменьш. сопротивления цели к магии',              pct:true },
+  { key:'threat_decrease',                             label:'Уменьшение ненависти',                            pct:true },
+  { key:'run_speed',                                   label:'Скорость в бою',                                  pct:true },
+  { key:'walk_speed',                                  label:'Скорость вне боя',                                pct:true },
+  { key:'change_experience_received_percent',          label:'Получение опыта',                                 pct:true },
+  { key:'change_experience_for_mobs_received_percent', label:'Получение опыта с монстров',                      pct:true },
+  { key:'charm',                                       label:'Харизма' },
+  { key:'karma',                                       label:'Карма' },
+  { key:'gifts_karma',                                 label:'Праздничное настроение' },
+  { key:'killer_chance',                               label:'Шанс нанести смертельный удар',                   pct:true },
+  { key:'ray_gun',                                     label:'Энергетическое оружие' },
+  { key:'strength',                                    label:'Сила' },
+  { key:'intellect',                                   label:'Интеллект' },
+  { key:'agility',                                     label:'Ловкость' },
+  { key:'spirit',                                      label:'Дух' },
+  { key:'stamina',                                     label:'Выносливость' },
+  { key:'change_reputation_rep14_received_percent',    label:'Получение славы на аренах и в Земле Мертвых',     pct:true },
+  { key:'change_reputation_pvp2_received_percent',     label:'Репутация Гладиатора',                            pct:true },
+  { key:'change_reputation_pvp1_received_percent',     label:'Репутация Завоевателя',                           pct:true },
+  { key:'change_reputation_pvp6_received_percent',     label:'Репутация Властителя земель',                     pct:true },
+  { key:'change_reputation_pve1_received_percent',     label:'Репутация Археолога',                             pct:true },
+  { key:'change_reputation_pve2_received_percent',     label:'Репутация Ведьмака',                              pct:true },
+  { key:'change_reputation_pve4_received_percent',     label:'Репутация Охотника на демонов',                   pct:true },
+  { key:'change_reputation_pve5_received_percent',     label:'Репутация Дрессировщика',                         pct:true },
+  { key:'change_reputation_rep15_received_percent',    label:'Репутация Первооткрывателя',                      pct:true },
+  { key:'change_reputation_rep19_received_percent',    label:'Репутация Чародея',                               pct:true },
+  { key:'change_reputation_rep21_received_percent',    label:'Репутация Королевской Гвардии',                   pct:true },
+  { key:'change_reputation_rep25_received_percent',    label:'Репутация Крылатого воителя',                     pct:true },
+  { key:'change_reputation_rep26_received_percent',    label:'Репутация Племен Джунго',                         pct:true },
+  { key:'change_reputation_rep27_received_percent',    label:'Репутация Пиратов Флайна',                        pct:true },
+  { key:'change_reputation_rep28_received_percent',    label:'Репутация Храмов Муун',                           pct:true },
+  { key:'change_reputation_pve6_received_percent',     label:'Репутация Защитник праздника',                    pct:true },
+  { key:'change_reputation_rep30_received_percent',    label:'Репутация Месяца Цветов',                         pct:true },
+  { key:'change_reputation_rep31_received_percent',    label:'Репутация Глубинного воителя',                    pct:true },
+  { key:'change_reputation_rep33_received_percent',    label:'Репутация Гоблинского Рая',                       pct:true },
+];
+
+// Маппинги db-классов/слотов → ключи в CLASS_ITEM_NAMES / CLASS_SET_NAMES
+const DB_CLS_MAP  = { cleric:'monk', shooter:'archer', warrior:'warrior', paladin:'paladin', mage:'mage', rogue:'rogue' };
+const DB_SLOT_MAP = { weapon1:'weapon', weapon2:'offhand' };
+
+function eqItemName(item) {
+  const cls  = DB_CLS_MAP[item.class] || item.class;
+  const slot = DB_SLOT_MAP[item.slot] || item.slot;
+  const base = CLASS_ITEM_NAMES[cls]?.[slot] || EQ_MAIN_SLOTS.find(s=>s.id===item.slot)?.name || item.slot;
+  const set  = CLASS_SET_NAMES[cls]?.[item.quality] || '';
+  const baseName = set ? `${base} ${set}` : base;
+
+  const id = item.id;
+  if (id.startsWith('reinforced_')) {
+    const prefix = УСИЛ[base] || 'Усиленный';
+    return `${prefix} ${baseName}`;
+  }
+  if (id.includes('fair_equipment'))   return `Ярмарочный ${baseName}`;
+  if (id.includes('_guard'))           return `Гвардейский ${baseName}`;
+  if (id.includes('_offer'))           return `Особый ${baseName}`;
+  if (id.includes('halloween'))        return `Хэллоуин — ${baseName}`;
+  if (id.includes('new_year'))         return `Новый год — ${baseName}`;
+  if (id.startsWith('red_equipment_')) return baseName;
+  return baseName;
+}
+
+const EVENT_TAG_LABELS = {
+  halloween:'Хэллоуин', caldron:'Котёл', st_patric:'День Святого Патрика',
+  dragons:'Чешуя Дракона', colder:'Зимний праздник', flowers:'8 марта',
+  cook:'Кулинарный конкурс', cards_booster:'Карты', dniwe:'Праздник независимости',
+  joust_2x2:'Турнир 2×2', pets:'Питомцы', pirate_day:'День пирата',
+  arena_sp_useable:'Арена', fair:'Ярмарка', goblin_land:'Земля гоблинов',
+  expedition:'Экспедиция', witcher:'Ведьмак', demon:'Бесы',
+  useable:'Общие', bestsale:'Магазин', gladiator:'Гладиатор',
+  conqueror:'Завоеватель', guardsman:'Охрана', exorcist:'Экзорцист',
+  wedding:'Свадьба', contest:'Конкурс',
+};
+
+const EVENT_TAG_ORDER = [
+  'halloween','caldron','st_patric','dragons','colder','flowers','cook',
+  'cards_booster','dniwe','joust_2x2','pirate_day','fair','goblin_land',
+  'expedition','witcher','demon','arena_sp_useable','pets',
+  'gladiator','conqueror','guardsman','exorcist','wedding','contest',
+  'useable','bestsale',
+];
+
+const TOKEN_ICO = {
+  // Из официального token-currency.xml
+  event_token:            'icons/currency_tailen_event_small.png',
+  fair_token:             'icons/currency_tailen_red_small.png',
+  contest_token:          'icons/currency_tailen_blue_small.png',
+  clan_token:             'icons/currency_tailen_green_small.png',
+  blood_token:            'icons/currency_tailen_blood_small.png',
+  colony_token:           'icons/currency_tailen_bronze_small.png',
+  offer_token:            'icons/tailen_goldenbutton_small.png',
+  island_robots_token:    'icons/island_robots_tailen_small.png',
+  expedition_token:       'icons/currency_tailen_expedition_small.png',
+  dniwe_token:            'icons/pearl_small.png',
+  // Старые токены
+  goblin_land_token:      'icons/currency_tailen_goblin_land_small.png',
+  colder_token:           'icons/currency_tailen_colder_small.png',
+  frozen_token:           'icons/tailen_colder.png',
+  blue_token:             'icons/currency_tailen_blue_small.png',
+  bronze_token:           'icons/currency_tailen_bronze_small.png',
+  halloween_token:        'icons/currency_tailen_halloween_small.png',
+  dragons_token:          'icons/dragons_token_small.png',
+  st_patric_token:        'icons/lucky_coin.jpg',
+  pirate_day_2013_token:  'icons/pirate_coin_small.png',
+  flowers_2015_token:     'icons/currency_tailen_march_8.png',
+  valentin_token:         'icons/currency_tailen_blue_glass_heart.png',
+  march_8_token:          'icons/currency_tailen_march_8.png',
+};
+const TOKEN_LABEL = {
+  // Официальные названия из item_locale_ru.json (поле name)
+  event_token:            'Праздничный тайлен',
+  fair_token:             'Ярмарочный тайлен',
+  contest_token:          'Турнирный тайлен',
+  clan_token:             'Клановый тайлен',
+  blood_token:            'Кровавый тайлен',
+  colony_token:           'Колониальный тайлен',
+  offer_token:            'Золотая пуговица',
+  island_robots_token:    'Стальной тайк',
+  expedition_token:       'Золотая пластина',
+  dniwe_token:            'Жемчужина',
+  goblin_land_token:      'Небесный камень',
+  frozen_token:           'Ледяной тайлен',
+  halloween_token:        'Серый тайлен',
+  dragons_token:          'Обсидиановый тайлен',
+  st_patric_token:        'Монета Лепреконов',
+  pirate_day_2013_token:  'Монета островного племени',
+  flowers_2015_token:     'Фейлир',
+  valentin_token:         'Стеклянное сердце',
+  march_8_token:          'Фейлир',
+  colder_token:           'Ледяной тайлен',
+  blue_token:             'Тайлен (синий)',
+  bronze_token:           'Тайлен (бронзовый)',
+};
+
+const RUNE_SLOT_GROUPS = [
+  { label:'Руны в оружие',          slots:new Set(['weapon1']) },
+  { label:'Руны в штаны',           slots:new Set(['pants']) },
+  { label:'Руны в пояс',            slots:new Set(['belt']) },
+  { label:'Руны в сапоги',          slots:new Set(['boots']) },
+  { label:'Руны в перчатки',        slots:new Set(['gloves']) },
+  { label:'Руны в наплечники',      slots:new Set(['shoulders']) },
+  { label:'Руны в нагрудник',       slots:new Set(['chest']) },
+  { label:'Руны в шлем',            slots:new Set(['helm']) },
+  { label:'Руны во второе оружие',  slots:new Set(['weapon2']) },
+  { label:'Руны в украшения',       slots:new Set(['amulet','ring1,ring2','bracelet1','medallion','trophy','talisman','accessory1','accessory2']) },
+  { label:'Руны в артефакты',       slots:new Set(['artefact1,artefact2,artefact3,artefact4,artefact5,artefact6,artefact7,artefact8,artefact9']) },
+  { label:'Руны в боевые сумки',    slots:new Set(['battle_bag']) },
+];
+
+const _dbCache = {};
+async function loadDb(name) {
+  if (!_dbCache[name]) {
+    const r = await fetch(`https://sriblo.github.io/Korolevstvo-Calculator/db/${name}.json`);
+    const items = await r.json();
+    _dbCache[name] = items.map(i => ({ ...i, _db: name }));
+  }
+  return _dbCache[name];
+}
+
+let _ttDbItems = [];
+
+function itemVariant(item) {
+  const id = item.id;
+  if (id.startsWith('reinforced_'))    return 'Усиленный';
+  if (id.startsWith('red_equipment_')) return 'Легендарный';
+  if (id.includes('fair_equipment'))   return 'Ярмарочный';
+  if (id.includes('_guard'))           return 'Гвардейский';
+  if (id.includes('_offer'))           return 'Особый';
+  if (id.includes('halloween'))        return 'Хэллоуин';
+  if (id.includes('march_8'))          return '8 марта';
+  if (id.includes('new_year'))         return 'Новый год';
+  if (id.includes('flowers'))          return 'Цветочный';
+  return null;
+}
+
+function runeDisplayName(rune) {
+  const stat = rune.stats ? Object.keys(rune.stats)[0] : null;
+  const statLabel = stat ? (DB_STAT_LABELS.find(s => s.key === stat)?.label || stat) : '';
+  const id = rune.id;
+  if (id.includes('colder'))       return `Зимний · ${statLabel}`;
+  if (id.includes('fair_offer'))   return `Ярмарка · ${statLabel}`;
+  if (id.includes('fair_'))        return `Ярмарка · ${statLabel}`;
+  if (id.includes('pirate'))       return `Пираты · ${statLabel}`;
+  if (id.includes('dragons'))      return `Дракон · ${statLabel}`;
+  if (id.includes('dniwe'))        return `Праздник · ${statLabel}`;
+  if (id.includes('contest'))      return `Конкурс · ${statLabel}`;
+  if (id.includes('clan'))         return `Клан · ${statLabel}`;
+  if (id.includes('exorcist'))     return `Экзорцист · ${statLabel}`;
+  return statLabel || id.replace(/_/g,' ');
+}
+
+const DB_STAT_SKIP = new Set([
+  'skin','avatar','to_location','from_location','arena_5x5',
+  'max_distance_to_target','min_distance_to_target','cooldown',
+  'teleport_realm','teleport_raelm_rus','target_class',
+  'use_in_location','move_speed','type','permanent','reusable',
+  'owner_alive','not_to_openworld','repeat','quest',
+]);
+
+function dbStatRows(stats) {
+  if (!stats) return '<div class="tt-empty">Нет статов</div>';
+  const mapped = new Set(DB_STAT_LABELS.map(s => s.key));
+  const rows = [];
+  for (const s of DB_STAT_LABELS) {
+    const v = stats[s.key];
+    if (v == null) continue;
+    const disp = s.suffix ? `${v}${s.suffix}` : (s.pct ? `${v >= 0 ? '+' : ''}${v}%` : (v >= 0 ? `+${v}` : `${v}`));
+    rows.push(`<div class="tt-row"><span class="tt-key">${s.label}</span><span class="tt-val">${disp}</span></div>`);
+  }
+  for (const [k, v] of Object.entries(stats)) {
+    if (mapped.has(k) || DB_STAT_SKIP.has(k) || v == null) continue;
+    const label = k.replace(/_percent$/, '').replace(/_/g, ' ');
+    const isPct = k.endsWith('_percent');
+    const disp = typeof v === 'number'
+      ? (isPct ? `${v >= 0 ? '+' : ''}${v}%` : (v >= 0 ? `+${v}` : `${v}`))
+      : String(v);
+    rows.push(`<div class="tt-row"><span class="tt-key" style="color:var(--txt3)">${label}</span><span class="tt-val">${disp}</span></div>`);
+  }
+  return rows.join('') || '<div class="tt-empty">Нет статов</div>';
+}
+
+const CLASS_SUFFIXES    = /_(cleric|mage|warrior|rogue|shooter|paladin|human|elf|ork)$/;
+const CLASS_SUFFIXES_EQ = /_(cleric|mage|warrior|rogue|shooter|paladin)$/;
+
+const VISUAL_ICON_MAP = {
+  '2009_trophy': 'drop_horn',
+  'accessory1_default': 'flask_default',
+  'accessory2_default': 'trinket_default',
+  'all_amulet_tournament_1': 'amulet_blood_moon_10',
+  'all_amulet_tournament_2': 'amulet_ice_guard_10',
+  'all_amulet_tournament_3': 'amulet_glass_dust_10',
+  'all_amulet_tournament_4': 'amulet_winter_claws_10',
+  'all_amulet_tournament_5': 'amulet_dawn_5',
+  'all_amulet_tournament_6': 'amulet_sloe_branch_5',
+  'all_amulet_tournament_7': 'amulet_full_cup_5',
+  'all_amulet_tournament_8': 'amulet_burning_night_5',
+  'all_amulet_tournament_9': 'amulet_singing_trees_5',
+  'all_ring_attack_10': 'rogue_ring_10',
+  'all_ring_defense_10': 'warrior_ring_10',
+  'all_ring_health_10': 'cleric_ring_10',
+  'all_ring_tournament_1': 'ring_blood_moon_10',
+  'all_ring_tournament_2': 'ring_ice_guard_10',
+  'all_ring_tournament_3': 'ring_glass_dust_10',
+  'all_ring_tournament_4': 'ring_winter_claws_10',
+  'all_ring_tournament_5': 'ring_dawn_5',
+  'all_ring_tournament_6': 'ring_sloe_branch_5',
+  'all_ring_tournament_7': 'ring_full_cup_5',
+  'all_ring_tournament_8': 'ring_burning_night_5',
+  'all_ring_tournament_9': 'ring_singing_trees_5',
+  'all_ring_wedding_female_1_10': 'merry_ring_female_human_cool',
+  'all_ring_wedding_female_1_5': 'merry_ring_female_simple',
+  'all_ring_wedding_male_1_10': 'merry_ring_male_human_cool',
+  'all_ring_wedding_male_1_5': 'merry_ring_male_simple',
+  'arch_battle_bag_5_5': 'battle_bag_03',
+  'arch_battle_bag_6_10': 'battle_bag_04',
+  'artefact_1': 'artefact_stone_air',
+  'artefact_2': 'artefact_stone_earth',
+  'artefact_3': 'artefact_stone_fire',
+  'artefact_4': 'artefact_stone_water',
+  'artefact_5': 'artefact_stone_blood',
+  'artefact_6': 'artefact_stone_dark',
+  'artefact_7': 'artefact_stone_gold',
+  'artefact_8': 'artefact_stone_light',
+  'artefact_9': 'artefact_stone_rubin',
+  'artefact_arena_1': 'artefact_stone_light',
+  'artefact_cards_fair': 'yellow_demonic_card',
+  'artefact_cards_inst': 'blue_demonic_card',
+  'artefact_cards_proff': 'red_demonic_card',
+  'artefact_cards_witcher': 'green_demonic_card',
+  'artefact_clan_1': 'artefact_stone_dark',
+  'artefact_clan_2': 'artefact_stone_dark',
+  'artefact_clan_3': 'artefact_stone_dark',
+  'artefact_clan_4': 'artefact_stone_dark',
+  'artefact_clan_5': 'artefact_stone_dark',
+  'artefact_clan_6': 'artefact_stone_dark',
+  'artefact_events_global_1': 'artefact_stone_fire',
+  'artefact_events_local_1': 'artefact_stone_fire',
+  'artefact_fair_1': 'artefact_stone_gold',
+  'artefact_inst_1': 'artefact_stone_air',
+  'artefact_inst_2': 'artefact_stone_air',
+  'artefact_inst_3': 'artefact_stone_air',
+  'artefact_masspvp_1': 'artefact_stone_blood',
+  'artefact_masspvp_2': 'artefact_stone_blood',
+  'artefact_proff_1': 'artefact_stone_water',
+  'artefact_proff_2': 'artefact_stone_water',
+  'artefact_proff_3': 'artefact_stone_water',
+  'artefact_ruby_1': 'artefact_stone_rubin',
+  'artefact_witcher_1': 'artefact_stone_earth',
+  'battle_bag_5_1_archeolog': 'battle_bag_03',
+  'battle_bag_5_1_tournament': 'battle_bag_02',
+  'battle_bag_5_666': 'battle_bag_01',
+  'battle_bag_6_5_hero': 'battle_bag_04',
+  'battle_bag_6_5_quest': 'battle_bag_03',
+  'battle_bag_7_10_hero': 'battle_bag_05',
+  'battle_bag_8_15_hero': 'battle_bag_06',
+  'bracelet_2009_oct_001_666': 'bracelet_speed',
+  'bracelet_2009_oct_001_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_001_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_001_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_001_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_001_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_001_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_002_666': 'bracelet_speed',
+  'bracelet_2009_oct_002_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_002_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_002_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_002_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_002_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_002_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_003_666': 'bracelet_speed',
+  'bracelet_2009_oct_003_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_003_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_003_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_003_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_003_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_003_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_004_666': 'bracelet_speed',
+  'bracelet_2009_oct_004_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_004_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_004_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_004_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_004_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_004_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_005_666': 'bracelet_speed',
+  'bracelet_2009_oct_005_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_005_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_005_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_005_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_005_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_005_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_006_666': 'bracelet_speed',
+  'bracelet_2009_oct_006_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_006_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_006_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_006_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_006_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_006_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_007_666': 'bracelet_speed',
+  'bracelet_2009_oct_007_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_007_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_007_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_007_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_007_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_007_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_008_666': 'bracelet_speed',
+  'bracelet_2009_oct_008_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_008_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_008_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_008_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_008_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_008_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_009_666': 'bracelet_speed',
+  'bracelet_2009_oct_009_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_009_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_009_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_009_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_009_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_009_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_010_666': 'bracelet_speed',
+  'bracelet_2009_oct_010_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_010_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_010_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_010_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_010_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_010_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_011_666': 'bracelet_speed',
+  'bracelet_2009_oct_011_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_011_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_011_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_011_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_011_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_011_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_012_666': 'bracelet_speed',
+  'bracelet_2009_oct_012_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_012_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_012_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_012_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_012_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_012_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_013_666': 'bracelet_speed',
+  'bracelet_2009_oct_013_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_013_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_013_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_013_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_013_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_013_666_warrior': 'bracelet_speed',
+  'bracelet_2009_oct_014_666': 'bracelet_speed',
+  'bracelet_2009_oct_014_666_cleric': 'bracelet_speed',
+  'bracelet_2009_oct_014_666_mage': 'bracelet_speed',
+  'bracelet_2009_oct_014_666_paladin': 'bracelet_speed',
+  'bracelet_2009_oct_014_666_rogue': 'bracelet_speed',
+  'bracelet_2009_oct_014_666_shooter': 'bracelet_speed',
+  'bracelet_2009_oct_014_666_warrior': 'bracelet_speed',
+  'bracelet_empty_action': 'bracelet_life',
+  'caldron_battle_bag_6': 'battle_bag_04',
+  'caldron_battle_bag_7': 'battle_bag_05',
+  'caldron_battle_bag_8': 'battle_bag_06',
+  'caldron_battle_bag_9': 'battle_bag_06',
+  'castle_arena_battle_bag_8': 'joust_2x2_battle_bag_05',
+  'castle_holder_medallion_1': 'comb_quest',
+  'castle_holder_medallion_10': 'comb_quest',
+  'castle_holder_medallion_15': 'comb_quest',
+  'castle_holder_medallion_20': 'comb_quest',
+  'castle_holder_medallion_5': 'comb_quest',
+  'colder_icon': 'ice_shield',
+  'comeback_talisman': 'pearl_talisman',
+  'contest_medallion_1': 'victory_silvermark',
+  'contest_medallion_2': 'victory_goldmark',
+  'contest_medallion_final': 'triumf_mark',
+  'dniwe_2013_battle_bag_7': 'battle_bag_05',
+  'dniwe_medallion_1': 'numbered_token',
+  'dniwe_medallion_10': 'tick_tock',
+  'dniwe_medallion_11': 'numbered_token',
+  'dniwe_medallion_12': 'numbered_token',
+  'dniwe_medallion_13': 'numbered_token',
+  'dniwe_medallion_14': 'numbered_token',
+  'dniwe_medallion_15': 'numbered_token',
+  'dniwe_medallion_16': 'numbered_token',
+  'dniwe_medallion_2': 'numbered_token',
+  'dniwe_medallion_3': 'numbered_token',
+  'dniwe_medallion_4': 'numbered_token',
+  'dniwe_medallion_5': 'numbered_token',
+  'dniwe_medallion_6': 'numbered_token',
+  'dniwe_medallion_7': 'tick_tock',
+  'dniwe_medallion_8': 'tick_tock',
+  'dniwe_medallion_9': 'tick_tock',
+  'dragons_2014_battle_bag_9': 'battle_bag_05',
+  'dragons_battle_bag_5_10': 'battle_bag_03',
+  'dragons_battle_bag_5_15': 'battle_bag_03',
+  'dragons_battle_bag_5_5': 'battle_bag_03',
+  'dragons_battle_bag_6_10': 'battle_bag_04',
+  'dragons_battle_bag_6_15': 'battle_bag_04',
+  'dragons_battle_bag_6_5': 'battle_bag_04',
+  'dragons_battle_bag_7_10': 'battle_bag_05',
+  'dragons_battle_bag_7_15': 'battle_bag_05',
+  'dragons_battle_bag_7_5': 'battle_bag_05',
+  'dragons_battle_bag_8_10': 'battle_bag_06',
+  'dragons_battle_bag_8_15': 'battle_bag_06',
+  'dragons_battle_bag_8_5': 'battle_bag_06',
+  'dragons_battle_bag_9_10': 'battle_bag_06',
+  'dragons_battle_bag_9_15': 'battle_bag_06',
+  'dragons_battle_bag_9_5': 'battle_bag_06',
+  'exorcist_battle_bag_5_1': 'battle_bag_03',
+  'exorcist_battle_bag_6_5': 'battle_bag_04',
+  'exorcist_battle_bag_7_10': 'battle_bag_05',
+  'exorcist_battle_bag_8_15': 'battle_bag_06',
+  'exorcist_battle_bag_9_20': 'battle_bag_06',
+  'exorcist_fair_battle_bag_5': 'battle_bag_03',
+  'exorcist_fair_battle_bag_6': 'battle_bag_04',
+  'exorcist_fair_battle_bag_7': 'battle_bag_05',
+  'exorcist_fair_battle_bag_8': 'battle_bag_06',
+  'exorcist_fair_battle_bag_9': 'battle_bag_06',
+  'fair_attack_ring_gift': 'fair_attack_ring',
+  'fair_battle_bag_5_666': 'battle_bag_03',
+  'fair_battle_bag_5_666_upgrade': 'battle_bag_03',
+  'fair_battle_bag_6_666': 'battle_bag_04',
+  'fair_battle_bag_6_666_upgrade': 'battle_bag_04',
+  'fair_battle_bag_7_666': 'battle_bag_05',
+  'fair_battle_bag_7_666_upgrade': 'battle_bag_05',
+  'fair_battle_bag_8_666': 'battle_bag_06',
+  'fair_battle_bag_8_666_upgrade': 'battle_bag_06',
+  'fair_battle_bag_9_666': 'battle_bag_06',
+  'fair_battle_bag_9_666_upgrade': 'battle_bag_06',
+  'fair_defense_ring_gift': 'fair_defense_ring',
+  'fair_medallion_666': 'numbered_token',
+  'fair_talisman': 'golden_horn',
+  'fair_talisman_cleric': 'golden_horn',
+  'fair_talisman_mage': 'golden_horn',
+  'fair_talisman_paladin': 'golden_horn',
+  'fair_talisman_rogue': 'golden_horn',
+  'fair_talisman_shooter': 'golden_horn',
+  'fair_talisman_warrior': 'golden_horn',
+  'fair_trophy_all': 'drop_horn',
+  'fair_trophy_all_1': 'drop_horn',
+  'fair_trophy_all_666': 'sapphire_talisman',
+  'fair_trophy_all_cleric': 'drop_horn',
+  'fair_trophy_all_cleric_1': 'drop_horn',
+  'fair_trophy_all_mage': 'drop_horn',
+  'fair_trophy_all_mage_1': 'drop_horn',
+  'fair_trophy_all_paladin': 'drop_horn',
+  'fair_trophy_all_paladin_1': 'drop_horn',
+  'fair_trophy_all_rogue': 'drop_horn',
+  'fair_trophy_all_rogue_1': 'drop_horn',
+  'fair_trophy_all_shooter': 'drop_horn',
+  'fair_trophy_all_shooter_1': 'drop_horn',
+  'fair_trophy_all_warrior': 'drop_horn',
+  'fair_trophy_all_warrior_1': 'drop_horn',
+  'fan_talisman': 'pearl_talisman',
+  'flask_23_feb_icon': 'grenade',
+  'flask_icon': 'flask',
+  'goblin_land_battle_bag_7': 'battle_bag_05',
+  'goblin_land_talisman_blue': 'goblin_talisman',
+  'goblin_land_talisman_green': 'goblin_talisman',
+  'goblin_land_talisman_violet': 'goblin_talisman',
+  'goblin_land_talisman_white': 'goblin_talisman',
+  'google': 'rogue_amulet_10',
+  'halloween_2013_battle_bag_7': 'halloween_battle_bag_05',
+  'halloween_rambler_amulet': 'green_pumpkin_quest',
+  'joust_2x2_battle_bag_7': 'joust_2x2_battle_bag_05',
+  'knights_medallion': 'triumf_mark',
+  'disguise_pumpkin_warrior':  'disguise_pumpkinwarrior',
+  'disguise_pumpkin_paladin':  'disguise_pumpkin',
+  'disguise_pumpkin_rogue':    'disguise_pumpkin',
+  'disguise_pumpkin_cleric':   'disguise_pumpkin',
+  'disguise_pumpkin_mage':     'disguise_pumpkin',
+  'disguise_pumpkin_shooter':  'disguise_pumpkin',
+  'disguise_st_patric_warrior':  'st_patric_hat',
+  'disguise_st_patric_paladin':  'st_patric_hat',
+  'disguise_st_patric_rogue':    'st_patric_hat',
+  'disguise_st_patric_cleric':   'st_patric_hat',
+  'disguise_st_patric_mage':     'st_patric_hat',
+  'disguise_st_patric_shooter':  'st_patric_hat',
+  'march_8_weapon2_melee_warrior': 'march_8_weapon2_melee',
+  'march_8_weapon2_melee_paladin': 'march_8_weapon2_melee',
+  'march_8_weapon2_melee_rogue':   'march_8_weapon2_melee',
+  'march_8_weapon2_melee_cleric':  'march_8_weapon2_melee',
+  'march_8_weapon2_range_mage':    'march_8_weapon2_range',
+  'march_8_weapon2_range_shooter': 'march_8_weapon2_range',
+  'medallion_bot_defeat': 'reward_medallion_wooden',
+  'medallion_bot_victory': 'reward_medallion_metal',
+  'medallion_bravery_3_5': 'bravery_mark',
+  'medallion_bravery_3_5_res': 'bravery_mark',
+  'medallion_bronze_3': 'victory_bronzemark',
+  'medallion_bronze_3_10': 'victory_bronzemark',
+  'medallion_bronze_3_10_clan': 'victory_bronzemark',
+  'medallion_bronze_3_res': 'victory_bronzemark',
+  'medallion_bronze_4': 'victory_bronzemark',
+  'medallion_bronze_4_res': 'victory_bronzemark',
+  'medallion_bronze_5': 'victory_bronzemark',
+  'medallion_bronze_5_res': 'victory_bronzemark',
+  'medallion_bronze_6': 'victory_bronzemark',
+  'medallion_bronze_6_res': 'victory_bronzemark',
+  'medallion_bronze_7_res': 'victory_bronzemark',
+  'medallion_castles_siege': 'reward_medallion_silver',
+  'medallion_empty_action': 'medallion_default',
+  'medallion_gold_3': 'victory_goldmark',
+  'medallion_gold_3_20': 'victory_goldmark',
+  'medallion_gold_3_20_clan': 'victory_goldmark',
+  'medallion_gold_3_res': 'victory_goldmark',
+  'medallion_gold_4': 'victory_goldmark',
+  'medallion_gold_4_res': 'victory_goldmark',
+  'medallion_gold_5': 'victory_goldmark',
+  'medallion_gold_5_res': 'victory_goldmark',
+  'medallion_gold_6': 'victory_goldmark',
+  'medallion_gold_6_res': 'victory_goldmark',
+  'medallion_gold_7_res': 'victory_goldmark',
+  'medallion_iron_3': 'victory_ironmark',
+  'medallion_iron_3_5': 'victory_ironmark',
+  'medallion_iron_3_5_clan': 'victory_ironmark',
+  'medallion_iron_3_res': 'victory_ironmark',
+  'medallion_iron_4': 'victory_ironmark',
+  'medallion_iron_4_res': 'victory_ironmark',
+  'medallion_iron_5': 'victory_ironmark',
+  'medallion_iron_5_res': 'victory_ironmark',
+  'medallion_iron_6': 'victory_ironmark',
+  'medallion_iron_6_res': 'victory_ironmark',
+  'medallion_iron_7_res': 'victory_ironmark',
+  'medallion_punisher_5': 'punisher_mark',
+  'medallion_punisher_5_res': 'punisher_mark',
+  'medallion_scout_5': 'scout_mark',
+  'medallion_scout_5_res': 'scout_mark',
+  'medallion_silver_3': 'victory_silvermark',
+  'medallion_silver_3_15': 'victory_silvermark',
+  'medallion_silver_3_15_clan': 'victory_silvermark',
+  'medallion_silver_3_res': 'victory_silvermark',
+  'medallion_silver_4': 'victory_silvermark',
+  'medallion_silver_4_res': 'victory_silvermark',
+  'medallion_silver_5': 'victory_silvermark',
+  'medallion_silver_5_res': 'victory_silvermark',
+  'medallion_silver_6': 'victory_silvermark',
+  'medallion_silver_6_res': 'victory_silvermark',
+  'medallion_silver_7_res': 'victory_silvermark',
+  'medallion_triumph_3_10': 'triumf_mark',
+  'medallion_triumph_3_10_res': 'triumf_mark',
+  'medallion_wood_3': 'victory_woodmark',
+  'medallion_wood_3_1': 'victory_woodmark',
+  'medallion_wood_3_1_clan': 'victory_woodmark',
+  'medallion_wood_3_res': 'victory_woodmark',
+  'medallion_wood_4': 'victory_woodmark',
+  'medallion_wood_4_res': 'victory_woodmark',
+  'medallion_wood_5': 'victory_woodmark',
+  'medallion_wood_5_res': 'victory_woodmark',
+  'medallion_wood_6': 'victory_woodmark',
+  'medallion_wood_6_res': 'victory_woodmark',
+  'medallion_wood_7_res': 'victory_woodmark',
+  'offer_amulet_rep_bust': 'amulet_blood_moon_10',
+  'offer_battle_bag_3_4': 'battle_bag_03',
+  'one_ring_to_rule_them_all': 'big_fucking_ring',
+  'pirate_day_2014_battle_bag_7': 'battle_bag_05',
+  'pirate_day_flask_icon': 'pirate_flask',
+  'rabbit_medallion': 'medallion_default',
+  'st_patric_ring': 'all_ring_patrick',
+  'st_patric_talisman_1': 'golden_clover_quest',
+  'st_patric_talisman_2': 'golden_clover_quest',
+  'st_patric_talisman_3': 'golden_clover_quest',
+  'test_pirate_day_amulet': 'black_amulet_quest',
+  'test_pirate_day_zombie_amulet': 'parrot_zombie_weapon',
+  'time_loop_arena_battle_bag_7': 'joust_2x2_battle_bag_05',
+  'tournament_battle_bag_6_5': 'battle_bag_04',
+  'trinket_icon': 'trinket',
+  'trinket_valentine_icon': 'valentine_trinket',
+  'vkontakt_amulet': 'amulet_blood_moon_10',
+  'vkontakt_bracelet': 'bracelet_life',
+  'vkontakt_ring': 'merry_ring_male_simple',
+  'warrior_shield_parrot': 'warrior_shield_default',
+  'warrior_shield_tube': 'warrior_shield_default',
+  'warrior_shield_zombie': 'warrior_shield_default',
+  'witcher_trophy_01': 'trophy_made_of_old_claws',
+  'witcher_trophy_01_new': 'trophy_made_of_old_claws',
+  'witcher_trophy_01_new_1': 'trophy_made_of_old_claws',
+  'witcher_trophy_02': 'trophy_made_of_beast_claws',
+  'witcher_trophy_02_1': 'trophy_made_of_beast_claws',
+  'witcher_trophy_03': 'trophy_made_of_sevenseas_claws',
+  'witcher_trophy_03_1': 'trophy_made_of_sevenseas_claws',
+  'witcher_trophy_04': 'trophy_made_of_stone_claws',
+  'witcher_trophy_04_1': 'trophy_made_of_stone_claws',
+  'witcher_trophy_05': 'trophy_made_of_tusk_claws',
+  'witcher_trophy_05_1': 'trophy_made_of_tusk_claws',
+  'witcher_trophy_06': 'trophy_made_of_glass_claws',
+  'witcher_trophy_06_1': 'trophy_made_of_glass_claws',
+  'witcher_trophy_07': 'trophy_made_of_witch_claws',
+  'witcher_trophy_07_1': 'trophy_made_of_witch_claws',
+  'witcher_trophy_08': 'trophy_made_of_mystical_claws',
+  'witcher_trophy_08_1': 'trophy_made_of_mystical_claws',
+  'witcher_trophy_09': 'trophy_made_of_sevenseas_claws',
+  'witcher_trophy_09_1': 'trophy_made_of_sevenseas_claws',
+  'witcher_trophy_10': 'trophy_made_of_glass_claws',
+  'witcher_trophy_10_1': 'trophy_made_of_glass_claws',
+  'witcher_trophy_11': 'trophy_made_of_witch_claws',
+  'witcher_trophy_11_1': 'trophy_made_of_witch_claws',
+
+  'cleric_relic_13': 'paladin_relic_13_human',
+  'deadly_fish_bone': 'deadly_fish_bone',
+  'death_thougths': 'death_thoughts',
+  'disguise_pumpkin': 'disguise_pumpkin',
+  'disguise_pumpkinwarrior': 'disguise_pumpkinwarrior',
+  'gift_big_violet_quest': 'gift_big_violet',
+  'halloween_cleric_weapon': 'halloween_cleric_weapon',
+  'halloween_mage_weapon': 'halloween_mage_weapon',
+  'halloween_paladin_weapon': 'halloween_paladin_weapon',
+  'halloween_rogue_weapon': 'halloween_rogue_weapon',
+  'halloween_shooter_weapon': 'halloween_shooter_weapon',
+  'halloween_warrior_weapon': 'halloween_warrior_weapon',
+  'none_axe_1': 'none_axe_1',
+  'none_axe_5': 'none_axe_5',
+  'none_belt_0': 'none_belt_0',
+  'none_belt_1': 'none_belt_1',
+  'none_blunt_0': 'none_blunt_0',
+  'none_blunt_5': 'none_blunt_5',
+  'none_boots_0': 'none_boots_0',
+  'none_boots_1': 'none_boots_1',
+  'none_chest_0': 'none_chest_0',
+  'none_chest_1': 'none_chest_1',
+  'none_pants_0': 'none_pants_0',
+  'none_pants_1': 'none_pants_1',
+  'none_sword_1': 'none_sword_1',
+  'none_sword_5': 'none_sword_5',
+  'paladin_shoulders_default_human': 'paladin_shoulders_default_human',
+  'rune_attack_weapon1_1': 'rune_attack_weapon1_1',
+  'rune_attack_weapon1_5': 'rune_attack_weapon1_5',
+  'rune_attack_weapon2_1': 'rune_attack_weapon2_1',
+  'rune_attack_weapon2_5': 'rune_attack_weapon2_5',
+  'rune_belt': 'rune_belt',
+  'rune_belt_attack_1': 'rune_belt_attack_1',
+  'rune_belt_attack_5': 'rune_belt_attack_5',
+  'rune_belt_defense_1': 'rune_belt_defense_1',
+  'rune_belt_defense_5': 'rune_belt_defense_5',
+  'rune_belt_health_1': 'rune_belt_health_1',
+  'rune_belt_health_5': 'rune_belt_health_5',
+  'rune_boots': 'rune_boots',
+  'rune_boots_attack_1': 'rune_boots_attack_1',
+  'rune_boots_attack_5': 'rune_boots_attack_5',
+  'rune_boots_defense_1': 'rune_boots_defense_1',
+  'rune_boots_defense_5': 'rune_boots_defense_5',
+  'rune_boots_health_1': 'rune_boots_health_1',
+  'rune_boots_health_5': 'rune_boots_health_5',
+  'rune_chest': 'rune_chest',
+  'rune_chest_attack_1': 'rune_chest_attack_1',
+  'rune_chest_attack_5': 'rune_chest_attack_5',
+  'rune_chest_defense_1': 'rune_chest_defense_1',
+  'rune_chest_defense_5': 'rune_chest_defense_5',
+  'rune_chest_health_1': 'rune_chest_health_1',
+  'rune_chest_health_5': 'rune_chest_health_5',
+  'rune_defense_weapon1_1': 'rune_defense_weapon1_1',
+  'rune_defense_weapon1_5': 'rune_defense_weapon1_5',
+  'rune_defense_weapon2_1': 'rune_defense_weapon2_1',
+  'rune_defense_weapon2_5': 'rune_defense_weapon2_5',
+  'rune_gloves': 'rune_gloves',
+  'rune_gloves_attack_1': 'rune_gloves_attack_1',
+  'rune_gloves_attack_5': 'rune_gloves_attack_5',
+  'rune_gloves_defense_1': 'rune_gloves_defense_1',
+  'rune_gloves_defense_5': 'rune_gloves_defense_5',
+  'rune_gloves_health_1': 'rune_gloves_health_1',
+  'rune_gloves_health_5': 'rune_gloves_health_5',
+  'rune_health_weapon1_1': 'rune_health_weapon1_1',
+  'rune_health_weapon1_5': 'rune_health_weapon1_5',
+  'rune_health_weapon2_1': 'rune_health_weapon2_1',
+  'rune_health_weapon2_5': 'rune_health_weapon2_5',
+  'rune_helm': 'rune_helm',
+  'rune_helm_attack_1': 'rune_helm_attack_1',
+  'rune_helm_attack_5': 'rune_helm_attack_5',
+  'rune_helm_defense_1': 'rune_helm_defense_1',
+  'rune_helm_defense_5': 'rune_helm_defense_5',
+  'rune_helm_health_1': 'rune_helm_health_1',
+  'rune_helm_health_5': 'rune_helm_health_5',
+  'rune_medallion_attack_10': 'rune_medallion_attack_10',
+  'rune_pants': 'rune_pants',
+  'rune_pants_attack_1': 'rune_pants_attack_1',
+  'rune_pants_attack_5': 'rune_pants_attack_5',
+  'rune_pants_defense_1': 'rune_pants_defense_1',
+  'rune_pants_defense_5': 'rune_pants_defense_5',
+  'rune_pants_health_1': 'rune_pants_health_1',
+  'rune_pants_health_5': 'rune_pants_health_5',
+  'rune_shoulders': 'rune_shoulders',
+  'rune_shoulders_attack_1': 'rune_shoulders_attack_1',
+  'rune_shoulders_attack_5': 'rune_shoulders_attack_5',
+  'rune_shoulders_defense_1': 'rune_shoulders_defense_1',
+  'rune_shoulders_defense_5': 'rune_shoulders_defense_5',
+  'rune_shoulders_health_1': 'rune_shoulders_health_1',
+  'rune_shoulders_health_5': 'rune_shoulders_health_5',
+  'rune_weapon': 'rune_weapon',
+  'rune_weapon2': 'rune_weapon2',
+  'tools': 'tools',
+  'wedding_box_01': 'female_wedding_dress',};
+
+function itemIconSrc(item) {
+  if (item.slot && item.slot.startsWith('artefact') && !item.visual) {
+    return ARTEFACT_CARD_ICONS[item.id] || ARTEFACT_SLOT_ICONS[item.slot] || null;
+  }
+  let v = item.visual || item.id;
+  const mapped = VISUAL_ICON_MAP[v];
+  if (mapped !== undefined) {
+    // Явное сопоставление — используем как есть, без _human/_elf
+    return `icons/${mapped}.jpg`;
+  }
+  const isEq = item.category !== 'enchant' && EQ_MAIN_SLOTS.some(s => s.id === item.slot);
+  if (isEq) return `icons/${v}_human.jpg`;
+  v = v.replace(CLASS_SUFFIXES_EQ, '');
+  return `icons/${v}.jpg`;
+}
+
+function iconFallback(el) {
+  const src = el.src;
+  if (src.endsWith('.jpg')) {
+    el.src = src.replace(/\.jpg$/, '.png');
+    el.onerror = () => { el.style.opacity = 0; };
+  } else {
+    el.style.opacity = 0;
+  }
+}
+
+function itemDisplayName(item) {
+  return locName(item.id)
+    || (EQ_MAIN_SLOTS.find(s => s.id === item.slot) ? eqItemName(item) : item.id.replace(/_/g,' '));
+}
+
+function dbItemCard(item, idx) {
+  const frame = QUALITY_FRAME[item.quality] || '';
+  const frameHtml = frame ? `<img class="ico-frame" src="${frame}" alt="">` : '';
+  const name = itemDisplayName(item);
+  const src = itemIconSrc(item);
+  const imgHtml = src ? `<img class="ico-img" src="${src}" alt="" onerror="iconFallback(this)">` : '';
+  const q = QUALITIES.find(q2 => q2.id === item.quality);
+  const nameColor = q ? q.color : 'var(--txt2)';
+  const techBadge = item.tech ? `<span class="badge-tech">ТЕХ</span>` : '';
+  const buffBadge = item.buff ? `<span class="badge-buff">БАФ</span>` : '';
+  return `<div class="eq-card" data-idx="${idx}" data-tech="${item.tech ? '1' : ''}" data-buff="${item.buff ? '1' : ''}"
+    onmouseenter="ttShowDbItem(${idx},event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"
+    ondblclick="copyItemId(event,'${item.id}')" oncontextmenu="editorCtxMenu(event,${idx})"
+    title="Двойной клик — скопировать ID">
+    <div class="rune-ico">${imgHtml}${frameHtml}${techBadge}${buffBadge}</div>
+    <div class="eq-slot-name" style="color:${nameColor}">${name}</div>
+  </div>`;
+}
+
+function ttShowDbItem(idx, e) {
+  const item = _ttDbItems[idx];
+  if (!item) return;
+  const q = QUALITIES.find(q2 => q2.id === item.quality);
+  const color = q ? q.color : 'var(--txt)';
+  const frame = QUALITY_FRAME[item.quality] || '';
+  const frameHtml = frame ? `<img class="ico-frame" src="${frame}" alt="">` : '';
+  const src = itemIconSrc(item);
+  const imgHtml = src ? `<img class="ico-img" src="${src}" alt="" onerror="iconFallback(this)">` : '';
+  const ico = `<div class="tt-ico">${imgHtml}${frameHtml}</div>`;
+  const name = itemDisplayName(item);
+
+  let html = `<div class="tt-head">${ico}<div class="tt-name" style="color:${color}">${name}</div></div>`;
+
+  // Тип предмета
+  const kind = locKind(item.id);
+  if (kind) html += `<div class="tt-kind">Тип: ${kind}</div>`;
+
+  // Слот (для рун)
+  if (item.slot && item.category === 'enchant') {
+    const SLOT_RU = {
+      'helm':'Шлем','chest':'Нагрудник','shoulders':'Наплечники','pants':'Штаны',
+      'gloves':'Перчатки','belt':'Пояс','boots':'Сапоги','weapon1':'Оружие',
+      'weapon2':'Второе оружие','ring1,ring2':'Кольцо','amulet':'Амулет',
+      'bracelet1':'Браслет','medallion':'Медальон','trophy':'Трофей',
+      'talisman':'Талисман','accessory1':'Аксессуар 1','accessory2':'Аксессуар 2',
+      'battle_bag':'Боевая сумка',
+    };
+    const slotRu = item.slot.startsWith('artefact') ? 'Артефакт'
+      : (SLOT_RU[item.slot] || item.slot);
+    html += `<div class="tt-kind" style="color:var(--txt3)">Вставляется в: ${slotRu}</div>`;
+  }
+
+  // Описание и действие
+  const desc   = locDesc(item.id);
+  const action = locAction(item.id, item.stats);
+  if (desc || action) {
+    html += `<div class="tt-sep"></div>`;
+    if (desc)   html += `<div class="tt-desc"><b style="color:var(--txt2)">Описание:</b> ${desc}</div>`;
+    if (action) html += `<div class="tt-action"><b>Действие:</b> ${action.replace(/\n/g,'<br>')}</div>`;
+  }
+
+  // Характеристики
+  const statsHtml = dbStatRows(item.stats);
+  if (statsHtml && !statsHtml.includes('tt-empty')) {
+    html += `<div class="tt-sep"></div>` + statsHtml;
+  } else if (!desc && !action) {
+    html += statsHtml;
+  }
+
+  // Мета: уровень, сет, цены
+  const hasMeta = (item.reqlvl > 0) || item.set || item.token_price;
+  if (hasMeta) html += `<div class="tt-sep"></div>`;
+
+  if (item.reqlvl > 0)
+    html += `<div class="tt-price"><span class="tt-price-key">Требуемый уровень</span><span class="tt-price-val" style="color:var(--gold-l)">${item.reqlvl}</span></div>`;
+  if (item.set)
+    html += `<div class="tt-price"><span class="tt-price-key">Сет</span><span class="tt-price-val">${item.set}</span></div>`;
+  if (item.token_price) {
+    const tType = item.token_type || '';
+    const tIco = TOKEN_ICO[tType] || 'icons/currency_tailen_event_small.png';
+    const tLabel = TOKEN_LABEL[tType] || tType.replace(/_/g,' ') || 'Тайлены';
+    html += `<div class="tt-price"><span class="tt-price-key">${tLabel}</span><span class="tt-price-val"><img class="tt-coin" src="${tIco}" alt=""> ${item.token_price}</span></div>`;
+  }
+
+  html += `<div class="tt-id">${item.id}</div>`;
+
+  _tt.innerHTML = html;
+  _tt.classList.add('vis');
+  ttMove(e);
+}
+
+// ── Equipment by class (from db) ─────────────────────────────────────────────
+
+async function renderEquipmentDb(c, cls) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const allItems = await loadDb(`equipment_${cls}`);
+  const clsName = DB_CLASSES[cls] || cls;
+
+  const mainSlotIds = new Set(EQ_MAIN_SLOTS.map(s => s.id));
+  const eqItems = allItems.filter(i => mainSlotIds.has(i.slot));
+
+  const presentQuals = new Set(eqItems.map(i => i.quality));
+  const validQ = QUALITIES.filter(q => presentQuals.has(q.id));
+  if (!validQ.find(q => q.id === activeQ)) activeQ = validQ[validQ.length - 2]?.id || validQ[0]?.id || 'purple';
+
+  const qTabs = validQ.map(q =>
+    `<div class="q-tab${activeQ===q.id?' on':''}" data-q="${q.id}" onclick="switchQ('${q.id}')">${q.label}</div>`
+  ).join('');
+
+  const filtered = eqItems.filter(i => i.quality === activeQ);
+  _ttDbItems = filtered;
+
+  let html = '';
+  for (const slot of EQ_MAIN_SLOTS) {
+    const slotItems = filtered.filter(i => i.slot === slot.id);
+    if (!slotItems.length) continue;
+    slotItems.sort((a,b) => a.reqlvl - b.reqlvl);
+    html += `<div class="art-section-divider">${slot.name}</div><div class="eq-grid">`;
+    slotItems.forEach(item => {
+      html += dbItemCard(item, filtered.indexOf(item));
+    });
+    html += `</div>`;
+  }
+
+  c.innerHTML = `
+    <div class="c-title">Снаряжение: ${clsName}</div>
+    <div class="q-tabs">${qTabs}</div>
+    ${html || '<div class="soon-block">Нет предметов для этого качества</div>'}`;
+}
+
+// ── Artifacts ────────────────────────────────────────────────────────────────
+
+const ARTEFACT_SLOT_ICONS = {
+  artefact1:'icons/artefact_stone_fire.jpg',  artefact2:'icons/artefact_stone_blood.jpg',
+  artefact3:'icons/artefact_stone_dark.jpg',  artefact4:'icons/artefact_stone_gold.jpg',
+  artefact5:'icons/artefact_stone_light.jpg', artefact6:'icons/artefact_stone_water.jpg',
+  artefact7:'icons/artefact_stone_earth.jpg', artefact8:'icons/artefact_stone_air.jpg',
+  artefact9:'icons/artefact_stone_rubin.jpg',
+};
+const ARTEFACT_CARD_ICONS = {
+  artefact_cards_fair:    'icons/artefact_cards_fair.jpg',
+  artefact_cards_proff:   'icons/artefact_cards_proff.jpg',
+  artefact_cards_witcher: 'icons/artefact_cards_witcher.jpg',
+  artefact_cards_inst:    'icons/artefact_cards_inst.jpg',
+};
+
+async function renderArtifactsDb(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const allItems = await loadDb('equipment_none');
+  const arts = allItems.filter(i => i.slot && i.slot.startsWith('artefact'));
+
+  const SLOT_ORDER = [
+    'artefact5','artefact9','artefact2','artefact4','artefact1','artefact7','artefact8','artefact6','artefact3',
+  ];
+  const grouped = {};
+  for (const item of arts) (grouped[item.slot] = grouped[item.slot] || []).push(item);
+  // Sort: non-orange by QUALITY_ORDER first, orange last
+  for (const slot of Object.keys(grouped)) {
+    grouped[slot].sort((a, b) => {
+      const aOrange = a.quality === 'orange' ? 1 : 0;
+      const bOrange = b.quality === 'orange' ? 1 : 0;
+      if (aOrange !== bOrange) return aOrange - bOrange;
+      return QUALITY_ORDER.indexOf(a.quality) - QUALITY_ORDER.indexOf(b.quality);
+    });
+  }
+
+  // Group label: use the stone name for the slot (from first non-orange item or first item)
+  function slotLabel(slot, items) {
+    const nonOrange = items.find(i => i.quality !== 'orange');
+    const ref = nonOrange || items[0];
+    return locName(ref.id) || ref.id;
+  }
+
+  let allSorted = [];
+  let html = '';
+  for (const slot of SLOT_ORDER) {
+    const items = grouped[slot];
+    if (!items?.length) continue;
+    const label = slotLabel(slot, items);
+    const base = allSorted.length;
+    allSorted = allSorted.concat(items);
+    html += `<div class="art-section-divider">${label}</div><div class="eq-grid">`;
+    items.forEach((item, i) => { html += dbItemCard(item, base + i); });
+    html += `</div>`;
+  }
+
+  _ttDbItems = allSorted;
+  c.innerHTML = `<div class="c-title">Артефакты</div>${html || '<div class="soon-block">Нет данных</div>'}`;
+}
+
+// ── Runes (from db/enchants.json) ────────────────────────────────────────────
+
+async function renderRunesDb(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const runes = await loadDb('enchants');
+
+  let allSorted = [];
+  let html = '';
+  for (const group of RUNE_SLOT_GROUPS) {
+    const groupRunes = runes.filter(r => group.slots.has(r.slot));
+    if (!groupRunes.length) continue;
+    const sorted = sortByQuality(groupRunes);
+    allSorted = allSorted.concat(sorted);
+    html += `<div class="art-section-divider">${group.label}</div><div class="eq-grid">`;
+    sorted.forEach(r => {
+      html += dbItemCard(r, allSorted.indexOf(r));
+    });
+    html += `</div>`;
+  }
+  _ttDbItems = allSorted;
+
+  c.innerHTML = `<div class="c-title">Руны</div><div class="c-sub">Наложение на экипировку и украшения</div>${html}`;
+}
+
+// ── Battle Bags ──────────────────────────────────────────────────────────────
+
+function bagPockets(item) {
+  const name = locName(item.id) || '';
+  const m = name.match(/(\d+)\s*(карман|отделени|слот)/);
+  if (m) return parseInt(m[1]);
+  const idm = item.id.match(/_(\d+)(?:_\d+)?$/);
+  return idm ? parseInt(idm[1]) : 0;
+}
+
+function pocketLabel(n) {
+  if (n === 0) return 'Прочие';
+  const m10 = n % 10, m100 = n % 100;
+  if (m100 >= 11 && m100 <= 14) return `${n} карманов`;
+  if (m10 === 1) return `${n} карман`;
+  if (m10 >= 2 && m10 <= 4) return `${n} кармана`;
+  return `${n} карманов`;
+}
+
+const ARCHIVE_BAG_IDS = new Set(['battle_bag_default', 'offer_battle_bag_3_4']);
+
+const OTHER_SECTIONS = {
+  colder:      { ids: ['colder_2025_trinket_daily_quest_part'] },
+  halloween:   { tags: ['halloween'] },
+  caldron:     { tags: ['caldron'] },
+  st_patric:   { tags: ['st_patric'] },
+  dragons:     { tags: ['dragons'] },
+  dniwe:       { tags: ['dniwe'] },
+  pirate_day:  { tags: ['pirate_day'] },
+  goblin_land: { tags: ['goblin_land'] },
+  expedition:  { tags: ['expedition'] },
+  flowers:     { tags: ['flowers'] },
+  birthday:    { idPrefix: 'birthday' },
+  arena:       { tags: ['arena_sp_useable'] },
+  emotions:    { tags: ['emotions'] },
+};
+
+function isArchiveRing(id) {
+  return id.startsWith('ring_reward_') || id.startsWith('all_ring_tournament_') ||
+    ['gift_vkontakt_ring','clans_2009_may_10_gold','clans_2009_may_10_silver','clans_2009_may_10_copper'].includes(id);
+}
+
+async function renderTeleportScrolls(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const allItems = await loadDb('inventory');
+  const items = allItems.filter(i => {
+    const id = i.id || '';
+    const tags = i.tags || '';
+    return tags === 'teleport' ||
+      id.startsWith('scroll_teleport_') ||
+      id.startsWith('stone_teleport_') ||
+      id.startsWith('traveler_stone_');
+  });
+
+  const REALM_LABEL = {
+    floring:        'Гальяра',
+    hirn:           'Хирн',
+    gaina:          'Гайна',
+    kohill_islands: 'Холмы острова',
+    spring_shore:   'Весенний берег',
+    graven:         'Гравен',
+    ritaly:         'Риталь',
+    horras:         'Хоррас',
+    silent_bay_human: 'Тихая бухта',
+    silent_bay_elf:   'Тихая бухта',
+    colony_3:       'Колония (3)',
+    colony_5:       'Колония (5)',
+    colony_7:       'Колония (7)',
+    colony_8:       'Колония (8)',
+  };
+
+  // Group by realm
+  const groups = {};
+  for (const item of items) {
+    const realm = item.stats?.teleport_realm || '';
+    const label = REALM_LABEL[realm] || (realm ? realm : 'Без локации');
+    (groups[label] = groups[label] || []).push(item);
+  }
+
+  // Sort each group by reqlvl then quality
+  const ORDER = { white:0, green:1, blue:2, purple:3, red:4, orange:5 };
+  const sortGroup = arr => arr.sort((a,b) =>
+    (a.reqlvl||0) - (b.reqlvl||0) || (ORDER[a.quality]||0) - (ORDER[b.quality]||0)
+  );
+
+  _ttDbItems = items;
+  let html = '';
+  for (const [label, arr] of Object.entries(groups).sort((a,b) => a[0].localeCompare(b[0],'ru'))) {
+    sortGroup(arr);
+    html += `<div class="art-section-divider">${label}</div><div class="eq-grid">`;
+    arr.forEach((item, idx) => { html += dbItemCard(item, items.indexOf(item)); });
+    html += `</div>`;
+  }
+  c.innerHTML = `<div class="c-title">Свитки телепорта</div>
+    <div class="c-sub">${items.length} предметов</div>${html}`;
+}
+
+const ARCHIVE_QUEST_IDS = new Set([
+  'mob_heroic_aoe_direct', 'mob_heroic_aoe_direct_spell', 'war_totem_direct_start',
+  'colony_evil_ring', 'colony_ring_lienna', 'st_roger_wedding_ring',
+  'golden_ring_quest', 'truln_ring_quest', 'family_ring_quest',
+]);
+
+function bagTypeGroup(item) {
+  const id = item.id;
+  if (id.startsWith('arch_battle_bag') || id === 'battle_bag_5_1_archeolog')
+    return 'archaeologist';
+  if (id.startsWith('exorcist_fair_battle_bag'))
+    return 'exorcist_magic';
+  if (id.startsWith('caldron_battle_bag'))
+    return 'exorcist_cursed';
+  if (id.startsWith('exorcist_battle_bag'))
+    return 'exorcist';
+  if (id.startsWith('fair_battle_bag') && id.endsWith('upgrade'))
+    return 'fair_magic';
+  if (id.startsWith('fair_battle_bag'))
+    return 'fair';
+  if (/battle_bag_[0-9]+_[0-9]+_hero/.test(id))
+    return 'crown';
+  return 'other';
+}
+
+const BAG_GROUP_ORDER = [
+  'archaeologist', 'fair', 'fair_magic',
+  'exorcist', 'exorcist_cursed', 'exorcist_magic', 'crown', 'other',
+];
+const BAG_GROUP_LABELS = {
+  archaeologist: 'Боевые сумки Археолога',
+  fair:          'Ярмарочные боевые сумки',
+  fair_magic:    'Ярмарочные волшебные боевые сумки',
+  exorcist:      'Боевые сумки Экзорциста',
+  exorcist_cursed: 'Проклятые боевые сумки Экзорциста',
+  exorcist_magic:  'Волшебные боевые сумки Экзорциста',
+  crown:         'Боевые сумки Ордена Короны',
+  other:         'Прочие',
+};
+
+async function renderBattleBags(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const allItems = await loadDb('inventory');
+  const bags = allItems.filter(i =>
+    (i.category === 'battle_bag' || (i.tags||'').includes('battle_bag'))
+    && !ARCHIVE_BAG_IDS.has(i.id)
+  );
+
+  if (!bags.length) { renderSoon(c, 'Боевые сумки'); return; }
+
+  bags.sort((a, b) => bagPockets(a) - bagPockets(b) || a.reqlvl - b.reqlvl);
+  _ttDbItems = bags;
+
+  const groups = {};
+  for (const item of bags) {
+    const key = bagTypeGroup(item);
+    (groups[key] = groups[key] || []).push(item);
+  }
+
+  let html = '';
+  for (const key of BAG_GROUP_ORDER) {
+    const items = groups[key];
+    if (!items?.length) continue;
+    html += `<div class="art-section-divider">${BAG_GROUP_LABELS[key]}</div><div class="eq-grid">`;
+    items.forEach(item => { html += dbItemCard(item, bags.indexOf(item)); });
+    html += `</div>`;
+  }
+
+  c.innerHTML = `<div class="c-title">Боевые сумки</div>${html}`;
+}
+
+// ── Event Buffs (from db/buffs.json) ─────────────────────────────────────────
+
+async function renderEventBuffsDb(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const otherIds  = new Set(Object.values(OTHER_SECTIONS).flatMap(s => s.ids  || []));
+  const otherTags = new Set(Object.values(OTHER_SECTIONS).flatMap(s => s.tags || []));
+  const repTags   = new Set(['witcher','demon','joust_2x2']);
+  const allBuffs = (await loadDb('buffs')).filter(i =>
+    !ARCHIVE_QUEST_IDS.has(i.id) &&
+    !otherIds.has(i.id) &&
+    !(i.id.startsWith('cook_') && !i.id.startsWith('cook_recipe_')) &&
+    !i.id.startsWith('cook_recipe_') &&
+    !(i.id||'').includes('avatar') &&
+    !((i.tags||'').split(',').some(t => otherTags.has(t.trim()) || repTags.has(t.trim()) || t.trim() === 'cards_booster'))
+  );
+  _ttDbItems = allBuffs;
+
+  function primaryTag(item) {
+    const tags = (item.tags||'').split(',').map(t=>t.trim()).filter(Boolean);
+    for (const t of EVENT_TAG_ORDER) if (tags.includes(t)) return t;
+    return tags[0] || 'useable';
+  }
+
+  const grouped = {};
+  for (const item of allBuffs) {
+    const tag = primaryTag(item);
+    (grouped[tag] = grouped[tag]||[]).push(item);
+  }
+
+  let allSorted = [];
+  let html = '';
+
+  function renderGroup(label, items) {
+    const sorted = sortByQuality(items);
+    const base = allSorted.length;
+    allSorted = allSorted.concat(sorted);
+    let g = `<div class="art-section-divider">${label} (${sorted.length})</div><div class="eq-grid">`;
+    sorted.forEach((item, i) => { g += dbItemCard(item, base + i); });
+    g += `</div>`;
+    return g;
+  }
+
+  for (const tag of EVENT_TAG_ORDER) {
+    if (!grouped[tag]?.length) continue;
+    html += renderGroup(EVENT_TAG_LABELS[tag] || tag, grouped[tag]);
+  }
+  for (const [tag, items] of Object.entries(grouped)) {
+    if (EVENT_TAG_ORDER.includes(tag)) continue;
+    html += renderGroup(EVENT_TAG_LABELS[tag] || tag, items);
+  }
+
+  _ttDbItems = allSorted;
+  c.innerHTML = `<div class="c-title">Ивентовые бафы</div>${html}`;
+}
+
+// ── Load all DB files ─────────────────────────────────────────────────────────
+
+let _allItems = null;
+async function loadAllDb() {
+  if (_allItems) return _allItems;
+  const names = ['equipment_warrior','equipment_paladin','equipment_mage',
+                  'equipment_cleric','equipment_rogue','equipment_shooter',
+                  'enchants','buffs','inventory'];
+  const arrays = await Promise.all(names.map(n => loadDb(n)));
+  _allItems = arrays.flat();
+  return _allItems;
+}
+
+// ── Technical sections ────────────────────────────────────────────────────────
+
+async function renderTechStats(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const all = await loadDb('inventory');
+  const filtered = all.filter(i => i.stats && Object.keys(i.stats).length > 0);
+  const sorted = sortByQuality(filtered);
+  _ttDbItems = sorted;
+  let html = `<div class="eq-grid">`;
+  sorted.forEach((item, idx) => { html += dbItemCard(item, idx); });
+  html += `</div>`;
+  c.innerHTML = `<div class="c-title">Влияют на характеристики</div>
+    <div class="c-sub">${sorted.length} предметов</div>${html}`;
+}
+
+async function renderTechNoStats(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const all = await loadAllDb();
+  const filtered = all.filter(i => !i.stats || Object.keys(i.stats).length === 0);
+  const sorted = sortByQuality(filtered);
+  _ttDbItems = sorted;
+  let html = `<div class="eq-grid">`;
+  sorted.forEach((item, idx) => { html += dbItemCard(item, idx); });
+  html += `</div>`;
+  c.innerHTML = `<div class="c-title">Не влияют на характеристики</div>
+    <div class="c-sub">${sorted.length} предметов</div>${html}`;
+}
+
+async function renderTechEquipment(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const names = ['equipment_warrior','equipment_paladin','equipment_mage',
+                  'equipment_cleric','equipment_rogue','equipment_shooter'];
+  const arrays = await Promise.all(names.map(n => loadDb(n)));
+  const sorted = sortByQuality(arrays.flat());
+  _ttDbItems = sorted;
+  let html = `<div class="eq-grid">`;
+  sorted.forEach((item, idx) => { html += dbItemCard(item, idx); });
+  html += `</div>`;
+  c.innerHTML = `<div class="c-title">Снаряжение (всё)</div>
+    <div class="c-sub">${sorted.length} предметов</div>${html}`;
+}
+
+async function renderOtherSection(c, key) {
+  const TITLES = {
+    colder:      'Колдер',
+    halloween:   'Тыквенный Фестиваль',
+    caldron:     'Земли мёртвых',
+    st_patric:   'Месяц цветущего хмеля',
+    dragons:     'Небесные Драконы',
+    dniwe:       'Зов глубин',
+    pirate_day:  'День Пирата',
+    goblin_land: 'Гоблинский Рай',
+    expedition:  'Экспедиция',
+    flowers:     'Месяц пробуждения цветов',
+    birthday:    'День Рождения Королевства',
+    arena:       'Арена',
+    emotions:    'Эмоции',
+    costumes:    'Костюмы',
+  };
+  // Sections that are standalone events (own header) vs misc "other" sections
+  const EVENT_KEYS = new Set(['colder','halloween','caldron','st_patric','dragons','dniwe',
+                               'pirate_day','goblin_land','expedition','flowers','birthday']);
+  const title = TITLES[key] || key;
+  const sectionTitle = EVENT_KEYS.has(key) ? title : `Разное: ${title}`;
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const section = OTHER_SECTIONS[key] || {};
+  const idSet     = new Set(section.ids  || []);
+  const tagSet    = new Set(section.tags || []);
+  const idPrefix  = section.idPrefix || '';
+  const [buffs, inv] = await Promise.all([loadDb('buffs'), loadDb('inventory')]);
+  const items = [...buffs, ...inv].filter(i =>
+    idSet.has(i.id) ||
+    (idPrefix && i.id.startsWith(idPrefix)) ||
+    (tagSet.size > 0 && (i.tags||'').split(',').some(t => tagSet.has(t.trim())))
+  );
+  items.sort((a, b) => (locName(a.id)||a.id).localeCompare(locName(b.id)||b.id, 'ru'));
+  _ttDbItems = items;
+  const sub = items.length ? `<div class="c-sub">${items.length} предметов</div>` : '';
+  const grid = items.length
+    ? `<div class="eq-grid">${items.map((item,idx) => dbItemCard(item,idx)).join('')}</div>`
+    : '<div class="soon-block">Пусто</div>';
+  c.innerHTML = `<div class="c-title">${sectionTitle}</div>${sub}${grid}`;
+}
+
+async function renderArchiveSection(c, title) {
+  if (title === 'Экипировка') {
+    c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+    const allItems = await loadDb('inventory');
+    const bags = allItems.filter(i =>
+      (i.category === 'battle_bag' || (i.tags||'').includes('battle_bag'))
+      && ARCHIVE_BAG_IDS.has(i.id)
+    );
+    bags.sort((a, b) => a.reqlvl - b.reqlvl);
+    _ttDbItems = bags;
+    const grid = bags.length
+      ? `<div class="art-section-divider">Боевые сумки</div><div class="eq-grid">${bags.map((item,idx) => dbItemCard(item,idx)).join('')}</div>`
+      : '<div class="soon-block">Пусто</div>';
+    c.innerHTML = `<div class="c-title">Архив: Экипировка</div>${grid}`;
+    return;
+  }
+  if (title === 'Квестовые предметы') {
+    c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+    const [buffs, inv] = await Promise.all([loadDb('buffs'), loadDb('inventory')]);
+    const items = [...buffs, ...inv].filter(i => ARCHIVE_QUEST_IDS.has(i.id));
+    items.sort((a, b) => (locName(a.id)||a.id).localeCompare(locName(b.id)||b.id, 'ru'));
+    _ttDbItems = items;
+    const grid = items.length
+      ? `<div class="eq-grid">${items.map((item,idx) => dbItemCard(item,idx)).join('')}</div>`
+      : '<div class="soon-block">Пусто</div>';
+    c.innerHTML = `<div class="c-title">Архив: Квестовые предметы</div>${grid}`;
+    return;
+  }
+
+  c.innerHTML = `<div class="c-title">Архив: ${title}</div>
+    <div class="soon-block">В разработке</div>`;
+}
+
+// ── Reputation sections ───────────────────────────────────────────────────────
+
+async function renderRepSection(c, key) {
+  const TITLES = {
+    witcher:'Ведьмак', demon:'Охотник на демонов',
+    gladiator:'Гладиатор', conqueror:'Завоеватель', explorer:'Первооткрыватель',
+  };
+  const TAG_MAP = {
+    witcher:'witcher', demon:'demon', gladiator:'gladiator', conqueror:'conqueror', explorer:'ravenhill',
+  };
+  const title = TITLES[key] || key;
+  const tag = TAG_MAP[key] || key;
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const [buffs, eqNone] = await Promise.all([loadDb('buffs'), loadDb('equipment_none')]);
+  const items = [...buffs, ...eqNone].filter(i =>
+    (i.tags||'').split(',').map(t=>t.trim()).includes(tag)
+  );
+  items.sort((a,b) => (locName(a.id)||a.id).localeCompare(locName(b.id)||b.id,'ru'));
+
+  if (key === 'demon') {
+    const getName = i => (locName(i.id)||i.id).toLowerCase();
+    const balsam  = items.filter(i => getName(i).includes('бальзам атаки'));
+    const armor   = items.filter(i => getName(i).includes('доспех охотника'));
+    const rest    = items.filter(i => !getName(i).includes('бальзам атаки') && !getName(i).includes('доспех охотника'));
+    let allSorted = [], html = '';
+    function addGrp(label, arr) {
+      if (!arr.length) return;
+      const base = allSorted.length;
+      allSorted = allSorted.concat(arr);
+      html += `<div class="art-section-divider">${label}</div><div class="eq-grid">`;
+      arr.forEach((item, i) => { html += dbItemCard(item, base + i); });
+      html += `</div>`;
+    }
+    addGrp('Бальзам атаки', sortByQuality(balsam));
+    addGrp('Доспех охотника', armor);
+    addGrp('Остальное', rest);
+    _ttDbItems = allSorted;
+    c.innerHTML = `<div class="c-title">Репутация: ${title}</div>${html || '<div class="soon-block">Пусто</div>'}`;
+    return;
+  }
+
+  _ttDbItems = items;
+  const grid = items.length
+    ? `<div class="eq-grid">${items.map((item,idx) => dbItemCard(item,idx)).join('')}</div>`
+    : '<div class="soon-block">Пусто</div>';
+  c.innerHTML = `<div class="c-title">Репутация: ${title}</div>${grid}`;
+}
+
+// ── Cards sections ────────────────────────────────────────────────────────────
+
+async function renderCardsSection(c, key) {
+  const TITLES = {spades:'Пики', hearts:'Червы', clubs:'Трефы', diamonds:'Бубны', other:'Остальные масти', albums:'Альбомы'};
+  const SUIT_KW = {spades:'пик', hearts:'черв', clubs:'треф', diamonds:'бубн'};
+  const title = TITLES[key] || key;
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const allBuffs = await loadDb('buffs');
+  const cardItems = allBuffs.filter(i => (i.tags||'').split(',').map(t=>t.trim()).includes('cards_booster'));
+
+  let items;
+  if (key === 'albums') {
+    items = cardItems.filter(i => (locName(i.id)||'').toLowerCase().includes('альбом') || (i.id||'').includes('_box'));
+  } else if (key === 'other') {
+    const suitKws = Object.values(SUIT_KW);
+    items = cardItems.filter(i => {
+      const n = (locName(i.id)||'').toLowerCase();
+      return !suitKws.some(k => n.includes(k)) && !n.includes('альбом') && !(i.id||'').includes('_box');
+    });
+  } else {
+    const kw = SUIT_KW[key];
+    items = cardItems.filter(i => (locName(i.id)||'').toLowerCase().includes(kw));
+  }
+
+  const sorted = sortByQuality(items);
+  _ttDbItems = sorted;
+  const grid = sorted.length
+    ? `<div class="eq-grid">${sorted.map((item,idx) => dbItemCard(item,idx)).join('')}</div>`
+    : '<div class="soon-block">Пусто</div>';
+  c.innerHTML = `<div class="c-title">Карты: ${title}</div>${grid}`;
+}
+
+// ── Profession sections ───────────────────────────────────────────────────────
+
+async function renderProfSection(c, key) {
+  const TITLES = {craft:'Ремесленник', herb:'Травник', mine:'Рудокоп', hunt:'Охотник', fish:'Рыболов', cook:'Повар'};
+  const title = TITLES[key] || key;
+
+  if (key === 'cook') {
+    c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+    const allBuffs = await loadDb('buffs');
+    const recipes = allBuffs.filter(i => i.id.startsWith('cook_recipe_'));
+    const COOK_LOCATIONS = [
+      { prefix:'cook_recipe_floring_buff_',        label:'Флоринг' },
+      { prefix:'cook_recipe_kohill_islands_buff_', label:'Кохилльский архипелаг' },
+      { prefix:'cook_recipe_gaina_buff_',          label:'Гайна' },
+      { prefix:'cook_recipe_spring_shore_buff_',   label:'Весенний берег' },
+      { prefix:'cook_recipe_hirn_buff_',           label:'Хирн' },
+      { prefix:'cook_recipe_south_fyorl_buff_',    label:'Южный Фьорл' },
+      { prefix:'cook_recipe_north_fyorl_buff_',    label:'Северный Фьорл' },
+    ];
+    let allSorted = [], html = '';
+    for (const loc of COOK_LOCATIONS) {
+      const items = recipes.filter(i => i.id.startsWith(loc.prefix)).sort((a,b) => a.id.localeCompare(b.id));
+      if (!items.length) continue;
+      const base = allSorted.length;
+      allSorted = allSorted.concat(items);
+      html += `<div class="art-section-divider">${loc.label} (${items.length})</div><div class="eq-grid">`;
+      items.forEach((item, i) => { html += dbItemCard(item, base + i); });
+      html += `</div>`;
+    }
+    _ttDbItems = allSorted;
+    c.innerHTML = `<div class="c-title">Профессии: Повар</div>${html || '<div class="soon-block">Пусто</div>'}`;
+    return;
+  }
+
+  c.innerHTML = `<div class="c-title">Профессии: ${title}</div><div class="soon-block">Данные добавляются</div>`;
+}
+
+// ── Costumes section ──────────────────────────────────────────────────────────
+
+async function renderCostumes(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const allBuffs = await loadDb('buffs');
+  const costumes = allBuffs.filter(i => (i.id||'').includes('avatar'));
+
+  const EVENT_LABELS = {
+    halloween:'Тыквенный фестиваль', caldron:'Земли мёртвых', st_patric:'Месяц цветущего хмеля',
+    dragons:'Небесные Драконы', colder:'Колдер', flowers:'8 марта', joust_2x2:'Стальной турнир',
+    goblin_land:'Гоблинский Рай', dniwe:'Зов глубин', useable:'Общие',
+  };
+  const tagged = {}, untagged = [];
+  for (const item of costumes) {
+    const tags = (item.tags||'').split(',').map(t=>t.trim()).filter(Boolean);
+    if (tags.length && tags[0] !== 'None') {
+      const t = tags[0];
+      (tagged[t] = tagged[t]||[]).push(item);
+    } else {
+      untagged.push(item);
+    }
+  }
+
+  let allSorted = [], html = '';
+  const tagOrder = ['halloween','caldron','st_patric','dragons','colder','flowers','joust_2x2','goblin_land','dniwe','useable'];
+
+  function addGroup(label, items) {
+    if (!items.length) return;
+    const sorted = sortByQuality(items);
+    const base = allSorted.length;
+    allSorted = allSorted.concat(sorted);
+    html += `<div class="art-section-divider">${label} (${sorted.length})</div><div class="eq-grid">`;
+    sorted.forEach((item, i) => { html += dbItemCard(item, base + i); });
+    html += `</div>`;
+  }
+
+  for (const tag of tagOrder) {
+    if (tagged[tag]?.length) addGroup(EVENT_LABELS[tag] || tag, tagged[tag]);
+  }
+  for (const [tag, items] of Object.entries(tagged)) {
+    if (!tagOrder.includes(tag)) addGroup(EVENT_LABELS[tag] || tag, items);
+  }
+  if (untagged.length) addGroup('Прочие', untagged);
+
+  _ttDbItems = allSorted;
+  c.innerHTML = `<div class="c-title">Остальные предметы: Костюмы</div>${html || '<div class="soon-block">Пусто</div>'}`;
+}
+
+// ── Archive: Rings & Tournament ───────────────────────────────────────────────
+
+async function renderArchiveRings(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const eq = await loadDb('equipment_none');
+  const rings = eq.filter(i => i.slot === 'ring1,ring2' && isArchiveRing(i.id));
+  rings.sort((a,b) => a.reqlvl - b.reqlvl || (locName(a.id)||a.id).localeCompare(locName(b.id)||b.id,'ru'));
+  _ttDbItems = rings;
+  const grid = rings.length
+    ? `<div class="eq-grid">${rings.map((item,idx) => dbItemCard(item,idx)).join('')}</div>`
+    : '<div class="soon-block">Пусто</div>';
+  c.innerHTML = `<div class="c-title">Архив: Кольца</div>${grid}`;
+}
+
+async function renderArchiveTournament(c) {
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка…</div>';
+  const allBuffs = await loadDb('buffs');
+  const items = allBuffs.filter(i => (i.tags||'').split(',').map(t=>t.trim()).includes('joust_2x2'));
+  items.sort((a,b) => (locName(a.id)||a.id).localeCompare(locName(b.id)||b.id,'ru'));
+  _ttDbItems = items;
+  const grid = items.length
+    ? `<div class="eq-grid">${items.map((item,idx) => dbItemCard(item,idx)).join('')}</div>`
+    : '<div class="soon-block">Пусто</div>';
+  c.innerHTML = `<div class="c-title">Архив: Стальной турнир</div>${grid}`;
+}
+
+// ── Search ────────────────────────────────────────────────────────────────────
+
+let _searchTimeout = null;
+function onSearch(query) {
+  clearTimeout(_searchTimeout);
+  if (!query || query.length < 2) {
+    if (!query) {
+      const c = document.getElementById('content');
+      c.innerHTML = `<div class="empty-state">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M16 24h16M24 16v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Выбери раздел слева</div>`;
+      clearActive();
+    }
+    return;
+  }
+  _searchTimeout = setTimeout(() => doSearch(query), 250);
+}
+
+// ══════════════════════════════════════════════════════════════
+// EDITOR — GitHub API + edit mode + context menu + pending saves
+// ══════════════════════════════════════════════════════════════
+
+const GH_OWNER = 'sriblo';
+const GH_REPO  = 'Korolevstvo-Calculator';
+
+const DB_LABELS = {
+  'inventory':         'Нераспределённые',
+  'buffs':             'Бафы',
+  'enchants':          'Руны',
+  'equipment_warrior':  'Снаряжение / Воин',
+  'equipment_paladin':  'Снаряжение / Паладин',
+  'equipment_mage':     'Снаряжение / Маг',
+  'equipment_cleric':   'Снаряжение / Монах',
+  'equipment_rogue':    'Снаряжение / Головорез',
+  'equipment_shooter':  'Снаряжение / Лучник',
+  'equipment_none':     'Снаряжение / Без класса',
+};
+
+let _editMode = false;
+let _pendingChanges = {};  // { dbName: { itemId: item } }
+let _pendingMoves   = {};  // { itemId: { from, to, item } }
+let _ctxItem = null;
+
+// ── GitHub API ──────────────────────────────────────────────
+function ghHeaders() {
+  const token = localStorage.getItem('gh_token');
+  return {
+    'Authorization': `token ${token}`,
+    'Accept': 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json',
+  };
+}
+
+async function ghGetFile(dbName) {
+  const r = await fetch(
+    `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/db/${dbName}.json`,
+    { headers: ghHeaders() }
+  );
+  if (!r.ok) throw new Error(`GitHub API: ${r.status}`);
+  const data = await r.json();
+  const raw = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
+  return { items: JSON.parse(raw), sha: data.sha };
+}
+
+async function ghPutFile(dbName, items, sha) {
+  const body = JSON.stringify(items, null, 2);
+  const content = btoa(unescape(encodeURIComponent(body)));
+  const r = await fetch(
+    `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/db/${dbName}.json`,
+    {
+      method: 'PUT',
+      headers: ghHeaders(),
+      body: JSON.stringify({
+        message: `База предметов: обновление через редактор`,
+        content,
+        sha,
+      }),
+    }
+  );
+  if (!r.ok) {
+    const err = await r.json();
+    throw new Error(err.message || r.status);
+  }
+}
+
+// ── Token management ────────────────────────────────────────
+function toggleEditMode() {
+  const hasToken = !!localStorage.getItem('gh_token');
+  if (!hasToken) {
+    openSettings();
+    return;
+  }
+  _editMode = !_editMode;
+  const btn = document.getElementById('edit-toggle-btn');
+  btn.classList.toggle('active', _editMode);
+  btn.querySelector('.dot').style.background = _editMode ? 'var(--gold)' : '';
+  if (!_editMode) closeCtxMenu();
+}
+
+function openSettings() {
+  const panel = document.getElementById('settings-panel');
+  const overlay = document.getElementById('settings-overlay');
+  const input = document.getElementById('gh-token-input');
+  panel.classList.add('open');
+  overlay.style.display = 'block';
+  const saved = localStorage.getItem('gh_token');
+  if (saved) input.value = saved;
+  input.focus();
+}
+
+function closeSettings() {
+  document.getElementById('settings-panel').classList.remove('open');
+  document.getElementById('settings-overlay').style.display = 'none';
+}
+
+function saveToken() {
+  const val = document.getElementById('gh-token-input').value.trim();
+  if (!val) return;
+  localStorage.setItem('gh_token', val);
+  setTokenStatus('Токен сохранён', 'ok');
+}
+
+async function testToken() {
+  setTokenStatus('Проверка…', '');
+  try {
+    const r = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}`,
+      { headers: ghHeaders() }
+    );
+    if (r.ok) setTokenStatus('Соединение успешно ✓', 'ok');
+    else setTokenStatus('Ошибка: ' + r.status, 'err');
+  } catch(e) { setTokenStatus('Ошибка сети', 'err'); }
+}
+
+function setTokenStatus(msg, cls) {
+  const el = document.getElementById('token-status');
+  el.textContent = msg;
+  el.className = 's-status' + (cls ? ' ' + cls : '');
+}
+
+// ── Context menu ────────────────────────────────────────────
+function editorCtxMenu(e, idx) {
+  if (!_editMode) return;
+  e.preventDefault();
+  e.stopPropagation();
+  const item = _ttDbItems[idx];
+  if (!item) return;
+  _ctxItem = item;
+
+  const nameEl  = document.getElementById('ctx-item-name');
+  const techRow = document.getElementById('ctx-tech-row');
+  const buffRow = document.getElementById('ctx-buff-row');
+  const submenu = document.getElementById('ctx-move-submenu');
+  const menu    = document.getElementById('ctx-menu');
+
+  nameEl.textContent = itemDisplayName(item);
+
+  techRow.classList.toggle('active-flag', !!item.tech);
+  techRow.innerHTML = `<span>${item.tech ? '☑' : '☐'}</span> Технический предмет`;
+
+  buffRow.classList.toggle('active-flag', !!item.buff);
+  buffRow.innerHTML = `<span>${item.buff ? '☑' : '☐'}</span> Баф`;
+
+  // Build move submenu
+  submenu.innerHTML = Object.entries(DB_LABELS)
+    .filter(([db]) => db !== item._db)
+    .map(([db, label]) =>
+      `<div class="ctx-row" onclick="ctxMoveTo('${db}')">${label}</div>`
+    ).join('');
+
+  // Position menu
+  menu.style.display = 'none';
+  menu.classList.add('open');
+  const vw = window.innerWidth, vh = window.innerHeight;
+  let x = e.clientX, y = e.clientY;
+  if (x + 220 > vw) x = vw - 230;
+  if (y + 200 > vh) y = vh - 210;
+  menu.style.left = x + 'px';
+  menu.style.top  = y + 'px';
+  menu.style.display = 'block';
+}
+
+function closeCtxMenu() {
+  const m = document.getElementById('ctx-menu');
+  m.classList.remove('open');
+  m.style.display = 'none';
+  _ctxItem = null;
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#ctx-menu')) closeCtxMenu();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeCtxMenu();
+});
+
+function ctxToggleFlag(flag) {
+  if (!_ctxItem) return;
+  const newVal = !_ctxItem[flag];
+  applyPendingChange(_ctxItem, { [flag]: newVal || undefined });
+  closeCtxMenu();
+}
+
+function ctxMoveTo(targetDb) {
+  if (!_ctxItem) return;
+  const item = _ctxItem;
+  const sourceDb = item._db;
+
+  // Track move
+  if (!_pendingMoves[item.id]) {
+    _pendingMoves[item.id] = { from: sourceDb, to: targetDb, item: { ...item } };
+  } else {
+    _pendingMoves[item.id].to = targetDb;
+  }
+
+  // Update in-memory item so UI reflects change
+  item._db = targetDb;
+  updatePendingBar();
+  closeCtxMenu();
+
+  // Re-render current view to show the change
+  const active = document.querySelector('.sb-item.on');
+  if (active) render(active.dataset.view);
+}
+
+function applyPendingChange(item, changes) {
+  const db = item._db;
+  if (!_pendingChanges[db]) _pendingChanges[db] = {};
+  // Apply changes to live item object
+  Object.assign(item, changes);
+  // Remove undefined keys
+  Object.keys(item).forEach(k => { if (item[k] === undefined) delete item[k]; });
+  // Clone into pending (without _db)
+  const clean = { ...item };
+  delete clean._db;
+  _pendingChanges[db][item.id] = clean;
+  updatePendingBar();
+  // Re-render to show badges
+  const active = document.querySelector('.sb-item.on');
+  if (active) render(active.dataset.view);
+}
+
+function updatePendingBar() {
+  const bar = document.getElementById('pending-bar');
+  const flagCount = Object.values(_pendingChanges).reduce((s, m) => s + Object.keys(m).length, 0);
+  const moveCount = Object.keys(_pendingMoves).length;
+  const total = flagCount + moveCount;
+  if (total === 0) { bar.classList.remove('open'); return; }
+  bar.classList.add('open');
+  document.getElementById('pending-count').innerHTML =
+    `Изменений: <strong>${total}</strong>${moveCount ? ` (${moveCount} перемещений)` : ''}`;
+}
+
+async function saveChanges() {
+  const bar = document.getElementById('pending-bar');
+  bar.querySelector('.p-btn.save').textContent = 'Сохранение…';
+
+  try {
+    const affectedDbs = new Set([
+      ...Object.keys(_pendingChanges),
+      ...Object.values(_pendingMoves).flatMap(m => [m.from, m.to]),
+    ]);
+
+    // Fetch all affected files from GitHub
+    const dbData = {};
+    for (const db of affectedDbs) {
+      dbData[db] = await ghGetFile(db);
+    }
+
+    // Apply flag changes
+    for (const [db, changes] of Object.entries(_pendingChanges)) {
+      for (const [id, changed] of Object.entries(changes)) {
+        const idx = dbData[db].items.findIndex(i => i.id === id);
+        if (idx >= 0) dbData[db].items[idx] = changed;
+      }
+    }
+
+    // Apply moves
+    for (const [id, { from, to, item }] of Object.entries(_pendingMoves)) {
+      dbData[from].items = dbData[from].items.filter(i => i.id !== id);
+      const clean = { ...item };
+      delete clean._db;
+      // Merge any flag changes that may have happened simultaneously
+      const flagChange = (_pendingChanges[item._db] || {})[id];
+      const finalItem = flagChange ? { ...clean, ...flagChange } : clean;
+      dbData[to].items.push(finalItem);
+    }
+
+    // Push to GitHub
+    for (const [db, { items, sha }] of Object.entries(dbData)) {
+      await ghPutFile(db, items, sha);
+    }
+
+    // Clear pending + cache, reload view
+    _pendingChanges = {};
+    _pendingMoves   = {};
+    Object.keys(_dbCache).forEach(k => delete _dbCache[k]);
+    _allItems       = null;
+    updatePendingBar();
+
+    const active = document.querySelector('.sb-item.on');
+    if (active) render(active.dataset.view);
+
+  } catch (e) {
+    alert('Ошибка сохранения: ' + e.message);
+  } finally {
+    const btn = bar.querySelector('.p-btn.save');
+    if (btn) btn.textContent = 'Сохранить в GitHub';
+  }
+}
+
+function cancelChanges() {
+  _pendingChanges = {};
+  _pendingMoves   = {};
+  Object.keys(_dbCache).forEach(k => delete _dbCache[k]);
+  _allItems       = null;
+  updatePendingBar();
+  const active = document.querySelector('.sb-item.on');
+  if (active) render(active.dataset.view);
+}
+
+// ── Tech section splitter ───────────────────────────────────
+function splitTechItems(container) {
+  container.querySelectorAll('.eq-grid').forEach(grid => {
+    // skip already-split tech grids
+    if (grid.classList.contains('tech-grid')) return;
+    const techCards = [...grid.querySelectorAll('.eq-card[data-tech="1"]')];
+    if (!techCards.length) return;
+
+    const section = document.createElement('div');
+    section.className = 'tech-section';
+    section.innerHTML = `<div class="tech-header" onclick="toggleTechSection(this)">
+      Технические предметы <span style="color:var(--txt3)">(${techCards.length})</span>
+      <span class="tech-chev">▶</span>
+    </div>
+    <div class="tech-grid eq-grid" style="display:none"></div>`;
+    const techGrid = section.querySelector('.tech-grid');
+    techCards.forEach(card => { grid.removeChild(card); techGrid.appendChild(card); });
+    grid.after(section);
+  });
+}
+
+function toggleTechSection(header) {
+  header.classList.toggle('open');
+  const grid = header.nextElementSibling;
+  grid.style.display = grid.style.display === 'none' ? '' : 'none';
+}
+
+// ── Auto-split tech items via MutationObserver ──────────────
+let _techSplitTimer;
+document.addEventListener('DOMContentLoaded', () => {
+  const contentEl = document.getElementById('content');
+  new MutationObserver(() => {
+    clearTimeout(_techSplitTimer);
+    _techSplitTimer = setTimeout(() => splitTechItems(contentEl), 350);
+  }).observe(contentEl, { childList: true });
+});
+
+async function doSearch(query) {
+  const c = document.getElementById('content');
+  c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Поиск…</div>';
+  clearActive();
+  const all = await loadAllDb();
+  if (!_locale) {
+    c.innerHTML = '<div class="c-title" style="color:var(--txt3)">Загрузка базы имён…</div>';
+    await new Promise(res => setTimeout(res, 500));
+  }
+  const q = query.toLowerCase();
+  const results = all.filter(item => {
+    const name = locName(item.id) || '';
+    return name.toLowerCase().includes(q);
+  });
+  if (!results.length) {
+    c.innerHTML = `<div class="c-title">Поиск: «${query}»</div>
+      <div class="soon-block">Ничего не найдено</div>`;
+    return;
+  }
+  const sorted = sortByQuality(results);
+  _ttDbItems = sorted;
+  let html = `<div class="eq-grid">`;
+  sorted.forEach((item, idx) => { html += dbItemCard(item, idx); });
+  html += `</div>`;
+  c.innerHTML = `<div class="c-title">Поиск: «${query}»</div>
+    <div class="c-sub">${sorted.length} результатов</div>${html}`;
+}
+</script>
+
+<!-- Tone picker -->
+<div class="tone" id="tone">
+  <span class="tone-l">Тон</span>
+  <button class="tone-btn" data-t="amber" title="Янтарь"><span class="swatch"></span></button>
+  <button class="tone-btn" data-t="brass" title="Латунь"><span class="swatch"></span></button>
+  <button class="tone-btn" data-t="sand"  title="Песок"><span class="swatch"></span></button>
+</div>
+<script>
+(function(){
+  var KEY='kor_tone';
+  function apply(t){
+    if(t&&t!=='amber') document.documentElement.setAttribute('data-tone',t);
+    else document.documentElement.removeAttribute('data-tone');
+    document.querySelectorAll('.tone-btn').forEach(function(b){
+      b.classList.toggle('on', b.dataset.t===(t||'amber'));
+    });
+  }
+  var saved=localStorage.getItem(KEY)||'amber';
+  apply(saved);
+  document.getElementById('tone').addEventListener('click',function(e){
+    var b=e.target.closest('.tone-btn'); if(!b) return;
+    localStorage.setItem(KEY,b.dataset.t); apply(b.dataset.t);
+  });
+})();
+</script>
+</body>
+</html>
