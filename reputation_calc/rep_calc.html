@@ -348,12 +348,6 @@
   </div>
 </div>
 
-<div class="tone" id="tone">
-  <span class="tone-l">Тон</span>
-  <button class="tone-btn on" data-t="amber" title="Амбра"><span class="swatch"></span></button>
-  <button class="tone-btn" data-t="brass" title="Латунь"><span class="swatch"></span></button>
-  <button class="tone-btn" data-t="sand" title="Песок"><span class="swatch"></span></button>
-</div>
 
 <script>
 const REPUTATIONS = [
@@ -799,26 +793,6 @@ function buildRankPath(curIdx, tgtIdx, curPts){
   }
   path.innerHTML = rows.join('');
 }
-
-/* ── TONE PICKER ── */
-(function(){
-  const saved = localStorage.getItem('kor-tone');
-  if (saved && saved !== 'amber') document.documentElement.setAttribute('data-tone', saved);
-  document.querySelectorAll('.tone-btn').forEach(btn => {
-    if (btn.dataset.t === (saved || 'amber')) {
-      document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('on'));
-      btn.classList.add('on');
-    }
-    btn.addEventListener('click', () => {
-      const t = btn.dataset.t;
-      if (t === 'amber') document.documentElement.removeAttribute('data-tone');
-      else document.documentElement.setAttribute('data-tone', t);
-      localStorage.setItem('kor-tone', t);
-      document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('on'));
-      btn.classList.add('on');
-    });
-  });
-})();
 
 /* ── INIT ── */
 buildRepGrid();

@@ -242,4 +242,35 @@
   document.addEventListener('click', function (e) {
     if (!sw.contains(e.target)) drop.classList.remove('open');
   });
+
+  // ── Footer ────────────────────────────────────────────────────────────────
+  if (!document.getElementById('nav-ftr-css')) {
+    var fs = document.createElement('style');
+    fs.id = 'nav-ftr-css';
+    fs.textContent = [
+      '.site-ftr{border-top:1px solid var(--line);padding:28px 40px;display:flex;',
+        'justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;',
+        'font-size:12px;color:var(--txt3)}',
+      '.site-ftr-l{font-family:var(--serif);font-style:italic}',
+      '.site-ftr-r{display:flex;gap:18px}',
+      '.site-ftr-r a{color:var(--txt3);text-decoration:none;transition:color .12s}',
+      '.site-ftr-r a:hover{color:var(--gold-l)}',
+      '@media(max-width:640px){.site-ftr{padding:20px 16px 36px;flex-direction:column;align-items:flex-start;gap:10px}}',
+    ].join('');
+    document.head.appendChild(fs);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var existing = document.querySelector('footer.ftr, footer.site-ftr');
+    if (existing) existing.remove();
+    var ftr = document.createElement('footer');
+    ftr.className = 'site-ftr';
+    ftr.innerHTML =
+      '<div class="site-ftr-l">Сделано с любовью к Королевству · не является официальным ресурсом</div>' +
+      '<div class="site-ftr-r">' +
+        '<a href="https://github.com/sriblo/korolevstvo" target="_blank" rel="noopener">GitHub</a>' +
+        '<a href="https://t.me/kor_base" target="_blank" rel="noopener">Telegram</a>' +
+      '</div>';
+    document.body.appendChild(ftr);
+  });
 })();

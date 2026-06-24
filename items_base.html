@@ -357,18 +357,19 @@ a{color:inherit;text-decoration:none}
 
 /* ── MOBILE ── */
 @media(max-width:760px){
+  body{overflow-x:hidden}
   .top{padding:0 16px;gap:10px}
   .nav{display:none}
-  .hero-i{padding:30px 16px 26px}
-  .hero-name{font-size:32px}
-  .hero-meta{font-size:14px}
+  .hero-i{padding:24px 16px 20px}
+  .hero-name{font-size:26px}
+  .hero-meta{font-size:13px;margin-top:8px}
   .top .site-search input{width:150px}
-  .sidebar{position:static;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--line)}
-  .sb-search{position:static}
   .layout{flex-direction:column}
-  .content{padding:24px 16px 64px}
-  .c-title{font-size:25px}
-  .tone{bottom:12px;right:12px}
+  .sidebar{position:static;width:100%;height:auto;max-height:60vh;overflow-y:auto;overflow-x:hidden;border-right:none;border-bottom:1px solid var(--line)}
+  .sb-search{position:sticky;top:0}
+  .content{padding:20px 16px 60px;min-width:0;overflow-x:hidden}
+  .c-title{font-size:22px}
+  .eq-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
 }
 
 /* ── EDITOR ── */
@@ -463,9 +464,6 @@ a{color:inherit;text-decoration:none}
   <a class="logo" id="site-logo" href="index_new.html"></a>
   <nav class="nav" id="site-nav"></nav>
   <script src="nav.js"></script>
-  <button class="edit-toggle-btn" id="edit-toggle-btn" onclick="toggleEditMode()" title="Режим редактирования">
-    <span class="dot"></span> Редактор
-  </button>
 </header>
 
 <!-- Settings panel -->
@@ -515,7 +513,7 @@ a{color:inherit;text-decoration:none}
       <span class="dot">·</span>
       <span style="color:var(--txt)">База знаний</span>
     </div>
-    <h1 class="hero-name">База <em>предметов</em></h1>
+    <h1 class="hero-name">База предметов</h1>
     <div class="hero-meta">Все предметы игры в одном месте — экипировка, бижутерия, руны, артефакты, бафы, карты и многое другое.</div>
   </div>
 </section>
@@ -3051,30 +3049,5 @@ async function doSearch(query) {
 }
 </script>
 
-<!-- Tone picker -->
-<div class="tone" id="tone">
-  <span class="tone-l">Тон</span>
-  <button class="tone-btn" data-t="amber" title="Янтарь"><span class="swatch"></span></button>
-  <button class="tone-btn" data-t="brass" title="Латунь"><span class="swatch"></span></button>
-  <button class="tone-btn" data-t="sand"  title="Песок"><span class="swatch"></span></button>
-</div>
-<script>
-(function(){
-  var KEY='kor_tone';
-  function apply(t){
-    if(t&&t!=='amber') document.documentElement.setAttribute('data-tone',t);
-    else document.documentElement.removeAttribute('data-tone');
-    document.querySelectorAll('.tone-btn').forEach(function(b){
-      b.classList.toggle('on', b.dataset.t===(t||'amber'));
-    });
-  }
-  var saved=localStorage.getItem(KEY)||'amber';
-  apply(saved);
-  document.getElementById('tone').addEventListener('click',function(e){
-    var b=e.target.closest('.tone-btn'); if(!b) return;
-    localStorage.setItem(KEY,b.dataset.t); apply(b.dataset.t);
-  });
-})();
-</script>
 </body>
 </html>
