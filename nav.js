@@ -134,6 +134,7 @@
 
   var logo = document.getElementById('site-logo');
   if (logo) {
+    logo.href = _base + 'index.html';
     logo.innerHTML =
       '<img src="' + _base + 'kor_logo.svg" alt="">' +
       '<div><div class="logo-n">Королевство: База знаний</div></div>';
