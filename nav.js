@@ -249,7 +249,7 @@
     var fs = document.createElement('style');
     fs.id = 'nav-ftr-css';
     fs.textContent = [
-      '.site-ftr{border-top:1px solid var(--line);padding:28px 40px;display:flex;',
+      '.site-ftr{border-top:1px solid var(--line);padding:28px 40px;margin-top:60px;display:flex;',
         'justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;',
         'font-size:12px;color:var(--txt3)}',
       '.site-ftr-l{font-family:var(--serif);font-style:italic}',
