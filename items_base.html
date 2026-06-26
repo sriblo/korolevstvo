@@ -2962,7 +2962,7 @@ async function doSearch(query) {
   const q = query.toLowerCase();
   const results = all.filter(item => {
     const name = locName(item.id) || '';
-    return name.toLowerCase().includes(q);
+    return name.toLowerCase().includes(q) || item.id.includes(q);
   });
   if (!results.length) {
     c.innerHTML = `<div class="c-title">Поиск: «${query}»</div>
