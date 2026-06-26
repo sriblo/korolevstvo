@@ -1281,7 +1281,7 @@ function dbStatRows(stats) {
   for (const s of DB_STAT_LABELS) {
     const v = stats[s.key];
     if (v == null) continue;
-    const disp = s.suffix ? `${v}${s.suffix}` : (s.pct ? `${v >= 0 ? '+' : ''}${v}%` : (v >= 0 ? `+${v}` : `${v}`));
+    const disp = s.suffix ? `${v}${s.suffix}` : (typeof v === 'string' ? `+${v}` : (s.pct ? `${v >= 0 ? '+' : ''}${v}%` : (v >= 0 ? `+${v}` : `${v}`)));
     rows.push(`<div class="tt-row"><span class="tt-key">${s.label}</span><span class="tt-val">${disp}</span></div>`);
   }
   for (const [k, v] of Object.entries(stats)) {
@@ -1290,7 +1290,7 @@ function dbStatRows(stats) {
     const isPct = k.endsWith('_percent');
     const disp = typeof v === 'number'
       ? (isPct ? `${v >= 0 ? '+' : ''}${v}%` : (v >= 0 ? `+${v}` : `${v}`))
-      : String(v);
+      : `+${v}`;
     rows.push(`<div class="tt-row"><span class="tt-key" style="color:var(--txt3)">${label}</span><span class="tt-val">${disp}</span></div>`);
   }
   return rows.join('') || '<div class="tt-empty">Нет статов</div>';
