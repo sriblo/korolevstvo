@@ -14,6 +14,7 @@
   var isPirate = pathname.indexOf('/den_pirata/') !== -1;
   var isCalc   = isHmeli || isGlubin || isPirate;
   var isItems  = page === 'items_base.html';
+  var isMobs   = page === 'mobs_base.html';
   var isGuides = pathname.indexOf('/guides/') !== -1;
 
   // ── CSS ────────────────────────────────────────────────────────────────────
@@ -129,6 +130,7 @@
       '</div>' +
     '</div>' +
     a(_base + 'items_base.html', 'База предметов', isItems) +
+    a(_base + 'mobs_base.html', 'База мобов', isMobs) +
     a(_base + 'guides/all_guides.html', 'Гайды', isGuides) +
     '<span class="nav-soon">Сообщество</span>';
 
@@ -179,6 +181,7 @@
     '<div class="nav-mb-links">' +
       '<a class="' + mbLinkClass(isHome, false) + '" href="' + _base + 'index.html">Главная</a>' +
       '<a class="' + mbLinkClass(isItems, false) + '" href="' + _base + 'items_base.html">База предметов</a>' +
+      '<a class="' + mbLinkClass(isMobs, false) + '" href="' + _base + 'mobs_base.html">База мобов</a>' +
       '<div class="nav-mb-sec">Калькуляторы</div>' +
       '<a class="' + mbLinkClass(isHmeli, false) + '" href="' + _base + 'leprecon/hmeli_calc.html">Месяц цветущего хмеля</a>' +
       '<a class="' + mbLinkClass(isGlubin, false) + '" href="' + _base + 'zov_glubin/glubin_calc.html">Зов Глубин</a>' +
@@ -199,6 +202,7 @@
   // ── Search ─────────────────────────────────────────────────────────────────
   var INDEX = [
     { title: 'База предметов', desc: 'Оружие, броня, аксессуары, руны, ивентовые предметы', url: 'items_base.html', tags: 'предметы оружие броня экипировка руны аксессуары артефакты амулеты кольца' },
+    { title: 'База мобов', desc: 'Мобы, NPC и объекты — имя, уровень, тип, отношение', url: 'mobs_base.html', tags: 'мобы монстры npc враги боссы элита' },
     { title: 'Калькулятор характеристик', desc: 'Расчёт характеристик, брони и урона персонажа', url: 'stats_calc.html', tags: 'статы характеристики броня урон атака защита резисты' },
     { title: 'Зов Глубин', desc: 'Ивент май 2026 — жемчужины, репутация, апгрейды', url: 'zov_glubin/glubin_calc.html', tags: 'зов глубин ивент жемчужины репутация апгрейд май' },
     { title: 'Месяц цветущего хмеля', desc: 'Ивент — хмель, золотой клевер, монеты леприкона', url: 'leprecon/hmeli_calc.html', tags: 'хмель леприкон клевер ивент монеты' },

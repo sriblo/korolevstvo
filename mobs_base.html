@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>База мобов — Королевство</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:      #d4a843;
+  --gold-l:    #f5d878;
+  --gold-d:    #a07d2b;
+  --gold-tint: 212,168,67;
+  --bg:  #0b0907;
+  --bg2: #120e09;
+  --bg3: #1a160f;
+  --bg4: #241d12;
+  --line:  rgba(var(--gold-tint),.09);
+  --line2: rgba(var(--gold-tint),.18);
+  --txt:  #ece4cf;
+  --txt2: #a99775;
+  --txt3: #6c5d44;
+  --green:#8ab860;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans:  'Inter', system-ui, sans-serif;
+  --top-h: 60px;
+  --sidebar-w: 252px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+html,body{min-height:100%;background:var(--bg);color:var(--txt);font-family:var(--sans);font-size:14px;-webkit-font-smoothing:antialiased}
+body{overflow-x:hidden;max-width:100%}
+body{
+  background:
+    radial-gradient(ellipse 70% 50% at 18% -8%, rgba(var(--gold-tint),.10), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 100% 2%, rgba(80,30,15,.16), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+/* ── TOP NAV (injected by nav.js) ── */
+.top{position:fixed;top:0;left:0;right:0;height:var(--top-h);z-index:100;
+  background:rgba(11,9,7,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;padding:0 24px;gap:16px}
+
+/* ── LAYOUT ── */
+.shell{display:flex;padding-top:var(--top-h);min-height:100vh}
+
+/* ── SIDEBAR ── */
+nav.sidebar{
+  width:var(--sidebar-w);flex-shrink:0;
+  position:sticky;top:var(--top-h);height:calc(100vh - var(--top-h));
+  overflow-y:auto;overflow-x:hidden;
+  border-right:1px solid var(--line);
+  padding:12px 0 40px;background:var(--bg2);
+}
+nav.sidebar::-webkit-scrollbar{width:5px}
+nav.sidebar::-webkit-scrollbar-track{background:transparent}
+nav.sidebar::-webkit-scrollbar-thumb{background:rgba(var(--gold-tint),.16);border-radius:3px}
+nav.sidebar::-webkit-scrollbar-thumb:hover{background:rgba(var(--gold-tint),.28)}
+
+.sb-search{padding:10px 12px 8px}
+.sb-search input{
+  width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--line2);
+  background:var(--bg3);color:var(--txt);font-family:var(--sans);font-size:13px;outline:none;
+}
+.sb-search input::placeholder{color:var(--txt3)}
+.sb-search input:focus{border-color:var(--gold-d);box-shadow:0 0 0 3px rgba(var(--gold-tint),.10)}
+
+.sb-label{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--txt3);
+  text-transform:uppercase;padding:12px 16px 4px}
+.sb-divider{height:1px;background:var(--line);margin:6px 14px}
+
+.sb-item{
+  display:flex;align-items:center;gap:8px;padding:7px 14px 7px 16px;
+  cursor:pointer;color:var(--txt2);font-size:13px;
+  border-left:2px solid transparent;transition:background .12s,color .12s;
+}
+.sb-item:hover{background:var(--bg3);color:var(--txt)}
+.sb-item.on{background:linear-gradient(90deg,rgba(var(--gold-tint),.07),transparent);
+  color:var(--gold-l);border-left-color:var(--gold)}
+.sb-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ── CONTENT ── */
+.content{flex:1;padding:28px 32px 60px;min-width:0}
+
+.c-title{font-family:var(--serif);font-size:30px;font-weight:500;letter-spacing:-.02em;
+  margin-bottom:6px;line-height:1.1}
+.c-sub{color:var(--txt2);font-size:13px;margin-bottom:20px}
+
+/* ── MOB GRID ── */
+.mob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:4px}
+
+.mob-card{
+  background:var(--bg2);border:1px solid var(--line);border-radius:10px;
+  padding:12px;cursor:default;transition:background .12s,border-color .15s;
+  position:relative;
+}
+.mob-card:hover{background:var(--bg3);border-color:var(--line2)}
+
+.mob-card.r-enemy  {border-left:3px solid #c04040}
+.mob-card.r-friend {border-left:3px solid #60a060}
+.mob-card.r-neutral{border-left:3px solid #666}
+
+.mob-name{font-size:13px;font-weight:500;color:var(--txt);line-height:1.3;
+  margin-bottom:6px;overflow-wrap:break-word;word-break:normal}
+
+.mob-level{font-size:11px;color:var(--txt3);margin-bottom:5px}
+.mob-level b{color:var(--gold);font-weight:700}
+
+.mob-id{font-size:10px;font-family:monospace;color:var(--txt3);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:6px}
+
+.mob-badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+
+.badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600}
+.b-mob         {background:rgba(192,64,64,.15);color:#e07070}
+.b-npc         {background:rgba(96,160,96,.15);color:#80c080}
+.b-active_object{background:rgba(96,140,200,.15);color:#90b8e8}
+.b-elite       {background:rgba(var(--gold-tint),.15);color:var(--gold-l)}
+.b-boss        {background:rgba(200,80,200,.15);color:#e090e0}
+
+.empty-state{color:var(--txt3);padding:60px 0;text-align:center;font-size:15px}
+
+/* ── TOOLTIP ── */
+#tt{position:fixed;z-index:999;pointer-events:none;
+  background:var(--bg2);border:1px solid var(--line2);border-radius:10px;
+  padding:12px 14px;width:240px;box-shadow:0 8px 32px rgba(0,0,0,.5);
+  font-size:13px;display:none}
+.tt-name{font-family:var(--serif);font-size:16px;font-weight:500;margin-bottom:8px;line-height:1.2}
+.tt-row{display:flex;justify-content:space-between;gap:8px;padding:2px 0;
+  border-bottom:1px solid var(--line);font-size:12px}
+.tt-row:last-child{border-bottom:none}
+.tt-key{color:var(--txt3)}
+.tt-val{color:var(--txt);text-align:right;font-family:monospace;font-size:11px}
+
+/* ── MOBILE ── */
+@media(max-width:760px){
+  .shell{flex-direction:column}
+  nav.sidebar{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--line)}
+  .content{padding:16px 14px 40px}
+  .mob-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+  .c-title{font-size:22px}
+}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+
+<div class="shell">
+  <!-- ── SIDEBAR ── -->
+  <nav class="sidebar">
+    <div class="sb-search">
+      <input type="text" id="sb-search-input" placeholder="Поиск по имени или ID…"
+        oninput="onSearch(this.value)" autocomplete="off">
+    </div>
+
+    <div class="sb-divider"></div>
+    <div class="sb-label">Отношение</div>
+    <div class="sb-item" data-filter="relation" data-val="" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:var(--txt3)"></span>Все
+    </div>
+    <div class="sb-item" data-filter="relation" data-val="enemy" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:#c04040"></span>Враги
+    </div>
+    <div class="sb-item" data-filter="relation" data-val="friend" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:#60a060"></span>Союзники
+    </div>
+    <div class="sb-item" data-filter="relation" data-val="neutral" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:#888"></span>Нейтральные
+    </div>
+
+    <div class="sb-divider"></div>
+    <div class="sb-label">Тип</div>
+    <div class="sb-item" data-filter="class" data-val="" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:var(--txt3)"></span>Все типы
+    </div>
+    <div class="sb-item" data-filter="class" data-val="mob" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:#e07070"></span>Мобы
+    </div>
+    <div class="sb-item" data-filter="class" data-val="npc" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:#80c080"></span>NPC
+    </div>
+    <div class="sb-item" data-filter="class" data-val="active_object" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:#90b8e8"></span>Объекты
+    </div>
+
+    <div class="sb-divider"></div>
+    <div class="sb-label">Элитность</div>
+    <div class="sb-item" data-filter="elite" data-val="" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:var(--txt3)"></span>Все
+    </div>
+    <div class="sb-item" data-filter="elite" data-val="boss" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:#e090e0"></span>Боссы
+    </div>
+    <div class="sb-item" data-filter="elite" data-val="elite" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:var(--gold)"></span>Элита
+    </div>
+    <div class="sb-item" data-filter="elite" data-val="base" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:var(--txt3)"></span>Обычные
+    </div>
+  </nav>
+
+  <!-- ── CONTENT ── -->
+  <div class="content" id="content">
+    <div class="empty-state">Загрузка базы мобов…</div>
+  </div>
+</div>
+
+<div id="tt"></div>
+
+<script>
+const MOBS_URL = 'https://sriblo.github.io/Korolevstvo-Calculator/game_data/game_mobs.json';
+
+let _allMobs = null;
+let _filters = { relation: '', class: '', elite: '' };
+let _query = '';
+let _visibleMobs = [];
+
+async function loadMobs() {
+  if (_allMobs) return _allMobs;
+  const r = await fetch(MOBS_URL);
+  _allMobs = await r.json();
+  return _allMobs;
+}
+
+function setFilter(el) {
+  const filter = el.dataset.filter;
+  const val = el.dataset.val;
+  _filters[filter] = val;
+  document.querySelectorAll(`.sb-item[data-filter="${filter}"]`).forEach(e => e.classList.remove('on'));
+  el.classList.add('on');
+  renderMobs();
+}
+
+function onSearch(q) {
+  _query = q.trim().toLowerCase();
+  renderMobs();
+}
+
+async function renderMobs() {
+  const c = document.getElementById('content');
+  const all = await loadMobs();
+  const q = _query;
+
+  let filtered = all.filter(m => {
+    if (_filters.relation && m.relation !== _filters.relation) return false;
+    if (_filters.class && m.class !== _filters.class) return false;
+    if (_filters.elite) {
+      if (_filters.elite === 'base' && m.elite !== 'base' && m.elite != null) return false;
+      if (_filters.elite === 'elite' && m.elite !== 'elite') return false;
+      if (_filters.elite === 'boss' && m.elite !== 'boss') return false;
+    }
+    if (q && !m.name.toLowerCase().includes(q) && !m.id.includes(q)) return false;
+    return true;
+  });
+
+  _visibleMobs = filtered;
+
+  if (!filtered.length) {
+    c.innerHTML = `<div class="c-title">Мобы</div><div class="c-sub">Ничего не найдено</div>`;
+    return;
+  }
+
+  let html = `<div class="c-title">База мобов</div>
+    <div class="c-sub">${filtered.length} записей</div>
+    <div class="mob-grid">`;
+
+  filtered.forEach((m, idx) => { html += mobCard(m, idx); });
+  html += `</div>`;
+  c.innerHTML = html;
+}
+
+function mobCard(m, idx) {
+  const rel = m.relation || '';
+  const relClass = rel ? `r-${rel}` : '';
+
+  const eliteBadge = m.elite === 'boss' ? `<span class="badge b-boss">Босс</span>`
+    : m.elite === 'elite' ? `<span class="badge b-elite">Элита</span>` : '';
+
+  const classBadge = m.class === 'mob' ? `<span class="badge b-mob">Моб</span>`
+    : m.class === 'npc' ? `<span class="badge b-npc">NPC</span>`
+    : m.class === 'active_object' ? `<span class="badge b-active_object">Объект</span>` : '';
+
+  const lvl = m.level != null ? `<div class="mob-level">Уровень <b>${m.level}</b></div>` : '';
+
+  return `<div class="mob-card ${relClass}" data-idx="${idx}"
+    onmouseenter="ttShow(${idx},event)" onmousemove="ttMove(event)" onmouseleave="ttHide()">
+    <div class="mob-name">${m.name || m.id}</div>
+    ${lvl}
+    <div class="mob-badges">${classBadge}${eliteBadge}</div>
+    <div class="mob-id">${m.id}</div>
+  </div>`;
+}
+
+function ttShow(idx, e) {
+  const m = _visibleMobs[idx];
+  if (!m) return;
+  const t = document.getElementById('tt');
+
+  const relRu = { enemy:'Враг', friend:'Союзник', neutral:'Нейтральный' };
+  const eliteRu = { base:'Обычный', elite:'Элита', boss:'Босс' };
+  const clsRu = { mob:'Моб', npc:'NPC', active_object:'Объект', player:'Игрок' };
+
+  let rows = '';
+  if (m.level != null)    rows += row('Уровень', m.level);
+  if (m.class)            rows += row('Тип', clsRu[m.class] || m.class);
+  if (m.relation)         rows += row('Отношение', relRu[m.relation] || m.relation);
+  if (m.elite)            rows += row('Элитность', eliteRu[m.elite] || m.elite);
+  if (m.race)             rows += row('Раса', m.race);
+  if (m.set)              rows += row('Сет', m.set);
+  if (m.drop_set)         rows += row('Дроп-сет', m.drop_set);
+
+  t.innerHTML = `<div class="tt-name">${m.name || m.id}</div>
+    <div class="tt-row"><span class="tt-key" style="font-family:monospace;font-size:10px">${m.id}</span></div>
+    ${rows}`;
+  t.style.display = 'block';
+  ttMove(e);
+}
+
+function row(k, v) {
+  return `<div class="tt-row"><span class="tt-key">${k}</span><span class="tt-val">${v}</span></div>`;
+}
+
+function ttMove(e) {
+  const t = document.getElementById('tt');
+  let x = e.clientX + 16, y = e.clientY + 12;
+  if (x + 260 > window.innerWidth)  x = e.clientX - 260;
+  if (y + t.offsetHeight > window.innerHeight) y = e.clientY - t.offsetHeight - 8;
+  t.style.left = x + 'px';
+  t.style.top  = y + 'px';
+}
+
+function ttHide() { document.getElementById('tt').style.display = 'none'; }
+
+// Инициализация
+renderMobs();
+</script>
+</body>
+</html>
