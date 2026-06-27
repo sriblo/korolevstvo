@@ -99,9 +99,6 @@ nav.sidebar::-webkit-scrollbar-thumb:hover{background:rgba(var(--gold-tint),.28)
   display:flex;align-items:center;gap:10px;
 }
 .mob-card:hover{background:var(--bg3);border-color:var(--line2)}
-.mob-card.r-enemy  {border-left:3px solid #c04040}
-.mob-card.r-friend {border-left:3px solid #60a060}
-.mob-card.r-neutral{border-left:3px solid #555}
 
 .mob-avatar{flex-shrink:0;outline:1px solid var(--line2);image-rendering:pixelated}
 .mob-avatar-placeholder{width:44px;height:44px;flex-shrink:0;outline:1px solid var(--line2);
@@ -112,6 +109,7 @@ nav.sidebar::-webkit-scrollbar-thumb:hover{background:rgba(var(--gold-tint),.28)
   overflow-wrap:break-word;word-break:normal}
 .mob-level{font-size:11px;color:var(--txt3);margin-top:2px}
 .mob-level b{color:var(--gold);font-weight:600}
+.mob-type{font-size:10px;color:var(--txt3);margin-top:2px}
 
 .empty-state{color:var(--txt3);padding:60px 0;text-align:center;font-size:15px}
 
@@ -251,7 +249,9 @@ async function renderMobs() {
 
 function mobCard(m, idx) {
   const relClass = m.relation ? `r-${m.relation}` : '';
+  const clsRu = { mob:'Моб', npc:'NPC', active_object:'Объект', player:'Игрок' };
   const lvl = m.level != null ? `<div class="mob-level">Ур. <b>${m.level}</b></div>` : '';
+  const typ = m.class ? `<div class="mob-type">${clsRu[m.class] || m.class}</div>` : '';
   const avatarHtml = m.avatar
     ? `<img class="mob-avatar" src="mob_avatars/${m.avatar}.png" alt="" onerror="this.outerHTML='<div class=mob-avatar-placeholder>?</div>'">`
     : `<div class="mob-avatar-placeholder">?</div>`;
@@ -262,7 +262,7 @@ function mobCard(m, idx) {
     ${avatarHtml}
     <div class="mob-info">
       <div class="mob-name">${m.name || m.id}</div>
-      ${lvl}
+      ${lvl}${typ}
     </div>
   </div>`;
 }
