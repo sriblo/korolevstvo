@@ -195,19 +195,8 @@ nav.sidebar::-webkit-scrollbar-thumb:hover{background:rgba(var(--gold-tint),.28)
     </div>
 
     <div class="sb-divider"></div>
-    <div class="sb-label">Элитность</div>
-    <div class="sb-item" data-filter="elite" data-val="" onclick="setFilter(this)">
-      <span class="sb-dot" style="background:var(--txt3)"></span>Все
-    </div>
-    <div class="sb-item" data-filter="elite" data-val="boss" onclick="setFilter(this)">
-      <span class="sb-dot" style="background:#e090e0"></span>Боссы
-    </div>
-    <div class="sb-item" data-filter="elite" data-val="elite" onclick="setFilter(this)">
-      <span class="sb-dot" style="background:var(--gold)"></span>Элита
-    </div>
-    <div class="sb-item" data-filter="elite" data-val="base" onclick="setFilter(this)">
-      <span class="sb-dot" style="background:var(--txt3)"></span>Обычные
-    </div>
+    <div class="sb-label">Уровень</div>
+    <div id="sb-levels"></div>
   </nav>
 
   <!-- ── CONTENT ── -->
@@ -222,7 +211,7 @@ nav.sidebar::-webkit-scrollbar-thumb:hover{background:rgba(var(--gold-tint),.28)
 const MOBS_URL = 'https://sriblo.github.io/Korolevstvo-Calculator/game_data/game_mobs.json';
 
 let _allMobs = null;
-let _filters = { relation: '', class: '', elite: '' };
+let _filters = { relation: '', class: '', level: '' };
 let _query = '';
 let _visibleMobs = [];
 
@@ -255,11 +244,7 @@ async function renderMobs() {
   let filtered = all.filter(m => {
     if (_filters.relation && m.relation !== _filters.relation) return false;
     if (_filters.class && m.class !== _filters.class) return false;
-    if (_filters.elite) {
-      if (_filters.elite === 'base' && m.elite !== 'base' && m.elite != null) return false;
-      if (_filters.elite === 'elite' && m.elite !== 'elite') return false;
-      if (_filters.elite === 'boss' && m.elite !== 'boss') return false;
-    }
+    if (_filters.level && String(m.level) !== _filters.level) return false;
     if (q && !m.name.toLowerCase().includes(q) && !m.id.includes(q)) return false;
     return true;
   });
@@ -320,10 +305,8 @@ function ttShow(idx, e) {
   if (m.level != null)    rows += row('Уровень', m.level);
   if (m.class)            rows += row('Тип', clsRu[m.class] || m.class);
   if (m.relation)         rows += row('Отношение', relRu[m.relation] || m.relation);
-  if (m.elite)            rows += row('Элитность', eliteRu[m.elite] || m.elite);
   if (m.race)             rows += row('Раса', m.race);
   if (m.set)              rows += row('Сет', m.set);
-  if (m.drop_set)         rows += row('Дроп-сет', m.drop_set);
 
   t.innerHTML = `<div class="tt-name">${m.name || m.id}</div>
     <div class="tt-row"><span class="tt-key" style="font-family:monospace;font-size:10px">${m.id}</span></div>
@@ -347,8 +330,22 @@ function ttMove(e) {
 
 function ttHide() { document.getElementById('tt').style.display = 'none'; }
 
+async function buildLevelFilter() {
+  const all = await loadMobs();
+  const levels = [...new Set(all.map(m => m.level).filter(l => l != null))].sort((a,b) => a-b);
+  const container = document.getElementById('sb-levels');
+  let html = `<div class="sb-item on" data-filter="level" data-val="" onclick="setFilter(this)">
+    <span class="sb-dot" style="background:var(--txt3)"></span>Все уровни</div>`;
+  levels.forEach(l => {
+    html += `<div class="sb-item" data-filter="level" data-val="${l}" onclick="setFilter(this)">
+      <span class="sb-dot" style="background:var(--gold-d)"></span>Уровень ${l}</div>`;
+  });
+  container.innerHTML = html;
+}
+
 // Инициализация
 renderMobs();
+buildLevelFilter();
 </script>
 </body>
 </html>
