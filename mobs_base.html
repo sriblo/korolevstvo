@@ -91,43 +91,27 @@ nav.sidebar::-webkit-scrollbar-thumb:hover{background:rgba(var(--gold-tint),.28)
 .c-sub{color:var(--txt2);font-size:13px;margin-bottom:20px}
 
 /* ── MOB GRID ── */
-.mob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px;margin-top:4px}
+.mob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-top:4px}
 
 .mob-card{
-  background:var(--bg2);border:1px solid var(--line);border-radius:10px;
-  padding:10px;cursor:default;transition:background .12s,border-color .15s;
-  position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;
+  background:var(--bg2);border:1px solid var(--line);border-radius:8px;
+  padding:8px 10px;cursor:default;transition:background .12s,border-color .15s;
+  display:flex;align-items:center;gap:10px;
 }
 .mob-card:hover{background:var(--bg3);border-color:var(--line2)}
+.mob-card.r-enemy  {border-left:3px solid #c04040}
+.mob-card.r-friend {border-left:3px solid #60a060}
+.mob-card.r-neutral{border-left:3px solid #555}
 
-.mob-card.r-enemy  {border-top:3px solid #c04040}
-.mob-card.r-friend {border-top:3px solid #60a060}
-.mob-card.r-neutral{border-top:3px solid #666}
+.mob-avatar{flex-shrink:0;outline:1px solid var(--line2);image-rendering:pixelated}
+.mob-avatar-placeholder{width:44px;height:44px;flex-shrink:0;outline:1px solid var(--line2);
+  display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--txt3)}
 
-.mob-avatar{width:44px;height:44px;border-radius:6px;margin-bottom:7px;
-  background:var(--bg4);border:1px solid var(--line2);flex-shrink:0;
-  image-rendering:pixelated}
-.mob-avatar-placeholder{width:44px;height:44px;border-radius:6px;margin-bottom:7px;
-  background:var(--bg4);border:1px solid var(--line2);display:flex;align-items:center;
-  justify-content:center;font-size:20px;color:var(--txt3)}
-
-.mob-name{font-size:12px;font-weight:500;color:var(--txt);line-height:1.3;
-  margin-bottom:5px;overflow-wrap:break-word;word-break:normal}
-
-.mob-level{font-size:11px;color:var(--txt3);margin-bottom:4px}
-.mob-level b{color:var(--gold);font-weight:700}
-
-.mob-id{font-size:10px;font-family:monospace;color:var(--txt3);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;margin-top:5px}
-
-.mob-badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;justify-content:center}
-
-.badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600}
-.b-mob         {background:rgba(192,64,64,.15);color:#e07070}
-.b-npc         {background:rgba(96,160,96,.15);color:#80c080}
-.b-active_object{background:rgba(96,140,200,.15);color:#90b8e8}
-.b-elite       {background:rgba(var(--gold-tint),.15);color:var(--gold-l)}
-.b-boss        {background:rgba(200,80,200,.15);color:#e090e0}
+.mob-info{flex:1;min-width:0}
+.mob-name{font-size:13px;font-weight:500;color:var(--txt);line-height:1.3;
+  overflow-wrap:break-word;word-break:normal}
+.mob-level{font-size:11px;color:var(--txt3);margin-top:2px}
+.mob-level b{color:var(--gold);font-weight:600}
 
 .empty-state{color:var(--txt3);padding:60px 0;text-align:center;font-size:15px}
 
@@ -266,30 +250,25 @@ async function renderMobs() {
 }
 
 function mobCard(m, idx) {
-  const rel = m.relation || '';
-  const relClass = rel ? `r-${rel}` : '';
-
-  const eliteBadge = m.elite === 'boss' ? `<span class="badge b-boss">Босс</span>`
-    : m.elite === 'elite' ? `<span class="badge b-elite">Элита</span>` : '';
-
-  const classBadge = m.class === 'mob' ? `<span class="badge b-mob">Моб</span>`
-    : m.class === 'npc' ? `<span class="badge b-npc">NPC</span>`
-    : m.class === 'active_object' ? `<span class="badge b-active_object">Объект</span>` : '';
-
+  const relClass = m.relation ? `r-${m.relation}` : '';
   const lvl = m.level != null ? `<div class="mob-level">Ур. <b>${m.level}</b></div>` : '';
-
   const avatarHtml = m.avatar
     ? `<img class="mob-avatar" src="mob_avatars/${m.avatar}.png" alt="" onerror="this.outerHTML='<div class=mob-avatar-placeholder>?</div>'">`
     : `<div class="mob-avatar-placeholder">?</div>`;
 
   return `<div class="mob-card ${relClass}" data-idx="${idx}"
-    onmouseenter="ttShow(${idx},event)" onmousemove="ttMove(event)" onmouseleave="ttHide()">
+    onmouseenter="ttShow(${idx},event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"
+    ondblclick="copyMobId('${m.id}')" title="Двойной клик — скопировать ID">
     ${avatarHtml}
-    <div class="mob-name">${m.name || m.id}</div>
-    ${lvl}
-    <div class="mob-badges">${classBadge}${eliteBadge}</div>
-    <div class="mob-id">${m.id}</div>
+    <div class="mob-info">
+      <div class="mob-name">${m.name || m.id}</div>
+      ${lvl}
+    </div>
   </div>`;
+}
+
+function copyMobId(id) {
+  navigator.clipboard.writeText(id).catch(() => {});
 }
 
 function ttShow(idx, e) {
