@@ -642,8 +642,10 @@ async function renderMobs() {
 const CLS_RU = { mob:'Моб', npc:'NPC', active_object:'Объект', player:'Игрок' };
 
 function mobCard(m, idx) {
-  const REL_COLOR = { enemy:'#c04040', friend:'#60a060', neutral:'#666' };
-  const relBorder = `2px solid ${REL_COLOR[m.relation] || 'var(--line2)'}`;
+  const REL_COLOR = { enemy:'#c04040', friend:'#60a060', neutral:'#b8a000' };
+  const relBorder = m.class === 'active_object'
+    ? '2px solid var(--line2)'
+    : `2px solid ${REL_COLOR[m.relation] || 'var(--line2)'}`;
   const avatarHtml = m.avatar
     ? `<img class="ico-img" src="mob_avatars/${m.avatar}.png" alt="" style="width:44px;height:44px;image-rendering:pixelated;outline:${relBorder}" onerror="this.outerHTML='<div style=width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--txt3);outline:${relBorder}>?</div>'">`
     : `<div style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--txt3);outline:${relBorder}">?</div>`;
