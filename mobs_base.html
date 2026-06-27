@@ -576,6 +576,10 @@ a{color:inherit;text-decoration:none}
 <script>
 const MOBS_URL = 'https://sriblo.github.io/Korolevstvo-Calculator/game_data/game_mobs.json';
 
+const _tt = document.createElement('div');
+_tt.className = 'eq-tt';
+document.body.appendChild(_tt);
+
 let _allMobs = null;
 let _filters = { relation: '', class: '', level: '' };
 let _query = '';
@@ -641,15 +645,15 @@ function mobCard(m, idx) {
   const avatarHtml = m.avatar
     ? `<img class="ico-img" src="mob_avatars/${m.avatar}.png" alt="" onerror="this.style.opacity=0" style="width:44px;height:44px;image-rendering:pixelated">`
     : '';
-  const lvl = m.level != null ? `Ур. ${m.level}` : '';
-  const typ = CLS_RU[m.class] || '';
-  const sub = [lvl, typ].filter(Boolean).join(' · ');
+  const lvl = m.level != null ? `<span style="color:var(--gold)">Ур. ${m.level}</span>` : '';
+  const typ = CLS_RU[m.class] ? `<span style="color:var(--txt2)">${CLS_RU[m.class]}</span>` : '';
+  const sep = lvl && typ ? `<span style="color:var(--txt3)"> · </span>` : '';
   return `<div class="eq-card" data-idx="${idx}"
     onmouseenter="ttShow(${idx},event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"
     ondblclick="copyId('${m.id}')" title="Двойной клик — скопировать ID">
     <div class="rune-ico">${avatarHtml}</div>
     <div class="eq-slot-name">${m.name || m.id}</div>
-    ${sub ? `<div style="font-size:10px;color:var(--txt3);margin-top:2px">${sub}</div>` : ''}
+    ${(lvl || typ) ? `<div style="font-size:10px;margin-top:2px">${lvl}${sep}${typ}</div>` : ''}
   </div>`;
 }
 
@@ -658,44 +662,42 @@ function copyId(id) { navigator.clipboard.writeText(id).catch(() => {}); }
 function ttShow(idx, e) {
   const m = _visibleMobs[idx];
   if (!m) return;
-  const t = document.getElementById('item-tooltip');
   const REL = { enemy:'Враг', friend:'Союзник', neutral:'Нейтральный' };
 
   const avatarHtml = m.avatar
-    ? `<img src="mob_avatars/${m.avatar}.png" alt="" onerror="this.style.display='none'" style="width:44px;height:44px;image-rendering:pixelated;outline:1px solid var(--line2)">`
+    ? `<img src="mob_avatars/${m.avatar}.png" alt="" onerror="this.style.display='none'" style="width:44px;height:44px;image-rendering:pixelated;outline:1px solid var(--line2);flex-shrink:0">`
     : '';
 
   let rows = '';
-  const r = (k,v) => `<div class="tt-row"><span class="tt-stat-label">${k}</span><span class="tt-stat-val">${v}</span></div>`;
+  const r = (k,v) => `<div class="tt-row"><span class="tt-key">${k}</span><span class="tt-val">${v}</span></div>`;
   if (m.level != null) rows += r('Уровень', m.level);
   if (m.class)         rows += r('Тип', CLS_RU[m.class] || m.class);
   if (m.relation)      rows += r('Отношение', REL[m.relation] || m.relation);
   if (m.race)          rows += r('Раса', m.race);
   if (m.set)           rows += r('Сет', m.set);
 
-  t.innerHTML = `
-    <div class="tt-head" style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+  _tt.innerHTML = `
+    <div class="tt-head">
       ${avatarHtml}
       <div>
-        <div class="tt-item-name">${m.name || m.id}</div>
-        <div style="font-size:10px;font-family:monospace;color:var(--txt3);margin-top:3px">${m.id}</div>
+        <div class="tt-name">${m.name || m.id}</div>
+        <div class="tt-id">${m.id}</div>
       </div>
     </div>
     ${rows}`;
-  t.style.display = 'block';
+  _tt.classList.add('vis');
   ttMove(e);
 }
 
 function ttMove(e) {
-  const t = document.getElementById('item-tooltip');
   let x = e.clientX + 16, y = e.clientY + 12;
-  if (x + 260 > window.innerWidth) x = e.clientX - 260;
-  if (y + t.offsetHeight > window.innerHeight) y = e.clientY - t.offsetHeight - 8;
-  t.style.left = x + 'px';
-  t.style.top  = y + 'px';
+  if (x + 360 > window.innerWidth) x = e.clientX - 360;
+  if (y + _tt.offsetHeight > window.innerHeight) y = e.clientY - _tt.offsetHeight - 8;
+  _tt.style.left = x + 'px';
+  _tt.style.top  = y + 'px';
 }
 
-function ttHide() { document.getElementById('item-tooltip').style.display = 'none'; }
+function ttHide() { _tt.classList.remove('vis'); }
 
 async function buildLevelFilter() {
   const all = await loadMobs();
