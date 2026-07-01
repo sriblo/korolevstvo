@@ -307,7 +307,7 @@ a{color:inherit;text-decoration:none}
   position:fixed;z-index:300;pointer-events:none;display:none;
   background:var(--bg3);border:1px solid var(--line2);border-radius:10px;
   padding:13px 15px;min-width:210px;max-width:340px;width:max-content;
-  max-height:calc(100vh - 20px);overflow-y:auto;
+
   box-shadow:0 14px 40px rgba(0,0,0,.6);
 }
 .tt-desc,.tt-action{max-width:316px;word-wrap:break-word;white-space:pre-wrap}
@@ -1038,9 +1038,13 @@ async function renderFood(c) {
 }
 
 function ttMove(e) {
-  const x = e.clientX + 14, y = e.clientY + 14;
-  _tt.style.left = Math.min(x, window.innerWidth  - _tt.offsetWidth  - 8) + 'px';
-  _tt.style.top  = Math.min(y, window.innerHeight - _tt.offsetHeight - 8) + 'px';
+  const tw = _tt.offsetWidth, th = _tt.offsetHeight;
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const x = Math.min(e.clientX + 14, vw - tw - 8);
+  const yBelow = e.clientY + 14;
+  const y = (yBelow + th + 8 > vh) ? e.clientY - th - 8 : yBelow;
+  _tt.style.left = Math.max(8, x) + 'px';
+  _tt.style.top  = Math.max(8, y) + 'px';
 }
 function ttHide() { _tt.classList.remove('vis'); }
 
