@@ -171,6 +171,8 @@
   var CATS = [
     { id:'all',   name:'Все гайды' },
     { id:'event', name:'Ивенты' },
+    { id:'pets',  name:'Питомцы' },
+    { id:'fair',  name:'Ярмарка' },
     { id:'loc',   name:'Локации и подземелья' },
     { id:'build', name:'Классы и билды' },
     { id:'rep',   name:'Репутации и фракции' },
@@ -186,9 +188,13 @@
   var emptyEl = document.getElementById('empty');
   var resT = document.getElementById('resT'), resC = document.getElementById('resC');
 
-  GUIDES.forEach(function(g){ var c=CATS.filter(function(x){return x.id===g.cat})[0]; g.catName=c?c.name:''; });
+  function inCat(g, id){ var c=Array.isArray(g.cat)?g.cat:[g.cat]; return c.indexOf(id)!==-1; }
+  GUIDES.forEach(function(g){
+    var cats=Array.isArray(g.cat)?g.cat:[g.cat];
+    g.catName=cats.map(function(id){ var c=CATS.filter(function(x){return x.id===id})[0]; return c?c.name:''; }).join(', ');
+  });
 
-  function countFor(id){ return id==='all' ? GUIDES.length : GUIDES.filter(function(g){return g.cat===id}).length; }
+  function countFor(id){ return id==='all' ? GUIDES.length : GUIDES.filter(function(g){return inCat(g,id)}).length; }
 
   function renderCats(){
     catsEl.innerHTML = CATS.map(function(c){
@@ -202,7 +208,7 @@
   }
 
   function matches(g){
-    var okCat = active==='all' || g.cat===active;
+    var okCat = active==='all' || inCat(g,active);
     var q = query.trim().toLowerCase();
     var okQ = !q || (g.title+' '+g.desc+' '+(g.tags||'')+' '+g.catName).toLowerCase().indexOf(q)!==-1;
     return okCat && okQ;
