@@ -233,7 +233,7 @@ function gicoHtml(visual, size, dataId, quality) {
   const src = iconSrc(visual);
   const attr = dataId ? ` data-id="${dataId}"` : '';
   return `<span class="gico sz-${size}"${attr} onmouseenter="ttShow(this,event)" onmousemove="ttMove(event)" onmouseleave="ttHide()">` +
-    `<img class="base" src="${src}" alt="" onerror="this.src='../icons/item_default.jpg'">` +
+    `<img class="base" src="${src}" alt="" onerror="if(!this._t){this._t=1;this.src=this.src.replace('.jpg','.png')}else{this.src='../icons/item_default.jpg'}">` +
     `<img class="fr" src="${frameSrc(quality)}" alt="" onerror="this.style.display='none'">` +
     `</span>`;
 }
