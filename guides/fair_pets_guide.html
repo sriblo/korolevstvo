@@ -428,7 +428,7 @@ function ttBuild(id) {
   }
 
   let html = `<div class="tt-head">
-    <div class="tt-ico"><img class="base" src="${icoSrc}" alt="" onerror="this.src='../icons/item_default.jpg'"><img class="fr" src="${frameSrc((item||{}).quality)}" alt="" onerror="this.style.display='none'"></div>
+    <div class="tt-ico"><img class="base" src="${icoSrc}" alt="" onerror="if(!this._t){this._t=1;this.src=this.src.replace('.jpg','.png')}else{this.src='../icons/item_default.jpg'}"><img class="fr" src="${frameSrc((item||{}).quality)}" alt="" onerror="this.style.display='none'"></div>
     <div><div class="tt-name">${name}</div></div>
   </div>`;
   if (desc) html += `<div class="tt-sep"></div><div class="tt-desc">${desc.replace(/\n/g,' ').slice(0,200)}${desc.length>200?'…':''}</div>`;
