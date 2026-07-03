@@ -144,7 +144,7 @@ a{color:inherit;text-decoration:none}
       <span style="color:var(--txt)">Ярмарочные питомцы</span>
     </div>
     <div class="eyebrow">Гайд</div>
-    <h1 class="h1">Ярмарочные <em>питомцы</em></h1>
+    <h1 class="h1">Ярмарочные питомцы</h1>
     <p class="lede">Как получить уникальных питомцев через Карты месяцев — и что даёт каждый из двенадцати.</p>
   </div>
 </section>
@@ -287,7 +287,7 @@ function petSectionHtml(p, item, loc) {
   const ico = gicoHtml(item.visual, 'lg', p.id, item.quality);
 
   return `
-<h2 class="h2" id="${p.anchor}"><span class="s">${p.month}</span> ${p.petName}</h2>
+<h2 class="h2" id="${p.anchor}">${p.month}. ${p.petName}</h2>
 <hr class="h2-rule">
 <div class="item-row">
   ${ico}
@@ -354,11 +354,10 @@ function ttBuild(id) {
 
   let html = `<div class="tt-head">
     <div class="tt-ico"><img class="base" src="${icoSrc}" alt="" onerror="this.src='../icons/item_default.jpg'"><img class="fr" src="${frameSrc((item||{}).quality)}" alt="" onerror="this.style.display='none'"></div>
-    <div><div class="tt-name">${name}</div>${kind ? `<div class="tt-kind">${kind}</div>` : ''}</div>
+    <div><div class="tt-name">${name}</div></div>
   </div>`;
   if (desc) html += `<div class="tt-sep"></div><div class="tt-desc">${desc.replace(/\n/g,' ').slice(0,200)}${desc.length>200?'…':''}</div>`;
   if (actionText) html += `<div class="tt-sep"></div><div class="tt-action">${actionText}</div>`;
-  html += `<div class="tt-id">${id}</div>`;
   return html;
 }
 
