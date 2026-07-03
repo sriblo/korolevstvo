@@ -109855,7 +109855,11 @@
     "visual": "dragons_buff",
     "price": 0,
     "ruby_price": null,
-    "durability": 0
+    "durability": 0,
+    "stats": {
+      "change_damage_sent_percent": 25.0,
+      "duration": 10
+    }
   },
   {
     "id": "spell_fair_king_salamandr_pre_1",

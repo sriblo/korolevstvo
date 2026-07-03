@@ -332,6 +332,24 @@ const PET_EXTRA = {
 </div>
 ${caldron ? `<div class="note"><div class="note-k">Земли Мёртвых и Арены Бессмертных</div><p>${caldron}</p></div>` : ''}`;
   },
+  apr(items, locale) {
+    const petStats = (items['fair_king_salamandr'] || {}).stats || {};
+    const spell1  = petStats.spell_1 || '';
+    const caldron = petStats.spell_caldron || '';
+
+    const effId  = 'spell_fair_king_salamandr_pre';
+    const effIt  = items[effId] || {};
+    const effLoc = locale[effId] || {};
+
+    return `<div class="note">
+  <div class="note-k">Особая способность</div>
+  <p>${spell1}</p>
+  <div class="ico-row">
+    <div class="ico-cell">${gicoHtml(effIt.visual,'lg',effId,effIt.quality)}<span class="ico-label">${effLoc.name || ''}</span></div>
+  </div>
+</div>
+${caldron ? `<div class="note"><div class="note-k">Земли Мёртвых и Арены Бессмертных</div><p>${caldron}</p></div>` : ''}`;
+  },
   may(items, locale) {
     const petStats = (items['fair_cave_dragon'] || {}).stats || {};
     const spellAllies = petStats.spell_caldron || '';
