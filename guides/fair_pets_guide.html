@@ -332,6 +332,33 @@ const PET_EXTRA = {
 </div>
 ${caldron ? `<div class="note"><div class="note-k">Земли Мёртвых и Арены Бессмертных</div><p>${caldron}</p></div>` : ''}`;
   },
+  may(items, locale) {
+    const petStats = (items['fair_cave_dragon'] || {}).stats || {};
+    const spellAllies = petStats.spell_caldron || '';
+    const spellCaldron = petStats.spell_caldron_1 || '';
+
+    const buffId  = 'spell_fair_cave_dragon_buff';
+    const aoeId   = 'spell_fair_cave_dragon_caldron_aoe';
+    const buffIt  = items[buffId] || {};
+    const aoeIt   = items[aoeId] || {};
+    const buffLoc = locale[buffId] || {};
+    const aoeLoc  = locale[aoeId] || {};
+
+    return `<div class="note">
+  <div class="note-k">Особая способность</div>
+  <p>${spellAllies}</p>
+  <div class="ico-row">
+    <div class="ico-cell">${gicoHtml(buffIt.visual,'lg',buffId,buffIt.quality)}<span class="ico-label">${buffLoc.name || ''}</span></div>
+  </div>
+</div>
+<div class="note">
+  <div class="note-k">Земли Мёртвых и Арены Бессмертных</div>
+  <p>${spellCaldron}</p>
+  <div class="ico-row">
+    <div class="ico-cell">${gicoHtml(aoeIt.visual,'lg',aoeId,aoeIt.quality)}<span class="ico-label">${aoeLoc.name || ''}</span></div>
+  </div>
+</div>`;
+  },
   mar(items, locale) {
     const petStats = (items['fair_dragon'] || {}).stats || {};
     const spell1   = petStats.spell_1 || '';
