@@ -332,6 +332,32 @@ const PET_EXTRA = {
 </div>
 ${caldron ? `<div class="note"><div class="note-k">Земли Мёртвых и Арены Бессмертных</div><p>${caldron}</p></div>` : ''}`;
   },
+  feb(items, locale) {
+    const petStats = (items['fair_momo'] || {}).stats || {};
+    const spell1   = petStats.spell_1 || '';
+    const caldron  = petStats.spell_caldron || '';
+
+    const foodId  = 'fair_momo_food_original';
+    const defId   = 'fair_momo_food_original_defence';
+    const foodIt  = items[foodId] || {};
+    const defIt   = items[defId] || {};
+    const foodLoc = locale[foodId] || {};
+    const defLoc  = locale[defId] || {};
+
+    const foodStats = foodIt.stats || {};
+    const foodAction = (foodLoc.action || '').replace(/#([^#]+)#/g, (m,k) => foodStats[k] != null ? foodStats[k] : m).replace(/<br\s*\/?>/gi,'\n');
+
+    return `<div class="note">
+  <div class="note-k">Особая способность</div>
+  <p>${spell1}</p>
+  <p>Найденный пирожок можно использовать — он моментально восстановит здоровье и даст щит от урона:</p>
+  <div class="ico-row">
+    <div class="ico-cell">${gicoHtml(foodIt.visual,'lg',foodId,foodIt.quality)}<span class="ico-label">${foodLoc.name || 'Пирожок'}</span></div>
+    <div class="ico-cell">${gicoHtml(defIt.visual,'lg',defId,defIt.quality)}<span class="ico-label">Эффект щита</span></div>
+  </div>
+</div>
+${caldron ? `<div class="note"><div class="note-k">Земли Мёртвых и Арены Бессмертных</div><p>${caldron}</p></div>` : ''}`;
+  },
 };
 
 function overviewHtml(items, locale) {
