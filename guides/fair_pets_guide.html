@@ -224,14 +224,18 @@ function iconSrc(visual) {
   return `../icons/${visual}.${png.includes(visual) ? 'png' : 'jpg'}`;
 }
 
-function frameSrc() { return '../icons/frames/orange.png'; }
+const QUALITY_FRAME = { white:'border_none', green:'border_low', blue:'border_medium', purple:'border_high', orange:'border_special', red:'border_exclusive' };
+function frameSrc(quality) {
+  const name = QUALITY_FRAME[quality] || 'border_none';
+  return `../frames/${name}.png`;
+}
 
-function gicoHtml(visual, size, dataId) {
+function gicoHtml(visual, size, dataId, quality) {
   const src = iconSrc(visual);
   const attr = dataId ? ` data-id="${dataId}"` : '';
   return `<span class="gico sz-${size}"${attr} onmouseenter="ttShow(this,event)" onmousemove="ttMove(event)" onmouseleave="ttHide()">` +
     `<img class="base" src="${src}" alt="" onerror="this.src='../icons/item_default.jpg'">` +
-    `<img class="fr" src="${frameSrc()}" alt="" onerror="this.style.display='none'">` +
+    `<img class="fr" src="${frameSrc(quality)}" alt="" onerror="this.style.display='none'">` +
     `</span>`;
 }
 
@@ -282,7 +286,7 @@ function petSectionHtml(p, item, loc) {
   const stats = item.stats || {};
   const action = fillAction(loc.action || '', stats);
 
-  const ico = gicoHtml(item.visual, 'lg', p.id);
+  const ico = gicoHtml(item.visual, 'lg', p.id, item.quality);
 
   return `
 <h2 class="h2" id="${p.anchor}"><span class="s">${p.month}</span> ${p.petName}</h2>
@@ -308,8 +312,8 @@ function overviewHtml(items, locale) {
     const item = items[p.id] || {};
     const cardItem = items[p.cardId] || {};
     const petName = (locale[p.id] || {}).name || p.petName;
-    const cardIco = gicoHtml(`season_card_${p.cardNum}`, 'sm', p.cardId);
-    const petIco  = gicoHtml(item.visual, 'sm', p.id);
+    const cardIco = gicoHtml(`season_card_${p.cardNum}`, 'sm', p.cardId, cardItem.quality);
+    const petIco  = gicoHtml(item.visual, 'sm', p.id, item.quality);
     return `<tr>
       <td class="cnum">${p.num}</td>
       <td><div class="ccard">${cardIco} Карта ${p.cardName}</div></td>
@@ -344,7 +348,7 @@ function ttBuild(id) {
   const icoSrc = iconSrc((item || {}).visual);
 
   let html = `<div class="tt-head">
-    <div class="tt-ico"><img class="base" src="${icoSrc}" alt="" onerror="this.src='../icons/item_default.jpg'"><img class="fr" src="${frameSrc()}" alt="" onerror="this.style.display='none'"></div>
+    <div class="tt-ico"><img class="base" src="${icoSrc}" alt="" onerror="this.src='../icons/item_default.jpg'"><img class="fr" src="${frameSrc((item||{}).quality)}" alt="" onerror="this.style.display='none'"></div>
     <div><div class="tt-name">${name}</div><div class="tt-kind">Уникальный</div></div>
   </div>`;
   if (desc) html += `<div class="tt-sep"></div><div class="tt-desc">${desc.replace(/\n/g,' ').slice(0,200)}${desc.length>200?'…':''}</div>`;
