@@ -279,11 +279,10 @@ function caldronHtml(stats) {
   return `<div class="note"><div class="note-k">Земли Мёртвых и Арены Бессмертных</div>${texts}</div>`;
 }
 
-function petSectionHtml(p, item, loc) {
+function petSectionHtml(p, item, loc, skipSpecial = false) {
   const name  = loc.name || p.petName;
   const desc  = lore(loc.description || '');
   const stats = item.stats || {};
-  const action = fillAction(loc.action || '', stats);
 
   const ico = gicoHtml(item.visual, 'lg', p.id, item.quality);
 
@@ -300,12 +299,16 @@ function petSectionHtml(p, item, loc) {
   </div>
 </div>
 <table class="stattable"><tbody>${statRowsHtml(stats)}<tr><td class="sn">Длительность</td><td class="sv">30 мин</td></tr></tbody></table>
-${specialAbilityHtml(stats)}
-${caldronHtml(stats)}`;
+${skipSpecial ? '' : specialAbilityHtml(stats)}
+${skipSpecial ? '' : caldronHtml(stats)}`;
 }
 
 const PET_EXTRA = {
   jan(items, locale) {
+    const petStats = (items['fair_penguin'] || {}).stats || {};
+    const spell1 = petStats.spell_1 || '';
+    const caldron = petStats.spell_caldron || '';
+
     const dropLabels = ['1 эффект','2 эффекта','3 эффекта'];
     const drops = ['fair_penguin_lollipop_word_1','fair_penguin_lollipop_word_2','fair_penguin_lollipop_word_3']
       .map((id, i) => {
@@ -320,12 +323,14 @@ const PET_EXTRA = {
         return `<div class="ico-cell">${gicoHtml(it.visual,'lg',id,it.quality)}<span class="ico-label">${label}</span></div>`;
       }).join('');
     return `<div class="note">
-  <div class="note-k">Магические Леденцы</div>
+  <div class="note-k">Особая способность</div>
+  <p>${spell1}</p>
   <p>С монстров вашего уровня выпадают Магические Леденцы трёх видов — они различаются количеством случайных эффектов:</p>
   <div class="ico-row">${drops}</div>
   <p>При использовании леденец случайно применяет один, два или три из четырёх эффектов (10 мин):</p>
   <div class="ico-row">${effects}</div>
-</div>`;
+</div>
+${caldron ? `<div class="note"><div class="note-k">Земли Мёртвых и Арены Бессмертных</div><p>${caldron}</p></div>` : ''}`;
   },
 };
 
@@ -415,8 +420,9 @@ async function init() {
   const art = document.getElementById('article-body');
   let html = overviewHtml(items, locale);
   for (const p of PETS) {
-    html += petSectionHtml(p, items[p.id] || {}, locale[p.id] || {});
-    html += PET_EXTRA[p.anchor] ? PET_EXTRA[p.anchor](items, locale) : '';
+    const extra = PET_EXTRA[p.anchor];
+    html += petSectionHtml(p, items[p.id] || {}, locale[p.id] || {}, !!extra);
+    html += extra ? extra(items, locale) : '';
   }
   art.innerHTML = html;
 
