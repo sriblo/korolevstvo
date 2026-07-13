@@ -329,6 +329,12 @@ input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
 .qtable .qtotal{color:var(--gold-l);font-weight:600;font-family:var(--serif);font-size:14px;font-feature-settings:'tnum';font-variant-numeric:tabular-nums;}
 .qtable .qtask{font-family:var(--serif);font-size:13px;color:var(--txt3);}
 .qtable tr.qtotal-row td { background: rgba(var(--gold-tint),.04); }
+.q-ico { position: relative; width: 28px; height: 28px; display: inline-block; flex-shrink: 0; cursor: default; vertical-align: middle; }
+.q-ico img.base { position: absolute; inset: 0; width: 28px; height: 28px; image-rendering: pixelated; }
+.q-ico img.fr   { position: absolute; inset: 0; width: 28px; height: 28px; }
+.qtask-item { display: flex; align-items: center; gap: 8px; }
+.qrew-line  { display: flex; align-items: center; gap: 7px; }
+.qrew-rep   { color: var(--txt3); font-weight: 400; font-size: 12px; margin-top: 3px; }
 
 /* ── ITEMS TABLE ────────────────────────────────────────── */
 .i-head {
@@ -1042,53 +1048,132 @@ select.on {
             <tr>
               <td class="qname">«Подарок»</td>
               <td class="qtask">—</td>
-              <td class="qrew">501 пластина</td>
+              <td class="qrew">
+                <div class="qrew-line">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_token','../icons/expedition_token.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/expedition_token.png"><img class="fr" src="../frames/border_none.png"></div>
+                  501 Золотая пластина
+                </div>
+              </td>
             </tr>
             <tr>
               <td class="qname">«Артефакт»</td>
-              <td class="qtask">Нужен предмет: Старый Артефакт<br><span style="color:var(--txt3)">Требует ранга Офицер</span></td>
-              <td class="qrew">Упакованные руны</td>
+              <td class="qtask">
+                <div class="qtask-item">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_quest_reward_rune_item','../icons/artefact_default.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/artefact_default.png"><img class="fr" src="../frames/border_none.png"></div>
+                  Нужен Старый Артефакт
+                </div>
+                <div style="margin-top:4px;padding-left:36px;color:var(--txt3);font-size:12px">Требует ранга Офицер</div>
+              </td>
+              <td class="qrew">
+                <div class="qrew-line">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('rune_artefact_chest_1','../icons/roll_quest.jpg',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/roll_quest.jpg"><img class="fr" src="../frames/border_none.png"></div>
+                  15 × Упакованные руны для Артефакта
+                </div>
+              </td>
             </tr>
             <tr><td colspan="3" class="qtag" style="background:rgba(var(--gold-tint),.06);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--txt3);padding:7px 10px">Ежедневные квесты</td></tr>
             <tr>
               <td class="qname">«Бивни»</td>
-              <td class="qtask">—</td>
-              <td class="qrew">80 пл + 80 реп.</td>
+              <td class="qtask">
+                <div class="qtask-item">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_frozen_islands_quest_item_03','../icons/frozen_ancestor.jpg',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/frozen_ancestor.jpg"><img class="fr" src="../frames/border_none.png"></div>
+                  Собрать Превосходные бивни
+                </div>
+              </td>
+              <td class="qrew">
+                <div class="qrew-line">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_token','../icons/expedition_token.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/expedition_token.png"><img class="fr" src="../frames/border_none.png"></div>
+                  80 Золотых пластин
+                </div>
+                <div class="qrew-rep">+ 80 очков репутации Первооткрыватель</div>
+              </td>
             </tr>
             <tr>
               <td class="qname">«Знак экспедиции»</td>
-              <td class="qtask">—</td>
-              <td class="qrew">180 пл + 180 реп.</td>
+              <td class="qtask">
+                <div class="qtask-item">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_frozen_islands_quest_item_01','../icons/zeppelin_badge.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/zeppelin_badge.png"><img class="fr" src="../frames/border_none.png"></div>
+                  Собрать Знак экспедиции
+                </div>
+              </td>
+              <td class="qrew">
+                <div class="qrew-line">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_token','../icons/expedition_token.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/expedition_token.png"><img class="fr" src="../frames/border_none.png"></div>
+                  180 Золотых пластин
+                </div>
+                <div class="qrew-rep">+ 180 очков репутации Первооткрыватель</div>
+              </td>
             </tr>
             <tr>
               <td class="qname">«Ледяные кристаллы»</td>
-              <td class="qtask">—</td>
-              <td class="qrew">80 пл + 80 реп.</td>
+              <td class="qtask">
+                <div class="qtask-item">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_frozen_islands_quest_item_02','../icons/thunder_crystal_quest.jpg',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/thunder_crystal_quest.jpg"><img class="fr" src="../frames/border_none.png"></div>
+                  Собрать Ледяные кристаллы
+                </div>
+              </td>
+              <td class="qrew">
+                <div class="qrew-line">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_token','../icons/expedition_token.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/expedition_token.png"><img class="fr" src="../frames/border_none.png"></div>
+                  80 Золотых пластин
+                </div>
+                <div class="qrew-rep">+ 80 очков репутации Первооткрыватель</div>
+              </td>
             </tr>
             <tr>
               <td class="qname">«Конкуренты»</td>
               <td class="qtask">—</td>
-              <td class="qrew">100 пл + 100 реп.</td>
+              <td class="qrew">
+                <div class="qrew-line">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_token','../icons/expedition_token.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/expedition_token.png"><img class="fr" src="../frames/border_none.png"></div>
+                  100 Золотых пластин
+                </div>
+                <div class="qrew-rep">+ 100 очков репутации Первооткрыватель</div>
+              </td>
             </tr>
             <tr>
               <td class="qname">«Песцы пришли»</td>
               <td class="qtask">—</td>
-              <td class="qrew">80 пл + 80 реп.</td>
+              <td class="qrew">
+                <div class="qrew-line">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_token','../icons/expedition_token.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/expedition_token.png"><img class="fr" src="../frames/border_none.png"></div>
+                  80 Золотых пластин
+                </div>
+                <div class="qrew-rep">+ 80 очков репутации Первооткрыватель</div>
+              </td>
             </tr>
             <tr>
               <td class="qname">«Чудовище»</td>
               <td class="qtask">—</td>
-              <td class="qrew">120 пл + 120 реп.</td>
+              <td class="qrew">
+                <div class="qrew-line">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_token','../icons/expedition_token.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/expedition_token.png"><img class="fr" src="../frames/border_none.png"></div>
+                  120 Золотых пластин
+                </div>
+                <div class="qrew-rep">+ 120 очков репутации Первооткрыватель</div>
+              </td>
             </tr>
             <tr>
               <td class="qname">«Остров проклятых»</td>
               <td class="qtask">—</td>
-              <td class="qrew">160 пл + 160 реп.</td>
+              <td class="qrew">
+                <div class="qrew-line">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_token','../icons/expedition_token.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/expedition_token.png"><img class="fr" src="../frames/border_none.png"></div>
+                  160 Золотых пластин
+                </div>
+                <div class="qrew-rep">+ 160 очков репутации Первооткрыватель</div>
+              </td>
             </tr>
             <tr class="qtotal-row">
               <td class="qtotal">Итого в день</td>
               <td></td>
-              <td class="qtotal">800 пластин + 800 реп.</td>
+              <td class="qtotal">
+                <div class="qrew-line">
+                  <div class="q-ico" onmouseenter="ttShowByGameId('expedition_token','../icons/expedition_token.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/expedition_token.png"><img class="fr" src="../frames/border_none.png"></div>
+                  800 Золотых пластин
+                </div>
+                <div class="qrew-rep">+ 800 очков репутации Первооткрыватель</div>
+              </td>
             </tr>
           </tbody>
         </table>
