@@ -1361,14 +1361,14 @@ const CUM_R = {
   costume_year: [0, 3],
   repair:       [0, 5],
 };
-// Минимальный ранг для покупки (0 = доступен с начала)
+// Минимальный ранг для покупки (по качеству: фиол=1, красн=2, оранж=3, белый=0)
 const REQ_RANK = {
-  badge:        [0, 0, 0, 0],
-  frozen:       [0, 0, 0, 0],
-  preobr:       [0, 0],
+  badge:        [0, 1, 2, 3],
+  frozen:       [0, 1, 2, 3],
+  preobr:       [0, 1],
   artefact:     [0, 0],
-  costume:      [0, 0],
-  costume_year: [0, 0],
+  costume:      [0, 1],
+  costume_year: [0, 2],
   repair:       [0, 0],
 };
 
@@ -1395,12 +1395,12 @@ const ITEMS = [
     gameIds: [null, 'expedition_quest_reward_rune_item'] },
   { id: 'costume', name: 'Костюм дикого орка', note: 'до 1 сентября',
     img: '../icons/mask.jpg',
-    frames:  [null, 'border_none'],
+    frames:  [null, 'border_high'],
     levels:  ['Нет', 'Есть'],
     gameIds: [null, 'expedition_disguise_wild_orc'] },
   { id: 'costume_year', name: 'Прочный костюм дикого орка', note: 'до 1 июля 2027',
     img: '../icons/mask.jpg',
-    frames:  [null, 'border_none'],
+    frames:  [null, 'border_exclusive'],
     levels:  ['Нет', 'Есть'],
     gameIds: [null, 'expedition_year_disguise_wild_orc'] },
   { id: 'repair', name: 'Универсальный восстановитель Ширди', note: '',
