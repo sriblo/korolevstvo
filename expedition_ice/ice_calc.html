@@ -1325,7 +1325,7 @@ function ttHide() { _tt.classList.remove('vis'); }
 
 // ── КОНСТАНТЫ ИВЕНТА ──
 const DAILY     = 800;
-const DAILY_REP = 800; // очков репутации Первооткрыватель из 7 ежедневных квестов
+
 const MAX_DAYS  = 15;
 
 // Репутация Экспедиция: пороги накопительно от нуля
@@ -1583,26 +1583,20 @@ function calc() {
   const targetRep  = REP[maxRank];
   const repNeeded  = Math.max(0, targetRep - haveRep);
 
-  // Бесплатная репутация из ежедневных квестов
-  const earnedQuestRep   = days * DAILY_REP;
-  const freeQuestRep     = Math.min(earnedQuestRep, repNeeded);
-  const repGapAfterQuests = repNeeded - freeQuestRep;
-
   // Бесплатная репутация: пластины → экспедиционные жетоны
-  const freeDust         = Math.floor(forRep / DUST_T);
-  const freeRepFromTokens = Math.min(freeDust * DUST_PTS, repGapAfterQuests);
-  const tUsedRep         = Math.ceil(freeRepFromTokens / DUST_PTS) * DUST_T;
-  const repGap           = repGapAfterQuests - freeRepFromTokens;
-  const rc               = optRubies(repGap);
-  const totalRub         = rubDef + rc.r + patRubDef;
+  const freeDust   = Math.floor(forRep / DUST_T);
+  const freeRep    = Math.min(freeDust * DUST_PTS, repNeeded);
+  const tUsedRep   = Math.ceil(freeRep / DUST_PTS) * DUST_T;
+  const repGap     = repNeeded - freeRep;
+  const rc         = optRubies(repGap);
+  const totalRub   = rubDef + rc.r + patRubDef;
 
   // Корректируем overshoot
-  const repFromRub      = rc.nPrem * ZAST_PTS + rc.nReg * DUST_PTS;
-  const overshoot       = Math.max(0, freeRepFromTokens + repFromRub - repGapAfterQuests);
-  const adjRepFromTokens = freeRepFromTokens - overshoot;
-  const adjFreeRep      = freeQuestRep + adjRepFromTokens;
-  const adjTUsed        = adjRepFromTokens > 0 ? Math.ceil(adjRepFromTokens / DUST_PTS) * DUST_T : 0;
-  const leftover        = forRep - adjTUsed;
+  const repFromRub = rc.nPrem * ZAST_PTS + rc.nReg * DUST_PTS;
+  const overshoot  = Math.max(0, freeRep + repFromRub - repNeeded);
+  const adjFreeRep = freeRep - overshoot;
+  const adjTUsed   = adjFreeRep > 0 ? Math.ceil(adjFreeRep / DUST_PTS) * DUST_T : 0;
+  const leftover   = forRep - adjTUsed;
 
   // Stats
   set('sv-earn',  fmt(earned));
@@ -1656,16 +1650,10 @@ function calc() {
       <span class="vkey">Осталось набрать репутации</span>
       <span class="vval r">${fmt(repNeeded)} очков</span>
     </div>`);
-    if (freeQuestRep > 0) {
-      rows.push(`<div class="vrow">
-        <span class="vkey">Из квестов (${days} дн. × ${fmt(DAILY_REP)} оч./день)</span>
-        <span class="vval g">+${fmt(freeQuestRep)} очков бесплатно</span>
-      </div>`);
-    }
-    if (adjRepFromTokens > 0) {
+    if (adjFreeRep > 0) {
       rows.push(`<div class="vrow">
         <span class="vkey">Бесплатно пластинами (Экспедиционный жетон)</span>
-        <span class="vval g">+${fmt(adjRepFromTokens)} очков (${fmt(adjTUsed)} пластин)</span>
+        <span class="vval g">${fmt(adjFreeRep)} очков (${fmt(adjTUsed)} пластин)</span>
       </div>`);
     }
     if (rc.r > 0) {
@@ -1733,16 +1721,10 @@ function calc() {
         <div class="sline-body">Купи патент(ы) напрямую за рубины: <span class="sr">${fmtR(patRubDef)} рубинов</span>.</div>
       </div>`);
     }
-    if (freeQuestRep > 0) {
-      lines.push(`<div class="sline">
-        ${icoOk}
-        <div class="sline-body">Из ежедневных квестов — <span class="sg">+${fmt(freeQuestRep)} очков</span> репутации Первооткрыватель за ${days} дней.</div>
-      </div>`);
-    }
-    if (adjRepFromTokens > 0 && adjTUsed > 0) {
+    if (adjFreeRep > 0 && adjTUsed > 0) {
       lines.push(`<div class="sline">
         ${icoDust}
-        <div class="sline-body">Потрать <span class="sn">${fmt(adjTUsed)} пластин</span> на <b>Экспедиционный жетон</b> — получишь <span class="sg">+${fmt(adjRepFromTokens)} очков</span> репутации бесплатно.</div>
+        <div class="sline-body">Потрать <span class="sn">${fmt(adjTUsed)} пластин</span> на <b>Экспедиционный жетон</b> — получишь <span class="sg">+${fmt(adjFreeRep)} очков</span> репутации бесплатно.</div>
       </div>`);
     }
     if (rc.nPrem > 0) {
