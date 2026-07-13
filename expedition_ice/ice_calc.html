@@ -1044,9 +1044,8 @@ select.on {
             <tr><th>Квест</th><th>Задание</th><th>Награда</th></tr>
           </thead>
           <tbody>
-            <tr><td colspan="3" class="qtag" style="background:rgba(var(--gold-tint),.06);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--txt3);padding:7px 10px">Разовые квесты</td></tr>
             <tr>
-              <td class="qname">«Подарок»</td>
+              <td><span class="qname">«Подарок»</span><span class="qtag qtag-once">Разовый</span></td>
               <td class="qtask">—</td>
               <td class="qrew">
                 <div class="qrew-line">
@@ -1056,7 +1055,7 @@ select.on {
               </td>
             </tr>
             <tr>
-              <td class="qname">«Артефакт»</td>
+              <td><span class="qname">«Артефакт»</span><span class="qtag qtag-once">Разовый</span></td>
               <td class="qtask">
                 <div class="qtask-item">
                   <div class="q-ico" onmouseenter="ttShowByGameId('expedition_quest_reward_rune_item','../icons/artefact_default.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/artefact_default.png"><img class="fr" src="../frames/border_none.png"></div>
@@ -1071,9 +1070,8 @@ select.on {
                 </div>
               </td>
             </tr>
-            <tr><td colspan="3" class="qtag" style="background:rgba(var(--gold-tint),.06);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--txt3);padding:7px 10px">Ежедневные квесты</td></tr>
             <tr>
-              <td class="qname">«Бивни»</td>
+              <td><span class="qname">«Бивни»</span><span class="qtag qtag-day">Ежедневный</span></td>
               <td class="qtask">
                 <div class="qtask-item">
                   <div class="q-ico" onmouseenter="ttShowByGameId('expedition_frozen_islands_quest_item_03','../icons/frozen_ancestor.jpg',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/frozen_ancestor.jpg"><img class="fr" src="../frames/border_none.png"></div>
@@ -1089,7 +1087,7 @@ select.on {
               </td>
             </tr>
             <tr>
-              <td class="qname">«Знак экспедиции»</td>
+              <td><span class="qname">«Знак экспедиции»</span><span class="qtag qtag-day">Ежедневный</span></td>
               <td class="qtask">
                 <div class="qtask-item">
                   <div class="q-ico" onmouseenter="ttShowByGameId('expedition_frozen_islands_quest_item_01','../icons/zeppelin_badge.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/zeppelin_badge.png"><img class="fr" src="../frames/border_none.png"></div>
@@ -1105,7 +1103,7 @@ select.on {
               </td>
             </tr>
             <tr>
-              <td class="qname">«Ледяные кристаллы»</td>
+              <td><span class="qname">«Ледяные кристаллы»</span><span class="qtag qtag-day">Ежедневный</span></td>
               <td class="qtask">
                 <div class="qtask-item">
                   <div class="q-ico" onmouseenter="ttShowByGameId('expedition_frozen_islands_quest_item_02','../icons/thunder_crystal_quest.jpg',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/thunder_crystal_quest.jpg"><img class="fr" src="../frames/border_none.png"></div>
@@ -1121,7 +1119,7 @@ select.on {
               </td>
             </tr>
             <tr>
-              <td class="qname">«Конкуренты»</td>
+              <td><span class="qname">«Конкуренты»</span><span class="qtag qtag-day">Ежедневный</span></td>
               <td class="qtask">—</td>
               <td class="qrew">
                 <div class="qrew-line">
@@ -1132,7 +1130,7 @@ select.on {
               </td>
             </tr>
             <tr>
-              <td class="qname">«Песцы пришли»</td>
+              <td><span class="qname">«Песцы пришли»</span><span class="qtag qtag-day">Ежедневный</span></td>
               <td class="qtask">—</td>
               <td class="qrew">
                 <div class="qrew-line">
@@ -1143,7 +1141,7 @@ select.on {
               </td>
             </tr>
             <tr>
-              <td class="qname">«Чудовище»</td>
+              <td><span class="qname">«Чудовище»</span><span class="qtag qtag-day">Ежедневный</span></td>
               <td class="qtask">—</td>
               <td class="qrew">
                 <div class="qrew-line">
@@ -1154,7 +1152,7 @@ select.on {
               </td>
             </tr>
             <tr>
-              <td class="qname">«Остров проклятых»</td>
+              <td><span class="qname">«Остров проклятых»</span><span class="qtag qtag-day">Ежедневный</span></td>
               <td class="qtask">—</td>
               <td class="qrew">
                 <div class="qrew-line">
@@ -1165,8 +1163,7 @@ select.on {
               </td>
             </tr>
             <tr class="qtotal-row">
-              <td class="qtotal">Итого в день</td>
-              <td></td>
+              <td colspan="2" style="color:var(--txt3);font-size:12px;padding:9px 14px;font-style:normal">Итого ежедневно (7 квестов)</td>
               <td class="qtotal">
                 <div class="qrew-line">
                   <div class="q-ico" onmouseenter="ttShowByGameId('expedition_token','../icons/expedition_token.png',event)" onmousemove="ttMove(event)" onmouseleave="ttHide()"><img class="base" src="../icons/expedition_token.png"><img class="fr" src="../frames/border_none.png"></div>
