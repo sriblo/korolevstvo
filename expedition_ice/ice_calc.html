@@ -845,7 +845,7 @@ select.on {
       <div class="irow">
         <div class="ico-pill"><img src="../icons/expedition_token_small.png"></div>
         <div class="ilbl">Пластин сейчас</div>
-        <span class="tip" data-tip="Сколько золотых пластин сейчас&#10;в твоём кошельке в игре.&#10;&#10;Именно столько — не считая то что&#10;ещё заработаешь за оставшиеся дни.">?</span>
+        <span class="tip" data-tip="Сколько золотых пластин сейчас&#10;в твоём кошельке в игре.&#10;&#10;Именно столько — не считая то что&#10;ещё заработаешь за оставшиеся дни.&#10;&#10;Если уже выполнил разовый квест&#10;«Подарок» (+501 пластина) —&#10;включи их сюда.">?</span>
         <div class="nf">
           <input type="number" id="have-t" value="0" min="0" oninput="calc()">
           <span class="unit">пластин</span>
@@ -1038,7 +1038,58 @@ select.on {
             <tr><th>Квест</th><th>Задание</th><th>Награда</th></tr>
           </thead>
           <tbody>
-            <tr><td colspan="3" style="color:var(--txt3);font-size:12px;padding:12px;font-style:italic">Данные о квестах будут добавлены позже.</td></tr>
+            <tr><td colspan="3" class="qtag" style="background:rgba(var(--gold-tint),.06);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--txt3);padding:7px 10px">Разовые квесты</td></tr>
+            <tr>
+              <td class="qname">«Подарок»</td>
+              <td class="qtask">—</td>
+              <td class="qrew">501 пластина</td>
+            </tr>
+            <tr>
+              <td class="qname">«Артефакт»</td>
+              <td class="qtask">Нужен предмет: Старый Артефакт<br><span style="color:var(--txt3)">Требует ранга Офицер</span></td>
+              <td class="qrew">Упакованные руны</td>
+            </tr>
+            <tr><td colspan="3" class="qtag" style="background:rgba(var(--gold-tint),.06);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--txt3);padding:7px 10px">Ежедневные квесты</td></tr>
+            <tr>
+              <td class="qname">«Бивни»</td>
+              <td class="qtask">—</td>
+              <td class="qrew">80 пл + 80 реп.</td>
+            </tr>
+            <tr>
+              <td class="qname">«Знак экспедиции»</td>
+              <td class="qtask">—</td>
+              <td class="qrew">180 пл + 180 реп.</td>
+            </tr>
+            <tr>
+              <td class="qname">«Ледяные кристаллы»</td>
+              <td class="qtask">—</td>
+              <td class="qrew">80 пл + 80 реп.</td>
+            </tr>
+            <tr>
+              <td class="qname">«Конкуренты»</td>
+              <td class="qtask">—</td>
+              <td class="qrew">100 пл + 80 реп.</td>
+            </tr>
+            <tr>
+              <td class="qname">«Песцы пришли»</td>
+              <td class="qtask">—</td>
+              <td class="qrew">80 пл + 80 реп.</td>
+            </tr>
+            <tr>
+              <td class="qname">«Чудовище»</td>
+              <td class="qtask">—</td>
+              <td class="qrew">120 пл + 120 реп.</td>
+            </tr>
+            <tr>
+              <td class="qname">«Остров проклятых»</td>
+              <td class="qtask">—</td>
+              <td class="qrew">160 пл + 80 реп.</td>
+            </tr>
+            <tr class="qtotal-row">
+              <td class="qtotal">Итого в день</td>
+              <td></td>
+              <td class="qtotal">800 пластин + 700 реп.</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -1273,8 +1324,9 @@ function ttMove(e) {
 function ttHide() { _tt.classList.remove('vis'); }
 
 // ── КОНСТАНТЫ ИВЕНТА ──
-const DAILY    = 0; // TODO: заполнить после получения данных о квестах
-const MAX_DAYS = 15;
+const DAILY     = 800;
+const DAILY_REP = 700; // очков репутации Первооткрыватель из 7 ежедневных квестов
+const MAX_DAYS  = 15;
 
 // Репутация Экспедиция: пороги накопительно от нуля
 const REP         = [0, 20000, 50000, 100000];
@@ -1289,17 +1341,75 @@ const DUST_R   = 2;
 const ZAST_R   = 3;
 const ZAST_PTS = 5000;
 
-// Накопительные цены в пластинах (от нуля) — TODO: заполнить
-const CUM = {};
-// Накопительные цены в рубинах (от нуля) — TODO: заполнить
-const CUM_R = {};
-// Минимальный ранг для каждого уровня — TODO: заполнить
-const REQ_RANK = {};
+// Накопительные цены в пластинах (от нуля)
+const CUM = {
+  badge:        [0, 500, 1500, 3500],   // Знак: фиол 500 + Документы_09 1000 + Документы_10 2000
+  frozen:       [0, 1000, 2500, 4500],  // Кубок: фиол 1000 + Маг.лёд_04 1500 + Маг.лёд_05 2000
+  preobr:       [0, 2000],
+  artefact:     [0, 2000],
+  costume:      [0, 300],
+  costume_year: [0, 900],
+  repair:       [0, 500],
+};
+// Накопительные цены в рубинах (от нуля)
+const CUM_R = {
+  badge:        [0, 5, 15, 35],
+  frozen:       [0, 10, 25, 45],
+  preobr:       [0, 20],
+  artefact:     [0, 20],
+  costume:      [0, 3],
+  costume_year: [0, 3],
+  repair:       [0, 5],
+};
+// Минимальный ранг для покупки (0 = доступен с начала)
+const REQ_RANK = {
+  badge:        [0, 0, 0, 0],
+  frozen:       [0, 0, 0, 0],
+  preobr:       [0, 0],
+  artefact:     [0, 0],
+  costume:      [0, 0],
+  costume_year: [0, 0],
+  repair:       [0, 0],
+};
 
-// TODO: заполнить предметами ивента
-const ITEMS = [];
+const ITEMS = [
+  { id: 'badge', name: 'Знак экспедиции', note: 'вечный',
+    img: null,
+    frames:  [null, 'border_high', 'border_exclusive', 'border_special'],
+    levels:  ['Нет', 'Фиолетовый', 'Красный', 'Оранжевый'],
+    gameIds: [null, 'expedition_zeppelin_badge_09', 'expedition_zeppelin_badge_10', 'expedition_zeppelin_badge_11'] },
+  { id: 'frozen', name: 'Кубок с Ледяных Островов', note: 'вечный',
+    img: null,
+    frames:  [null, 'border_high', 'border_exclusive', 'border_special'],
+    levels:  ['Нет', 'Фиолетовый', 'Красный', 'Оранжевый'],
+    gameIds: [null, 'expedition_frozen_islands_buff_04', 'expedition_frozen_islands_buff_05', 'expedition_frozen_islands_buff_06'] },
+  { id: 'preobr', name: 'Преобразователь Ширди', note: '',
+    img: null,
+    frames:  [null, 'border_high'],
+    levels:  ['Нет', 'Есть'],
+    gameIds: [null, 'expedition_dragons_broken_upgrade_chance'] },
+  { id: 'artefact', name: 'Старый Артефакт', note: 'для квеста «Артефакт»',
+    img: null,
+    frames:  [null, 'border_none'],
+    levels:  ['Нет', 'Есть'],
+    gameIds: [null, 'expedition_quest_reward_rune_item'] },
+  { id: 'costume', name: 'Костюм дикого орка', note: 'до 1 сентября',
+    img: null,
+    frames:  [null, 'border_none'],
+    levels:  ['Нет', 'Есть'],
+    gameIds: [null, 'expedition_disguise_wild_orc'] },
+  { id: 'costume_year', name: 'Прочный костюм дикого орка', note: 'до 1 июля 2027',
+    img: null,
+    frames:  [null, 'border_none'],
+    levels:  ['Нет', 'Есть'],
+    gameIds: [null, 'expedition_year_disguise_wild_orc'] },
+  { id: 'repair', name: 'Универсальный восстановитель Ширди', note: '',
+    img: null,
+    frames:  [null, 'border_none'],
+    levels:  ['Нет', 'Есть'],
+    gameIds: [null, 'expedition_dragons_broken_upgrade_repair'] },
+];
 
-// TODO: заполнить если будут особые предметы за рубины
 const PATENTS = [];
 
 function gico(cfg, lv) {
@@ -1349,6 +1459,10 @@ function renderItems() {
 
 function renderPatents() {
   const el = document.getElementById('patents-list');
+  if (!PATENTS.length) {
+    el.closest('.card').style.display = 'none';
+    return;
+  }
   el.innerHTML = PATENTS.map(cfg => `
     <div class="irow2">
       <div class="iname-c">
@@ -1469,20 +1583,26 @@ function calc() {
   const targetRep  = REP[maxRank];
   const repNeeded  = Math.max(0, targetRep - haveRep);
 
+  // Бесплатная репутация из ежедневных квестов
+  const earnedQuestRep   = days * DAILY_REP;
+  const freeQuestRep     = Math.min(earnedQuestRep, repNeeded);
+  const repGapAfterQuests = repNeeded - freeQuestRep;
+
   // Бесплатная репутация: пластины → экспедиционные жетоны
-  const freeDust   = Math.floor(forRep / DUST_T);
-  const freeRep    = Math.min(freeDust * DUST_PTS, repNeeded);
-  const tUsedRep   = Math.ceil(freeRep / DUST_PTS) * DUST_T;
-  const repGap     = repNeeded - freeRep;
-  const rc         = optRubies(repGap);
-  const totalRub   = rubDef + rc.r + patRubDef;
+  const freeDust         = Math.floor(forRep / DUST_T);
+  const freeRepFromTokens = Math.min(freeDust * DUST_PTS, repGapAfterQuests);
+  const tUsedRep         = Math.ceil(freeRepFromTokens / DUST_PTS) * DUST_T;
+  const repGap           = repGapAfterQuests - freeRepFromTokens;
+  const rc               = optRubies(repGap);
+  const totalRub         = rubDef + rc.r + patRubDef;
 
   // Корректируем overshoot
-  const repFromRub = rc.nPrem * ZAST_PTS + rc.nReg * DUST_PTS;
-  const overshoot  = Math.max(0, freeRep + repFromRub - repNeeded);
-  const adjFreeRep = freeRep - overshoot;
-  const adjTUsed   = adjFreeRep > 0 ? Math.ceil(adjFreeRep / DUST_PTS) * DUST_T : 0;
-  const leftover   = forRep - adjTUsed;
+  const repFromRub      = rc.nPrem * ZAST_PTS + rc.nReg * DUST_PTS;
+  const overshoot       = Math.max(0, freeRepFromTokens + repFromRub - repGapAfterQuests);
+  const adjRepFromTokens = freeRepFromTokens - overshoot;
+  const adjFreeRep      = freeQuestRep + adjRepFromTokens;
+  const adjTUsed        = adjRepFromTokens > 0 ? Math.ceil(adjRepFromTokens / DUST_PTS) * DUST_T : 0;
+  const leftover        = forRep - adjTUsed;
 
   // Stats
   set('sv-earn',  fmt(earned));
@@ -1536,10 +1656,16 @@ function calc() {
       <span class="vkey">Осталось набрать репутации</span>
       <span class="vval r">${fmt(repNeeded)} очков</span>
     </div>`);
-    if (adjFreeRep > 0) {
+    if (freeQuestRep > 0) {
+      rows.push(`<div class="vrow">
+        <span class="vkey">Из квестов (${days} дн. × ${fmt(DAILY_REP)} оч./день)</span>
+        <span class="vval g">+${fmt(freeQuestRep)} очков бесплатно</span>
+      </div>`);
+    }
+    if (adjRepFromTokens > 0) {
       rows.push(`<div class="vrow">
         <span class="vkey">Бесплатно пластинами (Экспедиционный жетон)</span>
-        <span class="vval g">${fmt(adjFreeRep)} очков (${fmt(adjTUsed)} пластин)</span>
+        <span class="vval g">+${fmt(adjRepFromTokens)} очков (${fmt(adjTUsed)} пластин)</span>
       </div>`);
     }
     if (rc.r > 0) {
@@ -1607,10 +1733,16 @@ function calc() {
         <div class="sline-body">Купи патент(ы) напрямую за рубины: <span class="sr">${fmtR(patRubDef)} рубинов</span>.</div>
       </div>`);
     }
-    if (adjFreeRep > 0 && adjTUsed > 0) {
+    if (freeQuestRep > 0) {
+      lines.push(`<div class="sline">
+        ${icoOk}
+        <div class="sline-body">Из ежедневных квестов — <span class="sg">+${fmt(freeQuestRep)} очков</span> репутации Первооткрыватель за ${days} дней.</div>
+      </div>`);
+    }
+    if (adjRepFromTokens > 0 && adjTUsed > 0) {
       lines.push(`<div class="sline">
         ${icoDust}
-        <div class="sline-body">Потрать <span class="sn">${fmt(adjTUsed)} пластин</span> на <b>Экспедиционный жетон</b> — получишь <span class="sg">+${fmt(adjFreeRep)} очков</span> репутации бесплатно.</div>
+        <div class="sline-body">Потрать <span class="sn">${fmt(adjTUsed)} пластин</span> на <b>Экспедиционный жетон</b> — получишь <span class="sg">+${fmt(adjRepFromTokens)} очков</span> репутации бесплатно.</div>
       </div>`);
     }
     if (rc.nPrem > 0) {
@@ -1653,8 +1785,40 @@ function renderItemsGuide() {
     return `${fmtR(r)} рубинов`;
   }
 
-  // TODO: заполнить предметами ивента
-  const GUIDE_ITEMS = [];
+  const badgeCfg  = ITEMS.find(c => c.id === 'badge');
+  const frozenCfg = ITEMS.find(c => c.id === 'frozen');
+
+  const GUIDE_ITEMS = [
+    { name: 'Знак экспедиции', note: 'вечный', cfg: badgeCfg, steps: [
+      { lv:1, label:'Знак экспедиции (фиол.)', cost:500,  costR:0, rAlt:5,  rank:0, ingr:null },
+      { lv:2, label:'Знак экспедиции (красн.)', cost:1000, costR:0, rAlt:10, rank:0,
+        ingr: ingrIco(null, 'border_exclusive', 'Документы', 'expedition_zeppelin_badge_upgrade_09') },
+      { lv:3, label:'Знак экспедиции (оранж.)', cost:2000, costR:0, rAlt:20, rank:0,
+        ingr: ingrIco(null, 'border_special',   'Документы', 'expedition_zeppelin_badge_upgrade_10') },
+    ]},
+    { name: 'Кубок с Ледяных Островов', note: 'вечный', cfg: frozenCfg, steps: [
+      { lv:1, label:'Кубок (фиолетовый)',  cost:1000, costR:0, rAlt:10, rank:0, ingr:null },
+      { lv:2, label:'Кубок (красный)',     cost:1500, costR:0, rAlt:15, rank:0,
+        ingr: ingrIco(null, 'border_exclusive', 'Магический лёд', 'expedition_frozen_islands_upgrade_04') },
+      { lv:3, label:'Кубок (оранжевый)',   cost:2000, costR:0, rAlt:20, rank:0,
+        ingr: ingrIco(null, 'border_special',   'Магический лёд', 'expedition_frozen_islands_upgrade_05') },
+    ]},
+    { name: 'Преобразователь Ширди', note: '', cfg: ITEMS.find(c=>c.id==='preobr'), steps: [
+      { lv:1, label:'Преобразователь Ширди', cost:2000, costR:0, rAlt:20, rank:0, ingr:null },
+    ]},
+    { name: 'Старый Артефакт', note: 'нужен для квеста «Артефакт»', cfg: ITEMS.find(c=>c.id==='artefact'), steps: [
+      { lv:1, label:'Старый Артефакт', cost:2000, costR:0, rAlt:20, rank:0, ingr:null },
+    ]},
+    { name: 'Костюм дикого орка', note: 'до 1 сентября', cfg: ITEMS.find(c=>c.id==='costume'), steps: [
+      { lv:1, label:'Костюм дикого орка', cost:300, costR:0, rAlt:3, rank:0, ingr:null },
+    ]},
+    { name: 'Прочный костюм дикого орка', note: 'до 1 июля 2027', cfg: ITEMS.find(c=>c.id==='costume_year'), steps: [
+      { lv:1, label:'Прочный костюм дикого орка', cost:900, costR:0, rAlt:3, rank:0, ingr:null },
+    ]},
+    { name: 'Универсальный восстановитель Ширди', note: '', cfg: ITEMS.find(c=>c.id==='repair'), steps: [
+      { lv:1, label:'Восстановитель Ширди', cost:500, costR:0, rAlt:5, rank:0, ingr:null },
+    ]},
+  ];
 
   function buildChain(steps, cfg, result) {
     const ico = [], nam = [], cst = [], rnk = [];
@@ -1736,7 +1900,7 @@ function renderItemsGuide() {
     </div>
   </div>`;
 
-  el.innerHTML = html + patHtml;
+  el.innerHTML = html + (PATENTS.length ? patHtml : '');
 }
 
 function switchTab(id, btn) {
