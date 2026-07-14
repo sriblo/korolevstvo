@@ -1857,30 +1857,30 @@ function renderItemsGuide() {
 
   const GUIDE_ITEMS = [
     { name: 'Знак экспедиции', note: 'вечный', cfg: badgeCfg, steps: [
-      { lv:1, label:'Знак экспедиции (фиол.)', cost:500,  costR:0, rAlt:5,  rank:0, ingr:null },
-      { lv:2, label:'Знак экспедиции (красн.)', cost:1000, costR:0, rAlt:10, rank:0,
+      { lv:1, label:'Знак экспедиции (фиол.)', cost:500,  costR:0, rAlt:5,  rank:1, ingr:null },
+      { lv:2, label:'Знак экспедиции (красн.)', cost:1000, costR:0, rAlt:10, rank:2,
         ingr: ingrIco('../icons/zeppelin_badge.png', 'border_exclusive', 'Документы', 'expedition_zeppelin_badge_upgrade_09') },
-      { lv:3, label:'Знак экспедиции (оранж.)', cost:2000, costR:0, rAlt:20, rank:0,
+      { lv:3, label:'Знак экспедиции (оранж.)', cost:2000, costR:0, rAlt:20, rank:3,
         ingr: ingrIco('../icons/zeppelin_badge.png', 'border_special',   'Документы', 'expedition_zeppelin_badge_upgrade_10') },
     ]},
     { name: 'Кубок с Ледяных Островов', note: 'вечный', cfg: frozenCfg, steps: [
-      { lv:1, label:'Кубок (фиолетовый)',  cost:1000, costR:0, rAlt:10, rank:0, ingr:null },
-      { lv:2, label:'Кубок (красный)',     cost:1500, costR:0, rAlt:15, rank:0,
+      { lv:1, label:'Кубок (фиолетовый)',  cost:1000, costR:0, rAlt:10, rank:1, ingr:null },
+      { lv:2, label:'Кубок (красный)',     cost:1500, costR:0, rAlt:15, rank:2,
         ingr: ingrIco('../icons/blue_glass_fragment.png', 'border_exclusive', 'Магический лёд', 'expedition_frozen_islands_upgrade_04') },
-      { lv:3, label:'Кубок (оранжевый)',   cost:2000, costR:0, rAlt:20, rank:0,
+      { lv:3, label:'Кубок (оранжевый)',   cost:2000, costR:0, rAlt:20, rank:3,
         ingr: ingrIco('../icons/blue_glass_fragment.png', 'border_special',   'Магический лёд', 'expedition_frozen_islands_upgrade_05') },
     ]},
     { name: 'Преобразователь Ширди', note: '', cfg: ITEMS.find(c=>c.id==='preobr'), steps: [
-      { lv:1, label:'Преобразователь Ширди', cost:2000, costR:0, rAlt:20, rank:0, ingr:null },
+      { lv:1, label:'Преобразователь Ширди', cost:2000, costR:0, rAlt:20, rank:1, ingr:null },
     ]},
     { name: 'Старый Артефакт', note: 'нужен для квеста «Артефакт»', cfg: ITEMS.find(c=>c.id==='artefact'), steps: [
       { lv:1, label:'Старый Артефакт', cost:2000, costR:0, rAlt:20, rank:0, ingr:null },
     ]},
     { name: 'Костюм дикого орка', note: 'до 1 сентября', cfg: ITEMS.find(c=>c.id==='costume'), steps: [
-      { lv:1, label:'Костюм дикого орка', cost:300, costR:0, rAlt:3, rank:0, ingr:null },
+      { lv:1, label:'Костюм дикого орка', cost:300, costR:0, rAlt:3, rank:1, ingr:null },
     ]},
     { name: 'Прочный костюм дикого орка', note: 'до 1 июля 2027', cfg: ITEMS.find(c=>c.id==='costume_year'), steps: [
-      { lv:1, label:'Прочный костюм дикого орка', cost:900, costR:0, rAlt:3, rank:0, ingr:null },
+      { lv:1, label:'Прочный костюм дикого орка', cost:900, costR:0, rAlt:3, rank:2, ingr:null },
     ]},
     { name: 'Универсальный восстановитель Ширди', note: '', cfg: ITEMS.find(c=>c.id==='repair'), steps: [
       { lv:1, label:'Восстановитель Ширди', cost:500, costR:0, rAlt:5, rank:0, ingr:null },
