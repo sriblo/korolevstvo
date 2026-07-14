@@ -1451,10 +1451,10 @@ const REQ_RANK = {
   badge:        [0, 1, 2, 3],
   frozen:       [0, 1, 2, 3],
   preobr:       [0, 1],
-  artefact:     [0, 0],
-  costume:      [0, 1],
-  costume_year: [0, 2],
-  repair:       [0, 0],
+  artefact:     [0, 3],
+  costume:      [0, 2],
+  costume_year: [0, 3],
+  repair:       [0, 3],
 };
 
 const ITEMS = [
@@ -1874,16 +1874,16 @@ function renderItemsGuide() {
       { lv:1, label:'Преобразователь Ширди', cost:2000, costR:0, rAlt:20, rank:1, ingr:null },
     ]},
     { name: 'Старый Артефакт', note: 'нужен для квеста «Артефакт»', cfg: ITEMS.find(c=>c.id==='artefact'), steps: [
-      { lv:1, label:'Старый Артефакт', cost:2000, costR:0, rAlt:20, rank:0, ingr:null },
+      { lv:1, label:'Старый Артефакт', cost:2000, costR:0, rAlt:20, rank:3, ingr:null },
     ]},
     { name: 'Костюм дикого орка', note: 'до 1 сентября', cfg: ITEMS.find(c=>c.id==='costume'), steps: [
-      { lv:1, label:'Костюм дикого орка', cost:300, costR:0, rAlt:3, rank:1, ingr:null },
+      { lv:1, label:'Костюм дикого орка', cost:300, costR:0, rAlt:3, rank:2, ingr:null },
     ]},
     { name: 'Прочный костюм дикого орка', note: 'до 1 июля 2027', cfg: ITEMS.find(c=>c.id==='costume_year'), steps: [
-      { lv:1, label:'Прочный костюм дикого орка', cost:900, costR:0, rAlt:3, rank:2, ingr:null },
+      { lv:1, label:'Прочный костюм дикого орка', cost:900, costR:0, rAlt:3, rank:3, ingr:null },
     ]},
     { name: 'Универсальный восстановитель Ширди', note: '', cfg: ITEMS.find(c=>c.id==='repair'), steps: [
-      { lv:1, label:'Восстановитель Ширди', cost:500, costR:0, rAlt:5, rank:0, ingr:null },
+      { lv:1, label:'Восстановитель Ширди', cost:500, costR:0, rAlt:5, rank:3, ingr:null },
     ]},
   ];
 
